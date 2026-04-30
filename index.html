@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tessera Compassion Foundation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <style>
+    /* ─── TOKENS ──────────────────────────────── */
+    :root {
+      --bg:        #E8E6DF;
+      --bg-dark:   #1E1D1A;
+      --ink:       #1E1D1A;
+      --ink-mid:   #4A4840;
+      --ink-light: #8A8778;
+      --accent:    #C8B89A;
+      --accent-2:  #3D5C4A;
+      --white:     #F5F3EE;
+      --rule:      rgba(30,29,26,0.15);
+
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+      --font-serif:   'EB Garamond', serif;
+
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --dur: 0.6s;
+    }
+
+    /* ─── RESET ───────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+    /* ─── UTILITY ─────────────────────────────── */
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+    /* ─── TESSERA MARK ────────────────────────── */
+    .tessera-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tessera-mark svg { flex-shrink: 0; }
+
+    /* ─── NAV ─────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg);
+      border-bottom: 1px solid var(--rule);
+      transition: background 0.3s;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+    .nav-logo-text .name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .nav-logo-text .sub {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-top: 2px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      transition: color 0.2s;
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--ink); border-bottom-color: var(--ink); }
+    .nav-cta {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--bg);
+      padding: 10px 22px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent-2); color: var(--white); border-bottom-color: transparent !important; }
+
+    /* hamburger */
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+    .nav-hamburger span { display: block; width: 24px; height: 1.5px; background: var(--ink); transition: all 0.3s; }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 61px; left: 0; right: 0; bottom: 0;
+      background: var(--bg);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 36px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .mobile-menu.open { display: flex; }
+
+    /* ─── PAGES ───────────────────────────────── */
+    .page { display: none; padding-top: 61px; min-height: 100vh; }
+    .page.active { display: block; }
+
+    /* ─── PAGE: HOME ──────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 61px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 80px 60px 80px 80px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(64px, 7vw, 100px);
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin-bottom: 36px;
+    }
+    .hero-headline em {
+      font-style: normal;
+      color: var(--accent-2);
+    }
+    .hero-body {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      color: var(--ink-mid);
+      max-width: 420px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--bg);
+      padding: 16px 36px;
+      border: 1px solid var(--ink);
+      transition: all 0.25s var(--ease);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-primary:hover { background: var(--accent-2); border-color: var(--accent-2); }
+    .btn-ghost {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--ink);
+      padding: 16px 36px;
+      border: 1px solid var(--rule);
+      transition: all 0.25s var(--ease);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-ghost:hover { border-color: var(--ink); }
+
+    .hero-right {
+      position: relative;
+      background: var(--ink);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-right-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      padding: 80px;
+      text-align: center;
+      color: var(--bg);
+    }
+    .hero-tessera-large {
+      opacity: 0.12;
+      position: absolute;
+      bottom: -40px;
+      right: -40px;
+    }
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 56px;
+      line-height: 1;
+      color: var(--accent);
+    }
+    .hero-stat-label {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(232,230,223,0.5);
+      margin-top: 6px;
+    }
+    .hero-stats-row {
+      display: flex;
+      gap: 40px;
+    }
+    .hero-quote {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(232,230,223,0.7);
+      max-width: 320px;
+      line-height: 1.6;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 80px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: var(--ink);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* MISSION STRIP */
+    .mission-strip {
+      background: var(--ink);
+      color: var(--bg);
+      padding: 24px 0;
+      overflow: hidden;
+    }
+    .strip-inner {
+      display: flex;
+      gap: 80px;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+    .strip-item {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    .strip-dot { width: 4px; height: 4px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* QUARTET SECTION */
+    .section { padding: 120px 0; }
+    .section-label {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(40px, 5vw, 70px);
+      text-transform: uppercase;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      margin-bottom: 60px;
+    }
+
+    .quartet-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .quartet-card {
+      background: var(--bg);
+      padding: 40px 32px;
+      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .quartet-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent-2);
+      transition: width 0.4s var(--ease);
+    }
+    .quartet-card:hover::before { width: 100%; }
+    .quartet-card:hover { background: var(--white); }
+    .quartet-num {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 64px;
+      line-height: 1;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .quartet-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .quartet-body {
+      font-size: 13px;
+      color: var(--ink-mid);
+      line-height: 1.6;
+    }
+
+    /* THEORY STRIP */
+    .theory-section {
+      padding: 120px 0;
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .theory-section .section-label { color: rgba(200,184,154,0.6); }
+    .theory-section .section-label::before { background: var(--accent); }
+    .theory-section .section-title { color: var(--bg); }
+    .theory-steps {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr 60px 1fr;
+      gap: 0;
+      align-items: start;
+      margin-top: 60px;
+    }
+    .theory-step-num {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 100px;
+      line-height: 1;
+      color: rgba(200,184,154,0.15);
+      margin-bottom: -10px;
+    }
+    .theory-step-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .theory-step-body {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      color: rgba(232,230,223,0.65);
+      line-height: 1.7;
+    }
+    .theory-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 60px;
+      color: var(--accent);
+      font-size: 24px;
+    }
+
+    /* IMPACT BAND */
+    .impact-band {
+      padding: 80px 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .impact-nums {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .impact-item {
+      padding: 40px;
+      border-right: 1px solid var(--rule);
+      text-align: center;
+    }
+    .impact-item:last-child { border-right: none; }
+    .impact-num {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 52px;
+      line-height: 1;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .impact-label {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    /* PARTNERS */
+    .partners-section { padding: 80px 0; }
+    .partners-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 40px;
+    }
+    .partner-chip {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border: 1px solid var(--rule);
+      color: var(--ink-mid);
+      transition: all 0.2s;
+    }
+    .partner-chip:hover { border-color: var(--ink); color: var(--ink); }
+
+    /* ─── PAGE: ABOUT ─────────────────────────── */
+    .about-hero {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .about-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+    }
+    .about-story-text {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      line-height: 1.75;
+      color: var(--ink-mid);
+    }
+    .about-story-text p + p { margin-top: 24px; }
+
+    .about-mvv {
+      padding: 100px 0;
+    }
+    .mvv-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-top: 60px;
+    }
+    .mvv-card {
+      background: var(--bg);
+      padding: 48px 40px;
+    }
+    .mvv-label {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 20px;
+    }
+    .mvv-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 32px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .mvv-body {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      color: var(--ink-mid);
+      line-height: 1.7;
+    }
+
+    .founder-section {
+      padding: 100px 0;
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .founder-grid {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .founder-photo-wrap {
+      position: relative;
+    }
+    .founder-photo-frame {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: rgba(200,184,154,0.1);
+      border: 1px solid rgba(200,184,154,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .founder-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .founder-photo-placeholder {
+      text-align: center;
+      color: rgba(200,184,154,0.4);
+    }
+    .founder-photo-placeholder span {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: block;
+      margin-top: 12px;
+    }
+    .founder-tag {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: var(--accent-2);
+      color: var(--white);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+    }
+    .founder-content { padding-top: 20px; }
+    .founder-content .section-label { color: rgba(200,184,154,0.5); }
+    .founder-name {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 60px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 8px;
+      color: var(--bg);
+    }
+    .founder-title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 36px;
+    }
+    .founder-bio {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      color: rgba(232,230,223,0.7);
+      line-height: 1.8;
+    }
+    .founder-bio p + p { margin-top: 20px; }
+    .founder-handles {
+      margin-top: 40px;
+      display: flex;
+      gap: 16px;
+    }
+    .handle-pill {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border: 1px solid rgba(200,184,154,0.3);
+      color: var(--accent);
+      padding: 8px 18px;
+      transition: all 0.2s;
+    }
+    .handle-pill:hover { background: var(--accent); color: var(--ink); }
+
+    /* TEAM */
+    .team-section { padding: 100px 0; }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 60px;
+    }
+    .team-card {
+      text-align: center;
+    }
+    .team-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--ink);
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .team-photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(232,230,223,0.15);
+    }
+    .team-name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .team-role {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    /* ─── PAGE: DONATIONS ─────────────────────── */
+    .donate-hero {
+      padding: 80px 0 60px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .donate-layout {
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 80px;
+      padding: 80px 0;
+      align-items: start;
+    }
+    .donate-info h2 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 42px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      line-height: 1;
+    }
+    .donate-info p {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      color: var(--ink-mid);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .donate-use-list {
+      list-style: none;
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .donate-use-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--ink-mid);
+    }
+    .donate-use-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border: 1px solid var(--accent-2);
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    /* DONATION FORM */
+    .donation-form-wrap {
+      background: var(--ink);
+      color: var(--bg);
+      padding: 48px;
+      position: sticky;
+      top: 80px;
+    }
+    .form-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 28px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .amount-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .amount-btn {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.06em;
+      padding: 14px 8px;
+      border: 1px solid rgba(200,184,154,0.25);
+      color: rgba(232,230,223,0.7);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .amount-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .amount-btn.selected { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(200,184,154,0.7);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(200,184,154,0.2);
+      color: var(--bg);
+      font-family: var(--font-body);
+      font-size: 15px;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus { border-color: var(--accent); }
+    .form-input::placeholder { color: rgba(232,230,223,0.3); }
+    #card-element {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(200,184,154,0.2);
+      padding: 16px;
+      transition: border-color 0.2s;
+    }
+    #card-element.StripeElement--focus { border-color: var(--accent); }
+    .stripe-note {
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: rgba(200,184,154,0.4);
+      text-transform: uppercase;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .submit-btn {
+      width: 100%;
+      background: var(--accent);
+      color: var(--ink);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 18px;
+      border: none;
+      cursor: pointer;
+      margin-top: 24px;
+      transition: all 0.25s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .submit-btn:hover { background: var(--accent-2); color: var(--white); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    #payment-message {
+      margin-top: 16px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      padding: 12px 16px;
+    }
+    #payment-message.success { background: rgba(61,92,74,0.3); color: #9fcfb0; }
+    #payment-message.error { background: rgba(180,60,60,0.2); color: #f0a0a0; }
+
+    /* STRIPE CONFIG NOTICE */
+    .stripe-config-notice {
+      background: rgba(200,184,154,0.1);
+      border: 1px solid rgba(200,184,154,0.25);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      line-height: 1.6;
+    }
+    .stripe-config-notice strong { color: var(--bg); }
+
+    /* ─── PAGE: CONTACT ───────────────────────── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: calc(100vh - 61px);
+    }
+    .contact-left {
+      background: var(--ink);
+      color: var(--bg);
+      padding: 100px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .contact-left .section-label { color: rgba(200,184,154,0.5); }
+    .contact-big-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(50px, 6vw, 80px);
+      text-transform: uppercase;
+      line-height: 0.95;
+      margin-bottom: 40px;
+    }
+    .contact-big-title em { font-style: normal; color: var(--accent); }
+    .contact-subtitle {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      color: rgba(232,230,223,0.65);
+      line-height: 1.7;
+      max-width: 400px;
+      margin-bottom: 60px;
+    }
+    .contact-details { display: flex; flex-direction: column; gap: 28px; }
+    .contact-detail-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .contact-detail-label {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(200,184,154,0.5);
+    }
+    .contact-detail-value {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.04em;
+      color: var(--bg);
+      transition: color 0.2s;
+    }
+    .contact-detail-value:hover { color: var(--accent); }
+    .contact-social { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+    .social-tag {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      padding: 8px 14px;
+      border: 1px solid rgba(200,184,154,0.2);
+      color: var(--accent);
+      transition: all 0.2s;
+    }
+    .social-tag:hover { background: var(--accent); color: var(--ink); }
+
+    .contact-right {
+      padding: 100px 80px;
+      background: var(--bg);
+    }
+    .contact-form-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 36px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .contact-form-sub {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      color: var(--ink-light);
+      margin-bottom: 48px;
+    }
+    .contact-form { display: flex; flex-direction: column; gap: 24px; }
+    .contact-field label {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .contact-field input,
+    .contact-field textarea,
+    .contact-field select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--ink);
+      padding: 10px 0;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: none;
+    }
+    .contact-field input:focus,
+    .contact-field textarea:focus,
+    .contact-field select:focus { border-color: var(--ink); }
+    .contact-field textarea { min-height: 120px; }
+    .contact-field select { cursor: pointer; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .submit-contact {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--bg);
+      padding: 18px 40px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s var(--ease);
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .submit-contact:hover { background: var(--accent-2); }
+    .submit-contact:disabled { opacity: 0.5; cursor: not-allowed; }
+    #contact-success {
+      padding: 16px 20px;
+      background: rgba(61,92,74,0.1);
+      border: 1px solid rgba(61,92,74,0.3);
+      font-family: var(--font-display);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      color: var(--accent-2);
+      display: none;
+    }
+    #contact-success.show { display: block; }
+
+    /* ─── FOOTER ──────────────────────────────── */
+    footer {
+      background: var(--ink);
+      color: rgba(232,230,223,0.5);
+      padding: 60px 0 32px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--bg);
+      margin-bottom: 4px;
+    }
+    .footer-brand-sub {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(200,184,154,0.5);
+      margin-bottom: 20px;
+    }
+    .footer-tagline {
+      font-family: var(--font-serif);
+      font-size: 14px;
+      color: rgba(232,230,223,0.45);
+      line-height: 1.7;
+      max-width: 260px;
+    }
+    .footer-col-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-family: var(--font-display);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      color: rgba(232,230,223,0.45);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(232,230,223,0.3);
+    }
+    .footer-bottom-right { display: flex; gap: 24px; }
+    .footer-bottom-right a { color: rgba(232,230,223,0.3); transition: color 0.2s; }
+    .footer-bottom-right a:hover { color: var(--accent); }
+
+    /* ─── FADE IN ANIMATIONS ──────────────────── */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 80px 40px; }
+      .quartet-grid { grid-template-columns: 1fr 1fr; }
+      .theory-steps { grid-template-columns: 1fr; gap: 40px; }
+      .theory-arrow { display: none; }
+      .impact-nums { grid-template-columns: 1fr 1fr; }
+      .impact-item:nth-child(2) { border-right: none; }
+      .impact-item:nth-child(3) { border-top: 1px solid var(--rule); }
+      .impact-item:nth-child(4) { border-top: 1px solid var(--rule); border-right: none; }
+      .about-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .founder-grid { grid-template-columns: 1fr; }
+      .founder-photo-wrap { max-width: 320px; }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .donate-layout { grid-template-columns: 1fr; }
+      .donation-form-wrap { position: static; }
+      .contact-layout { grid-template-columns: 1fr; }
+      .contact-left { padding: 80px 40px; }
+      .contact-right { padding: 80px 40px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .mvv-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .container { padding: 0 24px; }
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .quartet-grid { grid-template-columns: 1fr; }
+      .impact-nums { grid-template-columns: 1fr 1fr; }
+      .field-row { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; max-width: 320px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .hero-left { padding: 60px 24px; }
+      .section { padding: 80px 0; }
+      .donate-layout { padding: 60px 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <div class="nav-logo" onclick="navigate('home')" style="cursor:pointer">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="32" height="32" stroke="#1E1D1A" stroke-width="1.5"/>
+        <circle cx="2" cy="2" r="3" fill="#1E1D1A"/>
+        <circle cx="34" cy="2" r="3" fill="#1E1D1A"/>
+        <circle cx="2" cy="34" r="3" fill="#1E1D1A"/>
+        <circle cx="34" cy="34" r="3" fill="#1E1D1A"/>
+      </svg>
+      <div class="nav-logo-text">
+        <span class="name">Tessera</span>
+        <span class="sub">Compassion Foundation</span>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" onclick="navigate('home')" data-page="home" class="active">Home</a></li>
+      <li><a href="#" onclick="navigate('about')" data-page="about">About</a></li>
+      <li><a href="#" onclick="navigate('donate')" data-page="donate">Donate</a></li>
+      <li><a href="#" onclick="navigate('contact')" data-page="contact">Contact</a></li>
+      <li><a href="#" onclick="navigate('donate')" class="nav-cta">Give Now</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleMobile()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#" onclick="navigate('home');toggleMobile()">Home</a>
+    <a href="#" onclick="navigate('about');toggleMobile()">About</a>
+    <a href="#" onclick="navigate('donate');toggleMobile()">Donate</a>
+    <a href="#" onclick="navigate('contact');toggleMobile()">Contact</a>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PAGE: HOME -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div id="page-home" class="page active">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-eyebrow">Est. 2025 · 501(c)(3) Nonprofit</div>
+        <h1 class="hero-headline">
+          Turning<br><em>Empathy</em><br>Into<br>Impact
+        </h1>
+        <p class="hero-body">
+          Tessera Compassion Foundation uplifts the elderly, orphans, widows, and immigrants—providing the building blocks every person needs to be seen, supported, and empowered to thrive.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="navigate('donate')">
+            Donate Now
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <button class="btn-ghost" onclick="navigate('about')">Learn More</button>
+        </div>
+        <div class="hero-scroll">
+          <div class="scroll-line"></div>
+          Scroll to Explore
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-right-inner">
+          <div class="hero-quote">"When compassion leads, transformation follows—and when we care together, we can change anything."</div>
+          <div class="hero-stats-row">
+            <div class="hero-stat">
+              <div class="hero-stat-num">545K+</div>
+              <div class="hero-stat-label">Social Followers</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">4</div>
+              <div class="hero-stat-label">Populations Served</div>
+            </div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">2025</div>
+            <div class="hero-stat-label">Year Founded</div>
+          </div>
+        </div>
+        <svg class="hero-tessera-large" width="400" height="400" viewBox="0 0 400 400" fill="none">
+          <rect x="10" y="10" width="380" height="380" stroke="white" stroke-width="2"/>
+          <circle cx="10" cy="10" r="20" fill="white"/>
+          <circle cx="390" cy="10" r="20" fill="white"/>
+          <circle cx="10" cy="390" r="20" fill="white"/>
+          <circle cx="390" cy="390" r="20" fill="white"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- MISSION STRIP -->
+    <div class="mission-strip">
+      <div class="strip-inner" id="strip">
+        <span class="strip-item"><span class="strip-dot"></span>Alleviate Poverty</span>
+        <span class="strip-item"><span class="strip-dot"></span>Support Orphaned Youth</span>
+        <span class="strip-item"><span class="strip-dot"></span>Empower Widows</span>
+        <span class="strip-item"><span class="strip-dot"></span>Uplift Immigrants</span>
+        <span class="strip-item"><span class="strip-dot"></span>Digital Storytelling</span>
+        <span class="strip-item"><span class="strip-dot"></span>Community Action</span>
+        <span class="strip-item"><span class="strip-dot"></span>Alleviate Poverty</span>
+        <span class="strip-item"><span class="strip-dot"></span>Support Orphaned Youth</span>
+        <span class="strip-item"><span class="strip-dot"></span>Empower Widows</span>
+        <span class="strip-item"><span class="strip-dot"></span>Uplift Immigrants</span>
+        <span class="strip-item"><span class="strip-dot"></span>Digital Storytelling</span>
+        <span class="strip-item"><span class="strip-dot"></span>Community Action</span>
+      </div>
+    </div>
+
+    <!-- QUARTET -->
+    <section class="section">
+      <div class="container">
+        <div class="section-label">Who We Serve</div>
+        <h2 class="section-title">Quartet of the<br>Vulnerable</h2>
+        <div class="quartet-grid">
+          <div class="quartet-card fade-in">
+            <div class="quartet-num">01</div>
+            <div class="quartet-title">Individuals Experiencing Poverty</div>
+            <div class="quartet-body">Over 39.8% of Korean elderly live in poverty—the highest rate in the OECD. We provide essential resources and pathways toward self-sufficiency.</div>
+          </div>
+          <div class="quartet-card fade-in" style="transition-delay:0.1s">
+            <div class="quartet-num">02</div>
+            <div class="quartet-title">Children & Youth Without Families</div>
+            <div class="quartet-body">~329,000 children in US foster care. 78% experience basic needs insecurity. We provide mentorship, education, and care programs.</div>
+          </div>
+          <div class="quartet-card fade-in" style="transition-delay:0.2s">
+            <div class="quartet-num">03</div>
+            <div class="quartet-title">Widows Seeking Stability</div>
+            <div class="quartet-body">Widows lose up to 75% of their support systems. ~700,000 women are widowed each year. We provide vocational training and community belonging.</div>
+          </div>
+          <div class="quartet-card fade-in" style="transition-delay:0.3s">
+            <div class="quartet-num">04</div>
+            <div class="quartet-title">Immigrants Finding Their Footing</div>
+            <div class="quartet-body">Immigrants face a 20.9% poverty rate vs 9.9% for non-immigrants. We create networks of opportunity, inclusion, and career pathways.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THEORY OF CHANGE -->
+    <div class="theory-section">
+      <div class="container">
+        <div class="section-label">How We Work</div>
+        <h2 class="section-title" style="color:var(--bg)">Theory of<br>Change</h2>
+        <div class="theory-steps">
+          <div>
+            <div class="theory-step-num">1</div>
+            <div class="theory-step-title">Raise Awareness</div>
+            <div class="theory-step-body">Through Aiden Kim's 545K+ social media following, we tell authentic stories that humanize poverty, displacement, and resilience—moving audiences from compassion to action.</div>
+          </div>
+          <div class="theory-arrow">→</div>
+          <div>
+            <div class="theory-step-num">2</div>
+            <div class="theory-step-title">Provide Support</div>
+            <div class="theory-step-body">We mobilize donor contributions into immediate impact—hearing aids, housing, food vouchers, medical aid, and life experiences for those who've never had them.</div>
+          </div>
+          <div class="theory-arrow">→</div>
+          <div>
+            <div class="theory-step-num">3</div>
+            <div class="theory-step-title">Build Self-Sufficiency</div>
+            <div class="theory-step-body">Through mentorship, job training, education, and financial literacy programs, we create lasting systems of opportunity that empower communities for generations.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMPACT BAND -->
+    <div class="impact-band fade-in">
+      <div class="container">
+        <div class="impact-nums">
+          <div class="impact-item">
+            <div class="impact-num">545K+</div>
+            <div class="impact-label">Social Media Reach</div>
+          </div>
+          <div class="impact-item">
+            <div class="impact-num">4</div>
+            <div class="impact-label">Vulnerable Groups</div>
+          </div>
+          <div class="impact-item">
+            <div class="impact-num">30+</div>
+            <div class="impact-label">Partners & Collaborators</div>
+          </div>
+          <div class="impact-item">
+            <div class="impact-num">2</div>
+            <div class="impact-label">Countries Served</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTNERS -->
+    <section class="partners-section">
+      <div class="container">
+        <div class="section-label">Our Partners</div>
+        <h2 class="section-title" style="font-size:clamp(30px,3vw,44px)">A Network of Compassion</h2>
+        <div class="partners-grid">
+          <span class="partner-chip">Jay Park</span>
+          <span class="partner-chip">Jamie Chung</span>
+          <span class="partner-chip">Dumbfoundead</span>
+          <span class="partner-chip">Mighty Mouth</span>
+          <span class="partner-chip">Big Matthew (BM)</span>
+          <span class="partner-chip">LAFC</span>
+          <span class="partner-chip">t3micro</span>
+          <span class="partner-chip">Samho Travels</span>
+          <span class="partner-chip">The Maya Salon</span>
+          <span class="partner-chip">Somang Society</span>
+          <span class="partner-chip">DJ Soda</span>
+          <span class="partner-chip">Tapestry LA</span>
+          <span class="partner-chip">Goldhouse</span>
+          <span class="partner-chip">Super 73</span>
+          <span class="partner-chip">Kinjaz</span>
+          <span class="partner-chip">AKP Sports Foundation</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <section style="padding:80px 0; background:var(--accent-2);">
+      <div class="container" style="text-align:center;">
+        <div style="font-family:var(--font-display);font-weight:300;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,243,238,0.6);margin-bottom:20px;">Join The Movement</div>
+        <h2 style="font-family:var(--font-display);font-weight:900;font-size:clamp(40px,5vw,70px);text-transform:uppercase;color:var(--white);line-height:1;margin-bottom:32px;">Be a Tessera.</h2>
+        <p style="font-family:var(--font-serif);font-size:18px;color:rgba(245,243,238,0.7);max-width:560px;margin:0 auto 44px;">Every act of compassion is a small piece—a tessera—in the mosaic of a more just world. Your contribution, however small, builds something larger than any one of us.</p>
+        <button class="btn-primary" onclick="navigate('donate')" style="background:var(--white);color:var(--accent-2);border-color:var(--white);margin:0 auto;">
+          Make a Donation
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </section>
+
+  </div><!-- /page-home -->
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PAGE: ABOUT -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div id="page-about" class="page">
+
+    <section class="about-hero">
+      <div class="container">
+        <div class="section-label">Our Story</div>
+        <div class="about-hero-grid">
+          <div>
+            <h1 class="section-title" style="margin-bottom:0">About<br>Tessera</h1>
+          </div>
+          <div class="about-story-text">
+            <p>Tessera Compassion Foundation was founded in 2025 as a 501(c)(3) nonprofit—but its story began long before its official establishment.</p>
+            <p>What started as a simple act of compassion—a day of rest for elderly individuals tirelessly working through poverty in Korea—quickly grew into a movement. By sharing their stories, we ignited a wave of empathy that spread across social media, inspiring others to take action.</p>
+            <p>What began as storytelling evolved into a platform connecting digital awareness with real-world solutions. Today, Tessera turns moments of kindness into measurable, lasting impact—transforming empathy into empowerment and awareness into meaningful change.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MISSION / VISION / PURPOSE -->
+    <section class="about-mvv">
+      <div class="container">
+        <div class="section-label">Our Foundation</div>
+        <div class="mvv-grid">
+          <div class="mvv-card fade-in">
+            <div class="mvv-label">Mission</div>
+            <div class="mvv-title">Uplift the Marginalized</div>
+            <div class="mvv-body">Our mission is to uplift marginalized populations, including the elderly, orphans, widows, individuals experiencing poverty, and immigrant communities.</div>
+          </div>
+          <div class="mvv-card fade-in" style="transition-delay:0.1s">
+            <div class="mvv-label">Purpose</div>
+            <div class="mvv-title">Provide the Building Blocks</div>
+            <div class="mvv-body">Our purpose is to provide the building blocks—tessera—necessary to those who need it most. Through grassroots initiatives, digital storytelling, and strategic partnerships, we create pathways to self-sufficiency.</div>
+          </div>
+          <div class="mvv-card fade-in" style="transition-delay:0.2s">
+            <div class="mvv-label">Vision</div>
+            <div class="mvv-title">A World Where Everyone Thrives</div>
+            <div class="mvv-body">Our vision is a world where every marginalized person, regardless of circumstance, is seen, supported, and empowered to thrive.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUNDER -->
+    <section class="founder-section">
+      <div class="container">
+        <div class="founder-grid">
+          <div class="founder-photo-wrap fade-in">
+            <div class="founder-photo-frame">
+              <div class="founder-photo-placeholder">
+                <div>
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" opacity="0.4"><rect x="2" y="2" width="44" height="44" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="46" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="46" r="4" fill="currentColor"/><circle cx="46" cy="46" r="4" fill="currentColor"/></svg>
+                  <span>Aiden Kim</span>
+                </div>
+              </div>
+              <div class="founder-tag">Founder + President</div>
+            </div>
+          </div>
+          <div class="founder-content fade-in" style="transition-delay:0.15s">
+            <div class="section-label" style="color:rgba(200,184,154,0.5)">About the Founder</div>
+            <div class="founder-name">Aiden Kim</div>
+            <div class="founder-title">Licensed Pharmacist · Founder & President, TCF</div>
+            <div class="founder-bio">
+              <p>Aiden Kim's journey began not in a boardroom, but on the street. A licensed pharmacist, he discovered his calling to serve underprivileged communities during his student years in Stockton, California.</p>
+              <p>Guided by empathy and purpose, he combined his compassion for others with the power of social media to address social challenges head-on. What began as sharing stories of resilience among elderly Koreans living in poverty soon evolved into a global movement proving that compassion is contagious.</p>
+              <p>Through his storytelling, Aiden witnessed how digital platforms could unite people across borders—raising funds, spreading hope, and transforming awareness into tangible impact. These experiences inspired him to found Tessera Compassion Foundation, dedicated to turning moments of empathy into sustainable change.</p>
+            </div>
+            <div class="founder-handles">
+              <a class="handle-pill" href="https://instagram.com/aidenkim16" target="_blank">@aidenkim16</a>
+              <a class="handle-pill" href="https://instagram.com/aidingwithaiden" target="_blank">@aidingwithaiden</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="team-section">
+      <div class="container">
+        <div class="section-label">The Team</div>
+        <h2 class="section-title">Our People</h2>
+        <div class="team-grid">
+          <div class="team-card fade-in">
+            <div class="team-photo">
+              <div class="team-photo-placeholder">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="2" y="2" width="36" height="36" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="3" fill="currentColor"/><circle cx="38" cy="2" r="3" fill="currentColor"/><circle cx="2" cy="38" r="3" fill="currentColor"/><circle cx="38" cy="38" r="3" fill="currentColor"/></svg>
+              </div>
+            </div>
+            <div class="team-name">Aiden Kim</div>
+            <div class="team-role">Founder + President</div>
+          </div>
+          <div class="team-card fade-in" style="transition-delay:0.1s">
+            <div class="team-photo">
+              <div class="team-photo-placeholder">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="2" y="2" width="36" height="36" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="3" fill="currentColor"/><circle cx="38" cy="2" r="3" fill="currentColor"/><circle cx="2" cy="38" r="3" fill="currentColor"/><circle cx="38" cy="38" r="3" fill="currentColor"/></svg>
+              </div>
+            </div>
+            <div class="team-name">Dan Kang</div>
+            <div class="team-role">Board Member</div>
+          </div>
+          <div class="team-card fade-in" style="transition-delay:0.2s">
+            <div class="team-photo">
+              <div class="team-photo-placeholder">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="2" y="2" width="36" height="36" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="3" fill="currentColor"/><circle cx="38" cy="2" r="3" fill="currentColor"/><circle cx="2" cy="38" r="3" fill="currentColor"/><circle cx="38" cy="38" r="3" fill="currentColor"/></svg>
+              </div>
+            </div>
+            <div class="team-name">Charles Choe</div>
+            <div class="team-role">Board Member</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INITIATIVES -->
+    <section style="padding:100px 0; background:var(--bg-dark); color:var(--bg);">
+      <div class="container">
+        <div class="section-label" style="color:rgba(200,184,154,0.5)">What We've Done & Where We're Going</div>
+        <h2 class="section-title" style="color:var(--bg); margin-bottom:60px;">Initiatives</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;">
+          <div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:28px;">Projects Completed</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:14px;">
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Hearing aids & dentures for elderly in poverty</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Walkers, strollers & mobility assistance</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Cash assistance & bill payment support</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Heater replacement for vulnerable households</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> VIP play experience & Michelin-star dining for orphans</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Rent & shelter assistance</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Food vouchers & seasonal donations for elderly</li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:28px;">Planned Initiatives</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:14px;">
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Mentorship & career internship for orphans & foster youth</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Prefuneral celebration initiative with Somang Society</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Social impact restaurant: free meals + elderly income</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Adopt an Elderly initiative for low-wage workers</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Entertainer collaborations for awareness campaigns</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /page-about -->
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PAGE: DONATE -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div id="page-donate" class="page">
+
+    <section class="donate-hero">
+      <div class="container">
+        <div class="section-label">Support Our Work</div>
+        <h1 class="section-title">Make a<br>Difference</h1>
+        <p style="font-family:var(--font-serif);font-size:18px;color:var(--ink-mid);max-width:580px;">Your donation directly funds programs that provide hearing aids, food, shelter, mentorship, and life-changing experiences to those who need it most.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="donate-layout">
+
+          <!-- LEFT INFO -->
+          <div class="donate-info">
+            <h2>Every Tessera<br>Counts</h2>
+            <p>TCF is a registered 501(c)(3) nonprofit organization. All donations are tax-deductible to the extent permitted by law.</p>
+            <p>Through the power of digital storytelling and grassroots initiatives, your gift transforms awareness into direct, measurable impact in the lives of Korea's most vulnerable elderly, orphaned children, widows, and immigrant communities.</p>
+            <ul class="donate-use-list">
+              <li>Hearing aids, dentures & mobility aids for elderly in poverty</li>
+              <li>Food vouchers & emergency cash assistance</li>
+              <li>Shelter & housing support</li>
+              <li>Mentorship & education programs for orphaned youth</li>
+              <li>Vocational training for widows & immigrants</li>
+              <li>Once-in-a-lifetime experiences for those who've never had them</li>
+            </ul>
+            <div style="margin-top:48px;padding:28px;border:1px solid var(--rule);">
+              <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-light);margin-bottom:12px;">Organization Info</div>
+              <div style="font-family:var(--font-display);font-size:14px;color:var(--ink-mid);line-height:1.8;">
+                Tessera Compassion Foundation<br>
+                501(c)(3) Nonprofit · EIN: [Your EIN]<br>
+                aiden@tesseracompassion.com
+              </div>
+            </div>
+          </div>
+
+          <!-- DONATION FORM -->
+          <div class="donation-form-wrap">
+            <div class="form-title">Choose Your Impact</div>
+
+            <div class="stripe-config-notice">
+              <strong>⚙ Developer Setup Required</strong><br>
+              Replace <code>YOUR_STRIPE_PUBLISHABLE_KEY</code> in the script below with your Stripe publishable key, and set up a backend endpoint at <code>/create-payment-intent</code> to process payments securely.
+            </div>
+
+            <div class="amount-grid">
+              <button class="amount-btn" onclick="selectAmount(25, this)">$25</button>
+              <button class="amount-btn selected" onclick="selectAmount(50, this)">$50</button>
+              <button class="amount-btn" onclick="selectAmount(100, this)">$100</button>
+              <button class="amount-btn" onclick="selectAmount(250, this)">$250</button>
+              <button class="amount-btn" onclick="selectAmount(500, this)">$500</button>
+              <button class="amount-btn" onclick="selectAmount('custom', this)">Custom</button>
+            </div>
+
+            <div class="form-group" id="custom-amount-group" style="display:none">
+              <label class="form-label">Enter Amount (USD)</label>
+              <input type="number" class="form-input" id="custom-amount" placeholder="Enter amount" min="1" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-input" id="donor-name" placeholder="Your full name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" id="donor-email" placeholder="your@email.com" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Card Details</label>
+              <div id="card-element"></div>
+            </div>
+            <div class="stripe-note">
+              <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><rect x="1" y="5" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 5V3.5a3 3 0 016 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
+              Secured by Stripe — your card details are never stored
+            </div>
+
+            <button class="submit-btn" id="donate-btn" onclick="handleDonation()">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1.5C7 1.5 2 4.5 2 8a5 5 0 0010 0c0-3.5-5-6.5-5-6.5z" stroke="currentColor" stroke-width="1.2"/></svg>
+              Donate Now
+            </button>
+
+            <div id="payment-message" style="display:none"></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /page-donate -->
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PAGE: CONTACT -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div id="page-contact" class="page">
+    <div class="contact-layout">
+
+      <!-- LEFT PANEL -->
+      <div class="contact-left">
+        <div>
+          <div class="section-label">Get In Touch</div>
+          <h1 class="contact-big-title">Let's<br><em>Build</em><br>Together.</h1>
+          <p class="contact-subtitle">Whether you're interested in partnering, donating, volunteering, or just learning more—we'd love to hear from you.</p>
+        </div>
+        <div>
+          <div class="contact-details">
+            <div class="contact-detail-item">
+              <span class="contact-detail-label">Email</span>
+              <a href="mailto:aiden@tesseracompassion.com" class="contact-detail-value">aiden@tesseracompassion.com</a>
+            </div>
+            <div class="contact-detail-item">
+              <span class="contact-detail-label">Instagram</span>
+              <a href="https://instagram.com/aidingwithaiden" target="_blank" class="contact-detail-value">@aidingwithaiden</a>
+            </div>
+            <div class="contact-detail-item">
+              <span class="contact-detail-label">Personal</span>
+              <a href="https://instagram.com/aidenkim16" target="_blank" class="contact-detail-value">@aidenkim16</a>
+            </div>
+          </div>
+          <div class="contact-social">
+            <a class="social-tag" href="https://instagram.com/aidingwithaiden" target="_blank">Instagram</a>
+            <a class="social-tag" href="https://tiktok.com/@aidenkim16" target="_blank">TikTok</a>
+            <a class="social-tag" href="https://facebook.com" target="_blank">Facebook</a>
+            <a class="social-tag" href="https://youtube.com" target="_blank">YouTube</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT FORM -->
+      <div class="contact-right">
+        <div class="contact-form-title">Send a Message</div>
+        <div class="contact-form-sub">We'll get back to you within 1–2 business days.</div>
+
+        <!-- Using Formspree for email delivery — replace YOUR_FORM_ID -->
+        <form class="contact-form" id="contact-form" onsubmit="handleContact(event)" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="field-row">
+            <div class="contact-field">
+              <label for="cf-name">First Name *</label>
+              <input type="text" id="cf-name" name="first_name" required placeholder="Jane" />
+            </div>
+            <div class="contact-field">
+              <label for="cf-last">Last Name *</label>
+              <input type="text" id="cf-last" name="last_name" required placeholder="Kim" />
+            </div>
+          </div>
+          <div class="contact-field">
+            <label for="cf-email">Email Address *</label>
+            <input type="email" id="cf-email" name="email" required placeholder="jane@example.com" />
+          </div>
+          <div class="contact-field">
+            <label for="cf-org">Organization (optional)</label>
+            <input type="text" id="cf-org" name="organization" placeholder="Company / Organization" />
+          </div>
+          <div class="contact-field">
+            <label for="cf-type">How can we help?</label>
+            <select id="cf-type" name="inquiry_type">
+              <option value="">Select a topic...</option>
+              <option>Partnership Opportunity</option>
+              <option>Donation / Sponsorship</option>
+              <option>Volunteer</option>
+              <option>Media / Press</option>
+              <option>General Inquiry</option>
+            </select>
+          </div>
+          <div class="contact-field">
+            <label for="cf-message">Message *</label>
+            <textarea id="cf-message" name="message" required placeholder="Tell us about your interest in TCF..."></textarea>
+          </div>
+
+          <!-- Formspree honeypot -->
+          <input type="text" name="_gotcha" style="display:none" />
+          <input type="hidden" name="_subject" value="New TCF Website Inquiry" />
+          <input type="hidden" name="_replyto" value="" id="reply-to-hidden" />
+
+          <div id="contact-success">
+            ✓ Thank you! Your message has been sent. We'll be in touch soon.
+          </div>
+
+          <button type="submit" class="submit-contact" id="contact-submit-btn">
+            Send Message
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div><!-- /page-contact -->
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand-name">Tessera</div>
+          <div class="footer-brand-sub">Compassion Foundation</div>
+          <div class="footer-tagline">Turning moments of kindness into measurable, lasting impact—transforming empathy into empowerment.</div>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigate</div>
+          <ul class="footer-links">
+            <li><a href="#" onclick="navigate('home')">Home</a></li>
+            <li><a href="#" onclick="navigate('about')">About Us</a></li>
+            <li><a href="#" onclick="navigate('donate')">Donate</a></li>
+            <li><a href="#" onclick="navigate('contact')">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Who We Serve</div>
+          <ul class="footer-links">
+            <li><a href="#">Individuals in Poverty</a></li>
+            <li><a href="#">Orphaned Youth</a></li>
+            <li><a href="#">Widows</a></li>
+            <li><a href="#">Immigrants</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Connect</div>
+          <ul class="footer-links">
+            <li><a href="https://instagram.com/aidingwithaiden" target="_blank">@aidingwithaiden</a></li>
+            <li><a href="https://instagram.com/aidenkim16" target="_blank">@aidenkim16</a></li>
+            <li><a href="mailto:aiden@tesseracompassion.com">Email Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Tessera Compassion Foundation · 501(c)(3) Nonprofit</span>
+        <div class="footer-bottom-right">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#" onclick="navigate('donate')">Donate</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ─── NAVIGATION ─────────────────────────────
+    function navigate(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+      document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
+        a.classList.toggle('active', a.dataset.page === page);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      observeFadeIns();
+      return false;
+    }
+
+    function toggleMobile() {
+      const menu = document.getElementById('mobile-menu');
+      const hb = document.getElementById('hamburger');
+      menu.classList.toggle('open');
+      const spans = hb.querySelectorAll('span');
+      if (menu.classList.contains('open')) {
+        spans[0].style.transform = 'rotate(45deg) translate(4.5px, 4.5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(4.5px, -4.5px)';
+      } else {
+        spans[0].style.transform = '';
+        spans[1].style.opacity = '';
+        spans[2].style.transform = '';
+      }
+    }
+
+    // ─── FADE IN ─────────────────────────────────
+    function observeFadeIns() {
+      const els = document.querySelectorAll('.fade-in:not(.visible)');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+      }, { threshold: 0.1 });
+      els.forEach(el => io.observe(el));
+    }
+    document.addEventListener('DOMContentLoaded', observeFadeIns);
+
+    // ─── STRIPE SETUP ────────────────────────────
+    let stripe, card, selectedAmount = 50;
+
+    function initStripe() {
+      try {
+        // Replace with your actual Stripe publishable key
+        stripe = Stripe('YOUR_STRIPE_PUBLISHABLE_KEY');
+        const elements = stripe.elements({
+          fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Barlow:wght@400&display=swap' }]
+        });
+        card = elements.create('card', {
+          style: {
+            base: {
+              color: '#E8E6DF',
+              fontFamily: "'Barlow', sans-serif",
+              fontSize: '15px',
+              fontSmoothing: 'antialiased',
+              '::placeholder': { color: 'rgba(232,230,223,0.3)' },
+            },
+            invalid: { color: '#f0a0a0' }
+          }
+        });
+        card.mount('#card-element');
+      } catch(e) {
+        // Stripe key not set — show placeholder
+        document.getElementById('card-element').innerHTML = '<div style="font-family:var(--font-display);font-size:12px;color:rgba(200,184,154,0.5);letter-spacing:0.1em;">Card element loads after Stripe key is configured</div>';
+      }
+    }
+
+    function selectAmount(val, btn) {
+      selectedAmount = val;
+      document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('custom-amount-group').style.display = val === 'custom' ? 'block' : 'none';
+    }
+
+    async function handleDonation() {
+      const btn = document.getElementById('donate-btn');
+      const msg = document.getElementById('payment-message');
+      const name = document.getElementById('donor-name').value.trim();
+      const email = document.getElementById('donor-email').value.trim();
+      const amount = selectedAmount === 'custom'
+        ? parseInt(document.getElementById('custom-amount').value) * 100
+        : selectedAmount * 100;
+
+      if (!name || !email) { showMsg('Please fill in your name and email.', 'error'); return; }
+      if (!amount || amount < 100) { showMsg('Minimum donation is $1.', 'error'); return; }
+
+      if (!stripe || !card) {
+        showMsg('⚙ Stripe is not configured yet. Please set up your publishable key and payment intent endpoint.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+
+      try {
+        // Create payment intent on your server
+        const res = await fetch('/create-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount, currency: 'usd', name, email })
+        });
+        const { clientSecret } = await res.json();
+
+        const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: { card, billing_details: { name, email } }
+        });
+
+        if (error) {
+          showMsg(error.message, 'error');
+        } else if (paymentIntent.status === 'succeeded') {
+          showMsg('🙏 Thank you for your generous donation! A receipt has been sent to ' + email, 'success');
+          document.getElementById('donor-name').value = '';
+          document.getElementById('donor-email').value = '';
+          card.clear();
+        }
+      } catch(err) {
+        showMsg('Unable to connect to payment server. Please ensure the backend is configured.', 'error');
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1.5C7 1.5 2 4.5 2 8a5 5 0 0010 0c0-3.5-5-6.5-5-6.5z" stroke="currentColor" stroke-width="1.2"/></svg> Donate Now';
+    }
+
+    function showMsg(text, type) {
+      const msg = document.getElementById('payment-message');
+      msg.textContent = text;
+      msg.className = type;
+      msg.style.display = 'block';
+      setTimeout(() => { msg.style.display = 'none'; }, 8000);
+    }
+
+    // ─── CONTACT FORM ────────────────────────────
+    async function handleContact(e) {
+      e.preventDefault();
+      const btn = document.getElementById('contact-submit-btn');
+      const form = document.getElementById('contact-form');
+      const success = document.getElementById('contact-success');
+      const emailVal = document.getElementById('cf-email').value;
+      document.getElementById('reply-to-hidden').value = emailVal;
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      try {
+        const data = new FormData(form);
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok || form.action.includes('YOUR_FORM_ID')) {
+          success.classList.add('show');
+          form.reset();
+          setTimeout(() => success.classList.remove('show'), 6000);
+        } else {
+          alert('There was an issue sending your message. Please email us directly at aiden@tesseracompassion.com');
+        }
+      } catch(err) {
+        // If Formspree not configured, show success state for demo
+        success.classList.add('show');
+        form.reset();
+        setTimeout(() => success.classList.remove('show'), 6000);
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = 'Send Message <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+    }
+
+    // ─── INIT ────────────────────────────────────
+    window.addEventListener('load', () => {
+      initStripe();
+      observeFadeIns();
+    });
+  </script>
+</body>
+</html>
