@@ -263,14 +263,32 @@
     }
     .hero-reel-wrap iframe {
       position: absolute;
+      /* Extend past container on all sides to clip Instagram card UI */
       width: 100%;
-      /* Taller than container to crop IG header+footer UI */
-      height: calc(100% + 320px);
-      /* Push up to center just the video portion */
-      top: -160px;
+      height: calc(100% + 300px);
+      top: -55px;   /* hide IG header (~55px) */
       left: 0;
       border: none;
       pointer-events: auto;
+    }
+    /* Gradient masks burn over the Instagram card UI cleanly */
+    .hero-reel-wrap::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 70px;
+      background: linear-gradient(to bottom, #000 0%, transparent 100%);
+      z-index: 5;
+      pointer-events: none;
+    }
+    .hero-reel-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 240px;
+      background: linear-gradient(to top, #000 0%, rgba(0,0,0,0.7) 40%, transparent 100%);
+      z-index: 5;
+      pointer-events: none;
     }
     .hero-reel-badge {
       position: absolute;
@@ -924,9 +942,11 @@
     .donation-form-wrap {
       background: var(--warm-dark);
       color: var(--bg);
-      padding: 48px;
+      padding: 40px;
       position: sticky;
-      top: 80px;
+      top: 72px;
+      max-height: calc(100vh - 88px);
+      overflow-y: auto;
     }
     .form-title {
       font-family: var(--font-display);
@@ -3008,21 +3028,17 @@
   <!-- ═══════════════════════════════════════════ -->
   <div id="page-donate" class="page">
 
-    <section class="donate-hero">
+    <section style="padding:0;">
       <div class="container">
-        <div class="section-label">Support Our Work</div>
-        <h1 class="section-title">Make a<br>Difference</h1>
-        <p style="font-family:var(--font-serif);font-size:18px;color:var(--ink-mid);max-width:580px;">Your donation directly funds programs that provide hearing aids, food, shelter, mentorship, and life-changing experiences to those who need it most.</p>
-      </div>
-    </section>
-
-    <!-- MAIN DONATE LAYOUT -->
-    <section>
-      <div class="container">
-        <div class="donate-layout">
+        <div class="donate-layout" style="padding-top:60px;">
 
           <!-- LEFT INFO -->
           <div class="donate-info">
+            <!-- Hero content moved into column so form starts at top -->
+            <div class="section-label" style="margin-bottom:20px;">Support Our Work</div>
+            <h1 class="section-title" style="font-size:clamp(48px,5vw,80px);margin-bottom:24px;">Make a<br>Difference</h1>
+            <p style="font-family:var(--font-serif);font-size:18px;color:var(--ink-mid);max-width:580px;line-height:1.75;margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid var(--rule);">Your donation directly funds programs that provide hearing aids, food, shelter, mentorship, and life-changing experiences to those who need it most.</p>
+
             <h2>Every Tessera<br>Counts</h2>
             <p>TCF is a registered 501(c)(3) nonprofit organization. All donations are tax-deductible to the extent permitted by law.</p>
             <p>Through the power of digital storytelling and grassroots initiatives, your gift transforms awareness into direct, measurable impact in the lives of Korea's most vulnerable elderly, orphaned children, widows, and immigrant communities.</p>
