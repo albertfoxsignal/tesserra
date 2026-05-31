@@ -259,13 +259,18 @@
       width: 100%;
       height: 100%;
       min-height: calc(100vh - 61px);
+      overflow: hidden;
     }
     .hero-reel-wrap iframe {
       position: absolute;
-      inset: 0;
       width: 100%;
-      height: 100%;
+      /* Taller than container to crop IG header+footer UI */
+      height: calc(100% + 320px);
+      /* Push up to center just the video portion */
+      top: -160px;
+      left: 0;
       border: none;
+      pointer-events: auto;
     }
     .hero-reel-badge {
       position: absolute;
@@ -331,109 +336,6 @@
       cursor: pointer;
     }
     .btn-adopt:hover { background: #b8a485; border-color: #b8a485; }
-
-    /* ─── PARTNER CARDS ────────────────────────── */
-    .partners-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 1fr;
-      gap: 0;
-      background: var(--rule);
-      border: 1px solid var(--rule);
-      margin-top: 48px;
-    }
-    .partner-card {
-      background: var(--bg);
-      padding: 28px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      transition: background 0.25s;
-      border-right: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-    }
-    .partner-card:hover { background: var(--bg-warm); }
-    .partner-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--ink);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: 15px;
-      color: var(--accent);
-      letter-spacing: 0.02em;
-      margin-bottom: 14px;
-    }
-    .partner-name {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 15px;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      color: var(--ink);
-      line-height: 1.1;
-      margin-bottom: 5px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .partner-role {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 8px;
-    }
-    .partner-handle {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 11px;
-      letter-spacing: 0.04em;
-      color: #E1306C;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-bottom: 14px;
-      transition: opacity 0.2s;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .partner-handle::before {
-      content: '';
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E1306C'%3E%3Cpath d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z'/%3E%3C/svg%3E") center/contain no-repeat;
-      flex-shrink: 0;
-    }
-    .partner-handle:hover { opacity: 0.7; }
-    .partner-tag {
-      display: inline-flex;
-      align-self: flex-start;
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 4px 9px;
-      border: 1px solid var(--rule);
-      color: var(--ink-light);
-      margin-top: auto;
-    }
-    @media (max-width: 1024px) { .partners-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px)  { .partners-grid { grid-template-columns: repeat(2, 1fr); } }
 
     /* ─── SHORTS EDGE ARROWS ───────────────────── */
     .shorts-track-wrap { position: relative; }
@@ -619,26 +521,150 @@
       color: var(--ink-light);
     }
 
-    /* PARTNERS */
-    .partners-section { padding: 80px 0; }
-    .partners-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 40px;
+    /* PARTNERS CAROUSEL */
+    .partners-section { padding: 80px 0; overflow: hidden; }
+    .partners-carousel-wrap {
+      position: relative;
+      margin-top: 48px;
     }
-    .partner-chip {
+    .partners-track-outer {
+      overflow: hidden;
+      border: 1px solid var(--rule);
+    }
+    .partners-track {
+      display: flex;
+      transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+    /* Each slide shows exactly 3 cards */
+    .partner-card {
+      flex: 0 0 calc(100% / 3);
+      min-width: calc(100% / 3);
+      padding: 40px 36px;
+      background: var(--bg);
+      border-right: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      transition: background 0.25s;
+    }
+    .partner-card:last-child { border-right: none; }
+    .partner-card:hover { background: var(--bg-warm); }
+    .partner-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: var(--font-display);
-      font-weight: 600;
+      font-weight: 900;
+      font-size: 16px;
+      color: var(--accent);
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+    .partner-name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .partner-role {
+      font-family: var(--font-display);
+      font-weight: 400;
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      padding: 8px 16px;
+      color: var(--ink-light);
+      margin-bottom: 14px;
+    }
+    .partner-handle {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: #E1306C;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+      transition: opacity 0.2s;
+    }
+    .partner-handle:hover { opacity: 0.65; }
+    .partner-handle::before {
+      content: '';
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E1306C'%3E%3Cpath d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z'/%3E%3C/svg%3E") center/contain no-repeat;
+      flex-shrink: 0;
+    }
+    .partner-tag {
+      display: inline-flex;
+      align-self: flex-start;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 4px 10px;
       border: 1px solid var(--rule);
-      color: var(--ink-mid);
+      color: var(--ink-light);
+      margin-top: auto;
+    }
+    /* Carousel nav */
+    .partners-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 24px;
+    }
+    .partners-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .partner-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--rule);
+      border: 1px solid var(--ink-light);
+      cursor: pointer;
+      transition: all 0.2s;
+      padding: 0;
+    }
+    .partner-dot.active {
+      background: var(--ink);
+      border-color: var(--ink);
+      width: 20px;
+      border-radius: 3px;
+    }
+    .partners-arrows { display: flex; gap: 8px; }
+    .partner-arrow {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--rule);
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: all 0.2s;
     }
-    .partner-chip:hover { border-color: var(--ink); color: var(--ink); }
+    .partner-arrow:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .partner-arrow:disabled { opacity: 0.25; cursor: not-allowed; }
+    @media (max-width: 768px) {
+      .partner-card { flex: 0 0 100%; min-width: 100%; border-right: none; border-bottom: 1px solid var(--rule); }
+      .partner-card:last-child { border-bottom: none; }
+    }
 
     /* ─── PAGE: ABOUT ─────────────────────────── */
     .about-hero {
@@ -1215,10 +1241,13 @@
       grid-template-columns: 1fr 1fr;
       gap: 40px;
       margin-top: 48px;
+      align-items: stretch;
     }
     .wire-card {
       border: 1px solid var(--rule);
       padding: 36px;
+      display: flex;
+      flex-direction: column;
     }
     .wire-card-header {
       display: flex;
@@ -1278,6 +1307,7 @@
       margin-top: 20px;
       padding-top: 20px;
       border-top: 1px dashed var(--rule);
+      flex-grow: 1;
     }
     .wire-copy-btn {
       font-family: var(--font-display);
@@ -1291,6 +1321,7 @@
       border: none;
       cursor: pointer;
       margin-top: 20px;
+      align-self: flex-start;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -1618,6 +1649,27 @@
     .footer-bottom-right { display: flex; gap: 24px; }
     .footer-bottom-right a { color: rgba(232,230,223,0.3); transition: color 0.2s; }
     .footer-bottom-right a:hover { color: var(--accent); }
+    .footer-mobile-links {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .footer-mobile-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 16px;
+        margin-top: 20px;
+      }
+      .footer-mobile-links a {
+        font-family: var(--font-display);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(232,230,223,0.45);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .footer-mobile-links a:hover { color: var(--accent); }
+    }
 
     /* ─── SHORTS CAROUSEL ─────────────────────── */
     .shorts-section {
@@ -2247,11 +2299,37 @@
       .impact-nums { grid-template-columns: 1fr 1fr; }
       .field-row { grid-template-columns: 1fr; }
       .team-grid { grid-template-columns: 1fr; max-width: 320px; }
-      .footer-top { grid-template-columns: 1fr; }
-      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
       .hero-left { padding: 60px 24px 60px; }
       .section { padding: 80px 0; }
       .donate-layout { padding: 60px 0; }
+
+      /* ── Footer: compact single column ── */
+      footer { padding: 36px 0 24px; }
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin-bottom: 28px;
+      }
+      /* Hide the three nav/serve/connect columns on mobile */
+      .footer-top > div:not(:first-child) { display: none; }
+      /* Show a compact inline link row instead */
+      .footer-top > div:first-child::after {
+        content: '';
+        display: block;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+      }
+      .footer-tagline { display: none; }
+      .footer-brand-name { font-size: 18px; }
+      .footer-bottom {
+        flex-direction: row;
+        gap: 0;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        font-size: 10px;
+      }
+      .footer-bottom span { opacity: 0.5; }
     }
   </style>
 </head>
@@ -2464,104 +2542,169 @@
       <div class="container">
         <div class="section-label">Our Partners</div>
         <h2 class="section-title" style="font-size:clamp(30px,3vw,44px)">A Network of Compassion</h2>
-        <div class="partners-grid">
 
-          <div class="partner-card">
-            <div class="partner-avatar">JP</div>
-            <div class="partner-name">Jay Park</div>
-            <div class="partner-role">Singer · K-Pop Artist</div>
-            <a href="https://www.instagram.com/moresojuplease/" target="_blank" class="partner-handle">@moresojuplease</a>
-            <span class="partner-tag">Music</span>
+        <div class="partners-carousel-wrap">
+          <div class="partners-track-outer">
+            <div class="partners-track" id="partners-track">
+
+              <div class="partner-card">
+                <div class="partner-avatar">JP</div>
+                <div class="partner-name">Jay Park</div>
+                <div class="partner-role">Singer · K-Pop Artist</div>
+                <a href="https://www.instagram.com/moresojuplease/" target="_blank" class="partner-handle">@moresojuplease</a>
+                <span class="partner-tag">Music</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">JC</div>
+                <div class="partner-name">Jamie Chung</div>
+                <div class="partner-role">Actor</div>
+                <a href="https://www.instagram.com/jamiejchung/" target="_blank" class="partner-handle">@jamiejchung</a>
+                <span class="partner-tag">Film & TV</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">DP</div>
+                <div class="partner-name">Dumbfoundead</div>
+                <div class="partner-role">Rapper · Actor</div>
+                <a href="https://www.instagram.com/dumbfoundead/" target="_blank" class="partner-handle">@dumbfoundead</a>
+                <span class="partner-tag">Music · Film</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">MM</div>
+                <div class="partner-name">Mighty Mouth</div>
+                <div class="partner-role">Musician</div>
+                <a href="https://www.instagram.com/mightymouth237/" target="_blank" class="partner-handle">@mightymouth237</a>
+                <span class="partner-tag">Music</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">BM</div>
+                <div class="partner-name">Big Matthew</div>
+                <div class="partner-role">Musician · KARD</div>
+                <a href="https://www.instagram.com/bigmatthewww/" target="_blank" class="partner-handle">@bigmatthewww</a>
+                <span class="partner-tag">Music</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">DS</div>
+                <div class="partner-name">DJ Soda</div>
+                <div class="partner-role">DJ · Artist</div>
+                <a href="https://www.instagram.com/deejaysoda/" target="_blank" class="partner-handle">@deejaysoda</a>
+                <span class="partner-tag">Music</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">FC</div>
+                <div class="partner-name">LAFC</div>
+                <div class="partner-role">LA Football Club</div>
+                <a href="https://www.instagram.com/lafc/" target="_blank" class="partner-handle">@lafc</a>
+                <span class="partner-tag">Sports</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">T3</div>
+                <div class="partner-name">t3micro</div>
+                <div class="partner-role">Beauty Tech Brand</div>
+                <a href="https://www.instagram.com/t3micro/" target="_blank" class="partner-handle">@t3micro</a>
+                <span class="partner-tag">Brand</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">GH</div>
+                <div class="partner-name">Goldhouse</div>
+                <div class="partner-role">Asian Pacific Collective</div>
+                <a href="https://www.instagram.com/goldhouse/" target="_blank" class="partner-handle">@goldhouse</a>
+                <span class="partner-tag">Community</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">TL</div>
+                <div class="partner-name">Tapestry LA</div>
+                <div class="partner-role">Community Church</div>
+                <a href="https://www.instagram.com/tapestrylachurch/" target="_blank" class="partner-handle">@tapestrylachurch</a>
+                <span class="partner-tag">Community</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">S7</div>
+                <div class="partner-name">Super 73</div>
+                <div class="partner-role">Electric Bike Brand</div>
+                <a href="https://www.instagram.com/super73/" target="_blank" class="partner-handle">@super73</a>
+                <span class="partner-tag">Brand</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">SS</div>
+                <div class="partner-name">Somang Society</div>
+                <div class="partner-role">Korean Nonprofit</div>
+                <a href="https://www.instagram.com/somangsociety/" target="_blank" class="partner-handle">@somangsociety</a>
+                <span class="partner-tag">Nonprofit</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">ST</div>
+                <div class="partner-name">Samho Travels</div>
+                <div class="partner-role">Travel Agency</div>
+                <a href="https://www.instagram.com/samhotravels/" target="_blank" class="partner-handle">@samhotravels</a>
+                <span class="partner-tag">Travel</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">MS</div>
+                <div class="partner-name">The Maya Salon</div>
+                <div class="partner-role">Beauty · South Pasadena</div>
+                <a href="https://www.instagram.com/themayasalon/" target="_blank" class="partner-handle">@themayasalon</a>
+                <span class="partner-tag">Beauty</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">KJ</div>
+                <div class="partner-name">Kinjaz</div>
+                <div class="partner-role">Dance Crew</div>
+                <a href="https://www.instagram.com/kinjaz/" target="_blank" class="partner-handle">@kinjaz</a>
+                <span class="partner-tag">Dance · Arts</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">AK</div>
+                <div class="partner-name">Austin Kang</div>
+                <div class="partner-role">Chef · Mukjung Seoul</div>
+                <a href="https://www.instagram.com/austinkangg/" target="_blank" class="partner-handle">@austinkangg</a>
+                <span class="partner-tag">Food</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">JK</div>
+                <div class="partner-name">Jaykeeout</div>
+                <div class="partner-role">Content Creator</div>
+                <a href="https://www.instagram.com/jaykeeout/" target="_blank" class="partner-handle">@jaykeeout</a>
+                <span class="partner-tag">Creator</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">AK</div>
+                <div class="partner-name">AKP Sports</div>
+                <div class="partner-role">Sports Foundation</div>
+                <a href="https://www.instagram.com/akpsportsfoundation/" target="_blank" class="partner-handle">@akpsportsfoundation</a>
+                <span class="partner-tag">Sports</span>
+              </div>
+
+            </div><!-- /partners-track -->
+          </div><!-- /partners-track-outer -->
+
+          <div class="partners-nav">
+            <div class="partners-dots" id="partners-dots"></div>
+            <div class="partners-arrows">
+              <button class="partner-arrow" id="partners-prev" onclick="partnerSlide(-1)" aria-label="Previous">
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5.5 1L1 5l4.5 4M1 5h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+              <button class="partner-arrow" id="partners-next" onclick="partnerSlide(1)" aria-label="Next">
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5l-4.5 4M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+            </div>
           </div>
-
-          <div class="partner-card">
-            <div class="partner-avatar">JC</div>
-            <div class="partner-name">Jamie Chung</div>
-            <div class="partner-role">Actor</div>
-            <a href="https://www.instagram.com/jamiejchung/" target="_blank" class="partner-handle">@jamiejchung</a>
-            <span class="partner-tag">Film & TV</span>
-          </div>
-
-          <div class="partner-card">
-            <div class="partner-avatar">DP</div>
-            <div class="partner-name">Dumbfoundead</div>
-            <div class="partner-role">Rapper · Actor</div>
-            <a href="https://www.instagram.com/dumbfoundead/" target="_blank" class="partner-handle">@dumbfoundead</a>
-            <span class="partner-tag">Music · Film</span>
-          </div>
-
-          <div class="partner-card">
-            <div class="partner-avatar">MM</div>
-            <div class="partner-name">Mighty Mouth</div>
-            <div class="partner-role">Musician</div>
-            <a href="https://www.instagram.com/mightymouth237/" target="_blank" class="partner-handle">@mightymouth237</a>
-            <span class="partner-tag">Music</span>
-          </div>
-
-          <div class="partner-card">
-            <div class="partner-avatar">BM</div>
-            <div class="partner-name">Big Matthew</div>
-            <div class="partner-role">Musician · KARD</div>
-            <a href="https://www.instagram.com/bigmatthewww/" target="_blank" class="partner-handle">@bigmatthewww</a>
-            <span class="partner-tag">Music</span>
-          </div>
-
-          <div class="partner-card">
-            <div class="partner-avatar">DS</div>
-            <div class="partner-name">DJ Soda</div>
-            <div class="partner-role">DJ · Artist</div>
-            <a href="https://www.instagram.com/deejaysoda/" target="_blank" class="partner-handle">@deejaysoda</a>
-            <span class="partner-tag">Music</span>
-          </div>
-
-          <div class="partner-card">
-            <div class="partner-avatar">FC</div>
-            <div class="partner-name">LAFC</div>
-            <div class="partner-role">LA Football Club</div>
-            <a href="https://www.instagram.com/lafc/" target="_blank" class="partner-handle">@lafc</a>
-            <span class="partner-tag">Sports</span>
-          </div>
-
-          <div class="partner-card">
-            <div class="partner-avatar">T3</div>
-            <div class="partner-name">t3micro</div>
-            <div class="partner-role">Beauty Tech Brand</div>
-            <a href="https://www.instagram.com/t3micro/" target="_blank" class="partner-handle">@t3micro</a>
-            <span class="partner-tag">Brand</span>
-          </div>
-
-          <div class="partner-card">
-            <div class="partner-avatar">GH</div>
-            <div class="partner-name">Goldhouse</div>
-            <div class="partner-role">Asian Pacific Collective</div>
-            <a href="https://www.instagram.com/goldhouse/" target="_blank" class="partner-handle">@goldhouse</a>
-            <span class="partner-tag">Community</span>
-          </div>
-
-          <div class="partner-card">
-            <div class="partner-avatar">TL</div>
-            <div class="partner-name">Tapestry LA</div>
-            <div class="partner-role">Community Church</div>
-            <a href="https://www.instagram.com/tapestrylachurch/" target="_blank" class="partner-handle">@tapestrylachurch</a>
-            <span class="partner-tag">Community</span>
-          </div>
-
-          <div class="partner-card">
-            <div class="partner-avatar">S7</div>
-            <div class="partner-name">Super 73</div>
-            <div class="partner-role">Electric Bike Brand</div>
-            <a href="https://www.instagram.com/super73/" target="_blank" class="partner-handle">@super73</a>
-            <span class="partner-tag">Brand</span>
-          </div>
-
-          <div class="partner-card">
-            <div class="partner-avatar">SS</div>
-            <div class="partner-name">Somang Society</div>
-            <div class="partner-role">Korean Nonprofit</div>
-            <a href="https://www.instagram.com/somangsociety/" target="_blank" class="partner-handle">@somangsociety</a>
-            <span class="partner-tag">Nonprofit</span>
-          </div>
-
         </div>
       </div>
     </section>
@@ -3781,6 +3924,14 @@
           <div style="margin-top:20px;font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.25);line-height:1.7;">
             727 W 7th St #623<br>Los Angeles, CA 90017<br>+1 (213) 676-4606
           </div>
+          <!-- Mobile-only quick links -->
+          <div class="footer-mobile-links">
+            <a href="#" onclick="navigate('about')">About</a>
+            <a href="#" onclick="navigate('adopt')">Adopt</a>
+            <a href="#" onclick="navigate('donate')">Donate</a>
+            <a href="#" onclick="navigate('contact')">Contact</a>
+            <a href="https://www.instagram.com/aidenkim16/" target="_blank">Instagram</a>
+          </div>
         </div>
         <div>
           <div class="footer-col-title">Navigate</div>
@@ -3845,15 +3996,13 @@
       const track   = document.getElementById('shorts-track');
       const loading = document.getElementById('shorts-loading');
       const wrap    = document.getElementById('shorts-track-wrap');
-      const notice  = document.getElementById('shorts-api-notice');
 
-      if (!track) return;
+      if (!track || !loading || !wrap) return;
 
       let shorts = [];
 
       if (YT_API_KEY !== 'YOUR_YOUTUBE_API_KEY') {
         try {
-          // Step 1: resolve channel handle → channel ID
           const chanRes = await fetch(
             `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=${YT_CHANNEL_HANDLE}&key=${YT_API_KEY}`
           );
@@ -3861,17 +4010,14 @@
           const uploadsPlaylist = chanData.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
 
           if (uploadsPlaylist) {
-            // Step 2: fetch recent 40 uploads
             const vidRes = await fetch(
               `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=40&playlistId=${uploadsPlaylist}&key=${YT_API_KEY}`
             );
             const vidData = await vidRes.json();
             const videoIds = (vidData.items || [])
               .map(item => item.snippet?.resourceId?.videoId)
-              .filter(Boolean)
-              .join(',');
+              .filter(Boolean).join(',');
 
-            // Step 3: get duration to identify Shorts (≤ 180s)
             if (videoIds) {
               const detailRes = await fetch(
                 `https://www.googleapis.com/youtube/v3/videos?part=contentDetails,snippet&id=${videoIds}&key=${YT_API_KEY}`
@@ -3880,16 +4026,11 @@
               shorts = (detailData.items || [])
                 .filter(v => {
                   const dur = v.contentDetails?.duration || '';
-                  const match = dur.match(/PT(?:(\d+)M)?(?:(\d+)S)?/);
-                  if (!match) return false;
-                  const mins = parseInt(match[1] || '0');
-                  const secs = parseInt(match[2] || '0');
-                  return (mins * 60 + secs) <= 180;
+                  const m = dur.match(/PT(?:(\d+)M)?(?:(\d+)S)?/);
+                  if (!m) return false;
+                  return (parseInt(m[1]||0)*60 + parseInt(m[2]||0)) <= 180;
                 })
-                .map(v => ({
-                  id: v.id,
-                  title: v.snippet?.title || ''
-                }))
+                .map(v => ({ id: v.id, title: v.snippet?.title || '' }))
                 .slice(0, 14);
             }
           }
@@ -3898,12 +4039,9 @@
         }
       }
 
-      // Use fallback if API failed or key not set
+      // Always fall back to hardcoded IDs if nothing fetched
       if (shorts.length === 0) {
         shorts = FALLBACK_SHORTS;
-        if (YT_API_KEY === 'YOUR_YOUTUBE_API_KEY') {
-          notice.classList.add('show');
-        }
       }
 
       // Render cards
@@ -4029,6 +4167,76 @@
     }
 
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSponsorModal(); });
+
+    // ─── PARTNER CAROUSEL ────────────────────────
+    let partnerIndex = 0;
+    const PARTNERS_PER_SLIDE = 3;
+
+    function initPartnerCarousel() {
+      const track = document.getElementById('partners-track');
+      const dotsEl = document.getElementById('partners-dots');
+      if (!track || !dotsEl) return;
+
+      const cards = track.querySelectorAll('.partner-card');
+      const total = cards.length;
+      const slides = Math.ceil(total / PARTNERS_PER_SLIDE);
+
+      // Build dots
+      dotsEl.innerHTML = '';
+      for (let i = 0; i < slides; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'partner-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', `Slide ${i + 1}`);
+        dot.onclick = () => goToPartnerSlide(i);
+        dotsEl.appendChild(dot);
+      }
+
+      updatePartnerCarousel();
+    }
+
+    function goToPartnerSlide(index) {
+      const track = document.getElementById('partners-track');
+      const cards = track.querySelectorAll('.partner-card');
+      const slides = Math.ceil(cards.length / PARTNERS_PER_SLIDE);
+      partnerIndex = Math.max(0, Math.min(index, slides - 1));
+      updatePartnerCarousel();
+    }
+
+    function partnerSlide(dir) {
+      const track = document.getElementById('partners-track');
+      const cards = track.querySelectorAll('.partner-card');
+      const slides = Math.ceil(cards.length / PARTNERS_PER_SLIDE);
+      partnerIndex = Math.max(0, Math.min(partnerIndex + dir, slides - 1));
+      updatePartnerCarousel();
+    }
+
+    function updatePartnerCarousel() {
+      const track  = document.getElementById('partners-track');
+      const outer  = document.querySelector('.partners-track-outer');
+      const dotsEl = document.getElementById('partners-dots');
+      const prev   = document.getElementById('partners-prev');
+      const next   = document.getElementById('partners-next');
+      if (!track || !outer) return;
+
+      const cards  = track.querySelectorAll('.partner-card');
+      const slides = Math.ceil(cards.length / PARTNERS_PER_SLIDE);
+
+      // Move by the outer container's pixel width per slide
+      // (each card = 1/3 of that width, so 3 cards = exactly 1 outer width)
+      const pageWidth = outer.offsetWidth;
+      track.style.transform = `translateX(-${partnerIndex * pageWidth}px)`;
+
+      // Dots
+      if (dotsEl) {
+        dotsEl.querySelectorAll('.partner-dot').forEach((d, i) => {
+          d.classList.toggle('active', i === partnerIndex);
+        });
+      }
+
+      // Arrows
+      if (prev) prev.disabled = partnerIndex === 0;
+      if (next) next.disabled = partnerIndex >= slides - 1;
+    }
 
     // ─── NAVIGATION ─────────────────────────────
     function navigate(page) {
@@ -4294,6 +4502,11 @@
       initStripe();
       observeFadeIns();
       initShortsCarousel();
+      initPartnerCarousel();
+    });
+
+    window.addEventListener('resize', () => {
+      updatePartnerCarousel();
     });
   </script>
 </body>
