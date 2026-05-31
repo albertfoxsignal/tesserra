@@ -334,36 +334,7 @@
       100% { left: 100%; }
     }
 
-    /* MISSION STRIP */
-    .mission-strip {
-      background: var(--ink);
-      color: var(--bg);
-      padding: 24px 0;
-      overflow: hidden;
-    }
-    .strip-inner {
-      display: flex;
-      gap: 80px;
-      animation: marquee 20s linear infinite;
-      white-space: nowrap;
-    }
-    .strip-item {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-shrink: 0;
-    }
-    .strip-dot { width: 4px; height: 4px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
-    @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
+    /* MISSION STRIP — removed */
 
     /* QUARTET SECTION */
     .section { padding: 120px 0; }
@@ -921,6 +892,389 @@
     }
     .stripe-config-notice strong { color: var(--bg); }
 
+    /* ─── PAYMENT METHOD TABS ─────────────────── */
+    .pay-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid rgba(200,184,154,0.2);
+      margin-bottom: 28px;
+    }
+    .pay-tab {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 13px 8px;
+      background: transparent;
+      color: rgba(232,230,223,0.45);
+      border: none;
+      border-right: 1px solid rgba(200,184,154,0.2);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    .pay-tab:last-child { border-right: none; }
+    .pay-tab svg { opacity: 0.5; transition: opacity 0.2s; }
+    .pay-tab:hover { color: rgba(232,230,223,0.75); }
+    .pay-tab:hover svg { opacity: 0.75; }
+    .pay-tab.active {
+      background: rgba(200,184,154,0.12);
+      color: var(--accent);
+    }
+    .pay-tab.active svg { opacity: 1; }
+    .pay-tab-badge {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 8px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--accent-2);
+      color: var(--white);
+      padding: 2px 6px;
+      margin-top: 2px;
+    }
+
+    /* tab panels */
+    .pay-panel { display: none; }
+    .pay-panel.active { display: block; }
+
+    /* ACH form */
+    .ach-info-box {
+      background: rgba(61,92,74,0.15);
+      border: 1px solid rgba(61,92,74,0.3);
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.07em;
+      color: #9fcfb0;
+      line-height: 1.6;
+    }
+    .ach-info-box strong { color: #c5e8d4; }
+    .ach-fee-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(61,92,74,0.25);
+      border: 1px solid rgba(61,92,74,0.4);
+      color: #9fcfb0;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      margin-bottom: 20px;
+    }
+
+    /* DAF panel */
+    .daf-info-box {
+      background: rgba(200,184,154,0.08);
+      border: 1px solid rgba(200,184,154,0.2);
+      padding: 14px 16px;
+      margin-bottom: 24px;
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.07em;
+      color: rgba(232,230,223,0.65);
+      line-height: 1.7;
+    }
+    .daf-info-box strong { color: var(--accent); }
+    .daf-sponsors {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .daf-sponsor-btn {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 12px 10px;
+      border: 1px solid rgba(200,184,154,0.25);
+      color: rgba(232,230,223,0.7);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .daf-sponsor-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .daf-ein-box {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(200,184,154,0.15);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .daf-ein-label {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(200,184,154,0.5);
+      margin-bottom: 6px;
+    }
+    .daf-ein-value {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: 0.1em;
+      color: var(--bg);
+    }
+    .daf-ein-sub {
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: rgba(200,184,154,0.4);
+      margin-top: 4px;
+    }
+    .daf-chariot-box {
+      border: 1px solid rgba(200,184,154,0.2);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .daf-chariot-label {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .daf-chariot-body {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: rgba(232,230,223,0.55);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .daf-chariot-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 1px solid rgba(200,184,154,0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+    .daf-chariot-link:hover { border-color: var(--accent); }
+
+    /* ─── WIRE + ACH BANK SECTION ─────────────── */
+    .wire-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--rule);
+      background: var(--bg);
+    }
+    .wire-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 48px;
+    }
+    .wire-card {
+      border: 1px solid var(--rule);
+      padding: 36px;
+    }
+    .wire-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .wire-card-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .wire-badge {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      flex-shrink: 0;
+    }
+    .wire-badge.low { background: rgba(61,92,74,0.12); color: var(--accent-2); border: 1px solid rgba(61,92,74,0.25); }
+    .wire-badge.flat { background: rgba(200,184,154,0.12); color: var(--accent); border: 1px solid rgba(200,184,154,0.3); }
+    .wire-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule);
+      gap: 20px;
+    }
+    .wire-row:last-child { border-bottom: none; }
+    .wire-row-label {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      flex-shrink: 0;
+    }
+    .wire-row-value {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: var(--ink);
+      text-align: right;
+      word-break: break-all;
+    }
+    .wire-note {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.07em;
+      color: var(--ink-light);
+      line-height: 1.6;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--rule);
+    }
+    .wire-copy-btn {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--bg);
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .wire-copy-btn:hover { background: var(--accent-2); }
+    .copy-confirm {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--accent-2);
+      margin-left: 10px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: inline-block;
+    }
+    .copy-confirm.show { opacity: 1; }
+
+    /* ─── DAF FULL SECTION ────────────────────── */
+    .daf-section {
+      padding: 80px 0;
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .daf-section .section-label { color: rgba(200,184,154,0.5); }
+    .daf-section .section-label::before { background: var(--accent); }
+    .daf-section .section-title { color: var(--bg); }
+    .daf-main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: rgba(200,184,154,0.1);
+      border: 1px solid rgba(200,184,154,0.1);
+      margin-top: 48px;
+    }
+    .daf-main-card {
+      background: var(--ink);
+      padding: 36px 32px;
+    }
+    .daf-main-num {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 48px;
+      line-height: 1;
+      color: rgba(200,184,154,0.2);
+      margin-bottom: 16px;
+    }
+    .daf-main-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .daf-main-body {
+      font-family: var(--font-display);
+      font-size: 13px;
+      color: rgba(232,230,223,0.55);
+      line-height: 1.65;
+    }
+    .daf-sponsor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(200,184,154,0.1);
+      border: 1px solid rgba(200,184,154,0.1);
+      margin-top: 40px;
+    }
+    .daf-sponsor-card {
+      background: var(--ink);
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .daf-sponsor-name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--bg);
+    }
+    .daf-sponsor-desc {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: rgba(232,230,223,0.4);
+      line-height: 1.5;
+      flex: 1;
+    }
+    .daf-sponsor-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 4px;
+      transition: color 0.2s;
+    }
+    .daf-sponsor-link:hover { color: var(--white); }
+
     /* ─── PAGE: CONTACT ───────────────────────── */
     .contact-layout {
       display: grid;
@@ -1141,6 +1495,552 @@
     .footer-bottom-right a { color: rgba(232,230,223,0.3); transition: color 0.2s; }
     .footer-bottom-right a:hover { color: var(--accent); }
 
+    /* ─── SHORTS CAROUSEL ─────────────────────── */
+    .shorts-section {
+      padding: 80px 0 100px;
+      background: var(--ink);
+      color: var(--bg);
+      overflow: hidden;
+    }
+    .shorts-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .shorts-header .section-label { color: rgba(200,184,154,0.5); }
+    .shorts-header .section-label::before { background: var(--accent); }
+    .shorts-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(40px, 5vw, 68px);
+      text-transform: uppercase;
+      line-height: 0.95;
+      color: var(--bg);
+    }
+    .shorts-title em { font-style: normal; color: var(--accent); }
+    .shorts-yt-link {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(200,184,154,0.25);
+      padding: 12px 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      align-self: flex-end;
+    }
+    .shorts-yt-link:hover { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+
+    /* Track */
+    .shorts-track-wrap {
+      position: relative;
+    }
+    .shorts-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 4px;
+      cursor: grab;
+    }
+    .shorts-track:active { cursor: grabbing; }
+    .shorts-track::-webkit-scrollbar { display: none; }
+
+    /* Nav arrows */
+    .shorts-nav {
+      display: flex;
+      gap: 10px;
+      margin-top: 28px;
+      justify-content: flex-end;
+    }
+    .shorts-nav-btn {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(200,184,154,0.25);
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .shorts-nav-btn:hover { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+    .shorts-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    /* Individual Short card */
+    .short-card {
+      flex-shrink: 0;
+      width: 200px;
+      scroll-snap-align: start;
+      position: relative;
+      background: #0f0e0d;
+      border: 1px solid rgba(200,184,154,0.08);
+      overflow: hidden;
+      transition: transform 0.3s var(--ease), border-color 0.3s;
+    }
+    .short-card:hover { transform: translateY(-4px); border-color: rgba(200,184,154,0.25); }
+    .short-card-inner {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      overflow: hidden;
+    }
+    .short-card iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+      pointer-events: none; /* click goes to overlay link */
+    }
+    .short-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top,
+        rgba(30,29,26,0.92) 0%,
+        rgba(30,29,26,0.15) 45%,
+        transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 14px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .short-card:hover .short-card-overlay {
+      background: linear-gradient(to top,
+        rgba(30,29,26,0.98) 0%,
+        rgba(30,29,26,0.3) 50%,
+        transparent 100%);
+    }
+    .short-card-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.03em;
+      line-height: 1.35;
+      color: var(--bg);
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .short-card-watch {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.25s, transform 0.25s;
+    }
+    .short-card:hover .short-card-watch {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .short-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #FF0000;
+      color: white;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+    }
+
+    /* Placeholder card (shown when API key not set) */
+    .short-placeholder {
+      flex-shrink: 0;
+      width: 200px;
+      scroll-snap-align: start;
+      aspect-ratio: 9 / 16;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(200,184,154,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: rgba(200,184,154,0.2);
+      padding: 20px;
+      text-align: center;
+    }
+    .short-placeholder span {
+      font-family: var(--font-display);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      line-height: 1.5;
+    }
+
+    /* API key notice */
+    .shorts-api-notice {
+      display: none;
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: rgba(200,184,154,0.07);
+      border: 1px solid rgba(200,184,154,0.15);
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.07em;
+      color: rgba(200,184,154,0.55);
+      line-height: 1.65;
+    }
+    .shorts-api-notice strong { color: var(--accent); }
+    .shorts-api-notice.show { display: block; }
+
+    /* Loading state */
+    .shorts-loading {
+      display: flex;
+      gap: 16px;
+      padding: 8px 0;
+    }
+    .shorts-skeleton {
+      flex-shrink: 0;
+      width: 200px;
+      aspect-ratio: 9/16;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0.04) 0%,
+        rgba(255,255,255,0.08) 50%,
+        rgba(255,255,255,0.04) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* ─── ADOPT ─────────────────────────────────── */
+    .adopt-hero {
+      padding: 100px 0 60px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .adopt-hero-body {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      color: var(--ink-mid);
+      max-width: 640px;
+      line-height: 1.75;
+      margin-top: 20px;
+    }
+    .adopt-hero-meta {
+      display: flex;
+      gap: 40px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .adopt-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .adopt-meta-num {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 36px;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .adopt-meta-label {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    /* CARD GRID */
+    .adopt-grid-section { padding: 80px 0; }
+    .adopt-filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .adopt-filter-btn {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 9px 18px;
+      border: 1px solid var(--rule);
+      background: transparent;
+      color: var(--ink-mid);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .adopt-filter-btn:hover,
+    .adopt-filter-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+    .adopt-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    /* FLIP CARD */
+    .flip-card {
+      aspect-ratio: 1 / 1;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .flip-card:hover .flip-card-inner,
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    /* FRONT */
+    .flip-front,
+    .flip-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      overflow: hidden;
+    }
+    .flip-front { background: var(--ink); }
+    .flip-front-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.85;
+      transition: opacity 0.3s;
+    }
+    .flip-card:hover .flip-front-img { opacity: 0.7; }
+    .flip-front-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      background: linear-gradient(160deg, #2a2926 0%, #1E1D1A 100%);
+      color: rgba(200,184,154,0.15);
+    }
+    .flip-front-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(30,29,26,0.92) 0%, transparent 100%);
+    }
+    .flip-front-name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--bg);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .flip-front-age {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .flip-front-hint {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(232,230,223,0.5);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .flip-front-hint::before {
+      content: '';
+      width: 14px;
+      height: 1px;
+      background: rgba(200,184,154,0.4);
+    }
+
+    /* BACK */
+    .flip-back {
+      transform: rotateY(180deg);
+      background: var(--ink);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .flip-back-video {
+      position: relative;
+      flex: 1;
+      background: #0a0a09;
+      overflow: hidden;
+    }
+    .flip-back-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .flip-back-video-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      color: rgba(200,184,154,0.2);
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .flip-back-video-placeholder svg { opacity: 0.3; }
+    .play-indicator {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      background: rgba(200,184,154,0.15);
+      border: 1px solid rgba(200,184,154,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .flip-back-info {
+      padding: 16px;
+      flex-shrink: 0;
+    }
+    .flip-back-name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--bg);
+      margin-bottom: 2px;
+    }
+    .flip-back-story {
+      font-family: var(--font-serif);
+      font-size: 12px;
+      color: rgba(232,230,223,0.55);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .flip-back-price {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .flip-sponsor-btn {
+      width: 100%;
+      background: var(--accent);
+      color: var(--ink);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .flip-sponsor-btn:hover { background: var(--accent-2); color: var(--white); }
+
+    /* HOW IT WORKS */
+    .adopt-how {
+      padding: 80px 0;
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .adopt-how-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(200,184,154,0.1);
+      border: 1px solid rgba(200,184,154,0.1);
+      margin-top: 48px;
+    }
+    .adopt-how-card {
+      background: var(--ink);
+      padding: 36px 28px;
+    }
+    .adopt-how-num {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 56px;
+      line-height: 1;
+      color: rgba(200,184,154,0.12);
+      margin-bottom: 16px;
+    }
+    .adopt-how-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .adopt-how-body {
+      font-family: var(--font-display);
+      font-size: 13px;
+      color: rgba(232,230,223,0.5);
+      line-height: 1.65;
+    }
+
+    /* RESPONSIVE — adopt */
+    @media (max-width: 1024px) {
+      .adopt-grid { grid-template-columns: repeat(2, 1fr); }
+      .adopt-how-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .adopt-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .adopt-how-grid { grid-template-columns: 1fr; }
+    }
+
     /* ─── FADE IN ANIMATIONS ──────────────────── */
     .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
@@ -1207,6 +2107,7 @@
     <ul class="nav-links">
       <li><a href="#" onclick="navigate('home')" data-page="home" class="active">Home</a></li>
       <li><a href="#" onclick="navigate('about')" data-page="about">About</a></li>
+      <li><a href="#" onclick="navigate('adopt')" data-page="adopt">Adopt</a></li>
       <li><a href="#" onclick="navigate('donate')" data-page="donate">Donate</a></li>
       <li><a href="#" onclick="navigate('contact')" data-page="contact">Contact</a></li>
       <li><a href="#" onclick="navigate('donate')" class="nav-cta">Give Now</a></li>
@@ -1220,6 +2121,7 @@
   <div class="mobile-menu" id="mobile-menu">
     <a href="#" onclick="navigate('home');toggleMobile()">Home</a>
     <a href="#" onclick="navigate('about');toggleMobile()">About</a>
+    <a href="#" onclick="navigate('adopt');toggleMobile()">Adopt</a>
     <a href="#" onclick="navigate('donate');toggleMobile()">Donate</a>
     <a href="#" onclick="navigate('contact');toggleMobile()">Contact</a>
   </div>
@@ -1234,17 +2136,17 @@
       <div class="hero-left">
         <div class="hero-eyebrow">Est. 2025 · 501(c)(3) Nonprofit</div>
         <h1 class="hero-headline">
-          Turning<br><em>Empathy</em><br>Into<br>Impact
+          Every<br>Person<br>Deserves<br><em>Dignity.</em>
         </h1>
         <p class="hero-body">
-          Tessera Compassion Foundation uplifts the elderly, orphans, widows, and immigrants—providing the building blocks every person needs to be seen, supported, and empowered to thrive.
+          Tessera Compassion Foundation restores dignity and creates sustainable hope for vulnerable communities—low-income families, children without parents, widows, and immigrant refugees—through compassion, storytelling, and action.
         </p>
         <div class="hero-actions">
           <button class="btn-primary" onclick="navigate('donate')">
             Donate Now
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
-          <button class="btn-ghost" onclick="navigate('about')">Learn More</button>
+          <button class="btn-ghost" onclick="navigate('adopt')">Adopt an Elder</button>
         </div>
         <div class="hero-scroll">
           <div class="scroll-line"></div>
@@ -1253,11 +2155,11 @@
       </div>
       <div class="hero-right">
         <div class="hero-right-inner">
-          <div class="hero-quote">"When compassion leads, transformation follows—and when we care together, we can change anything."</div>
+          <div class="hero-quote">"Restoring Dignity, One Story at a Time."</div>
           <div class="hero-stats-row">
             <div class="hero-stat">
-              <div class="hero-stat-num">545K+</div>
-              <div class="hero-stat-label">Social Followers</div>
+              <div class="hero-stat-num">650K+</div>
+              <div class="hero-stat-label">Combined Followers</div>
             </div>
             <div class="hero-stat">
               <div class="hero-stat-num">4</div>
@@ -1279,23 +2181,50 @@
       </div>
     </section>
 
-    <!-- MISSION STRIP -->
-    <div class="mission-strip">
-      <div class="strip-inner" id="strip">
-        <span class="strip-item"><span class="strip-dot"></span>Alleviate Poverty</span>
-        <span class="strip-item"><span class="strip-dot"></span>Support Orphaned Youth</span>
-        <span class="strip-item"><span class="strip-dot"></span>Empower Widows</span>
-        <span class="strip-item"><span class="strip-dot"></span>Uplift Immigrants</span>
-        <span class="strip-item"><span class="strip-dot"></span>Digital Storytelling</span>
-        <span class="strip-item"><span class="strip-dot"></span>Community Action</span>
-        <span class="strip-item"><span class="strip-dot"></span>Alleviate Poverty</span>
-        <span class="strip-item"><span class="strip-dot"></span>Support Orphaned Youth</span>
-        <span class="strip-item"><span class="strip-dot"></span>Empower Widows</span>
-        <span class="strip-item"><span class="strip-dot"></span>Uplift Immigrants</span>
-        <span class="strip-item"><span class="strip-dot"></span>Digital Storytelling</span>
-        <span class="strip-item"><span class="strip-dot"></span>Community Action</span>
+    <!-- SHORTS CAROUSEL -->
+    <section class="shorts-section">
+      <div class="container">
+        <div class="shorts-header">
+          <div>
+            <div class="section-label">YouTube · @aidenkim16</div>
+            <h2 class="shorts-title">Compassion<br><em>in Action.</em></h2>
+          </div>
+          <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="shorts-yt-link">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M15.5 2.5S15.3 1.2 14.7.6C13.9-.2 13-.2 12.6-.2 10.5-.3 7.5-.3 7.5-.3s-3 0-5.1.1C2 -.2 1-.2.3.6-.3 1.2-.5 2.5-.5 2.5S-.7 4-.7 5.5v1.4C-.7 8.4-.5 9.7-.5 9.7S-.3 11 .3 11.6c.8.8 1.8.8 2.3.8C4.2 12.5 7.5 12.5 7.5 12.5s3 0 5.1-.2c.4 0 1.3 0 2.1-.8.6-.6.8-1.9.8-1.9S16 8.4 16 6.9V5.5C16 4 15.5 2.5 15.5 2.5zM6 8.5v-5l5 2.5L6 8.5z" fill="currentColor"/></svg>
+            Watch All Shorts
+          </a>
+        </div>
+
+        <!-- Loading state (shown briefly) -->
+        <div class="shorts-loading" id="shorts-loading">
+          <div class="shorts-skeleton"></div>
+          <div class="shorts-skeleton"></div>
+          <div class="shorts-skeleton"></div>
+          <div class="shorts-skeleton"></div>
+          <div class="shorts-skeleton"></div>
+          <div class="shorts-skeleton"></div>
+        </div>
+
+        <!-- Carousel track -->
+        <div class="shorts-track-wrap" id="shorts-track-wrap" style="display:none;">
+          <div class="shorts-track" id="shorts-track"></div>
+        </div>
+
+        <!-- API key notice -->
+        <div class="shorts-api-notice" id="shorts-api-notice">
+          <strong>⚙ YouTube API Key Required</strong> — To load live Shorts from the channel, add a YouTube Data API v3 key: replace <code>YOUR_YOUTUBE_API_KEY</code> in the script. Get a free key at <a href="https://console.cloud.google.com" target="_blank" style="color:var(--accent);">console.cloud.google.com</a> → Enable "YouTube Data API v3" → Create credentials. Until then, videos below are hardcoded previews.
+        </div>
+
+        <div class="shorts-nav">
+          <button class="shorts-nav-btn" id="shorts-prev" onclick="scrollShorts(-1)" aria-label="Previous">
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5.5 1L1 5l4.5 4M1 5h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <button class="shorts-nav-btn" id="shorts-next" onclick="scrollShorts(1)" aria-label="Next">
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5l-4.5 4M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
       </div>
-    </div>
+    </section>
 
     <!-- QUARTET -->
     <section class="section">
@@ -1305,23 +2234,23 @@
         <div class="quartet-grid">
           <div class="quartet-card fade-in">
             <div class="quartet-num">01</div>
-            <div class="quartet-title">Individuals Experiencing Poverty</div>
-            <div class="quartet-body">Over 39.8% of Korean elderly live in poverty—the highest rate in the OECD. We provide essential resources and pathways toward self-sufficiency.</div>
+            <div class="quartet-title">Low-Income Families</div>
+            <div class="quartet-body">Over 39.8% of Korean elderly live in poverty—#1 in the OECD. We provide essential resources, dignity-centered care, and pathways toward self-sufficiency.</div>
           </div>
           <div class="quartet-card fade-in" style="transition-delay:0.1s">
             <div class="quartet-num">02</div>
-            <div class="quartet-title">Children & Youth Without Families</div>
-            <div class="quartet-body">~329,000 children in US foster care. 78% experience basic needs insecurity. We provide mentorship, education, and care programs.</div>
+            <div class="quartet-title">Children Without Parents</div>
+            <div class="quartet-body">~329,000 children in US foster care. 78% experience basic needs insecurity. We provide mentorship, education, and sustained care so no child feels forgotten.</div>
           </div>
           <div class="quartet-card fade-in" style="transition-delay:0.2s">
             <div class="quartet-num">03</div>
-            <div class="quartet-title">Widows Seeking Stability</div>
-            <div class="quartet-body">Widows lose up to 75% of their support systems. ~700,000 women are widowed each year. We provide vocational training and community belonging.</div>
+            <div class="quartet-title">Widows</div>
+            <div class="quartet-body">Widows lose up to 75% of their support systems overnight. ~700,000 women are widowed each year. We restore community belonging and build financial independence.</div>
           </div>
           <div class="quartet-card fade-in" style="transition-delay:0.3s">
             <div class="quartet-num">04</div>
-            <div class="quartet-title">Immigrants Finding Their Footing</div>
-            <div class="quartet-body">Immigrants face a 20.9% poverty rate vs 9.9% for non-immigrants. We create networks of opportunity, inclusion, and career pathways.</div>
+            <div class="quartet-title">Immigrant Refugees</div>
+            <div class="quartet-body">Immigrants face a 20.9% poverty rate vs 9.9% for non-immigrants. We ease transitions, create networks of opportunity, and champion the dignity of every newcomer.</div>
           </div>
         </div>
       </div>
@@ -1336,7 +2265,7 @@
           <div>
             <div class="theory-step-num">1</div>
             <div class="theory-step-title">Raise Awareness</div>
-            <div class="theory-step-body">Through Aiden Kim's 545K+ social media following, we tell authentic stories that humanize poverty, displacement, and resilience—moving audiences from compassion to action.</div>
+            <div class="theory-step-body">Through Aiden Kim's 650,000+ social media following, we tell authentic stories that restore visibility and dignity to overlooked communities—moving audiences from compassion to action without pity or savior narratives.</div>
           </div>
           <div class="theory-arrow">→</div>
           <div>
@@ -1359,8 +2288,8 @@
       <div class="container">
         <div class="impact-nums">
           <div class="impact-item">
-            <div class="impact-num">545K+</div>
-            <div class="impact-label">Social Media Reach</div>
+            <div class="impact-num">650K+</div>
+            <div class="impact-label">Combined Followers</div>
           </div>
           <div class="impact-item">
             <div class="impact-num">4</div>
@@ -1432,9 +2361,9 @@
             <h1 class="section-title" style="margin-bottom:0">About<br>Tessera</h1>
           </div>
           <div class="about-story-text">
-            <p>Tessera Compassion Foundation was founded in 2025 as a 501(c)(3) nonprofit—but its story began long before its official establishment.</p>
-            <p>What started as a simple act of compassion—a day of rest for elderly individuals tirelessly working through poverty in Korea—quickly grew into a movement. By sharing their stories, we ignited a wave of empathy that spread across social media, inspiring others to take action.</p>
-            <p>What began as storytelling evolved into a platform connecting digital awareness with real-world solutions. Today, Tessera turns moments of kindness into measurable, lasting impact—transforming empathy into empowerment and awareness into meaningful change.</p>
+            <p>Tessera Compassion Foundation began not with a plan, but with a person. In high school, founder Aiden Kim met an unhoused elderly woman who declined his monetary donation and instead explained her need for medication for herself and her son.</p>
+            <p>That encounter profoundly shaped his understanding of compassion—and ultimately led him to pursue pharmacy and community outreach work in underserved cities like Stockton and Compton. Believing in the power of storytelling, he used $10,000 of his personal savings to travel to Korea, where simple videos providing rest and appreciation for elderly living in poverty gradually evolved into a global movement.</p>
+            <p>Today, Tessera Compassion Foundation is a 501(c)(3) nonprofit dedicated to restoring dignity, promoting self-sustainability, and serving vulnerable communities through compassionate action—one story, one person, one tessera at a time.</p>
           </div>
         </div>
       </div>
@@ -1447,18 +2376,53 @@
         <div class="mvv-grid">
           <div class="mvv-card fade-in">
             <div class="mvv-label">Mission</div>
-            <div class="mvv-title">Uplift the Marginalized</div>
-            <div class="mvv-body">Our mission is to uplift marginalized populations, including the elderly, orphans, widows, individuals experiencing poverty, and immigrant communities.</div>
+            <div class="mvv-title">Serve the Quartet of the Vulnerable</div>
+            <div class="mvv-body">Tessera Compassion Foundation exists to serve low-income families, orphaned children, widows, and immigrant refugees through compassionate action, storytelling, and sustainable support systems.</div>
           </div>
           <div class="mvv-card fade-in" style="transition-delay:0.1s">
             <div class="mvv-label">Purpose</div>
-            <div class="mvv-title">Provide the Building Blocks</div>
-            <div class="mvv-body">Our purpose is to provide the building blocks—tessera—necessary to those who need it most. Through grassroots initiatives, digital storytelling, and strategic partnerships, we create pathways to self-sufficiency.</div>
+            <div class="mvv-title">Restore Dignity. Create Sustainable Hope.</div>
+            <div class="mvv-body">To restore dignity and create sustainable hope for vulnerable communities through compassion, storytelling, and action—providing the tessera every person needs to thrive.</div>
           </div>
           <div class="mvv-card fade-in" style="transition-delay:0.2s">
             <div class="mvv-label">Vision</div>
-            <div class="mvv-title">A World Where Everyone Thrives</div>
-            <div class="mvv-body">Our vision is a world where every marginalized person, regardless of circumstance, is seen, supported, and empowered to thrive.</div>
+            <div class="mvv-title">Seen, Supported, and Empowered.</div>
+            <div class="mvv-body">We envision a world where every marginalized person is seen, supported, and empowered to thrive with dignity—regardless of circumstance, background, or the weight of their story.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE VALUES -->
+    <section style="padding:80px 0; border-top:1px solid var(--rule);">
+      <div class="container">
+        <div class="section-label">What Guides Us</div>
+        <h2 class="section-title" style="font-size:clamp(36px,4vw,56px);margin-bottom:48px;">Core Values</h2>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);">
+          <div style="background:var(--bg);padding:36px 28px;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:32px;color:var(--accent);line-height:1;margin-bottom:12px;">I</div>
+            <div style="font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Dignity</div>
+            <div style="font-family:var(--font-serif);font-size:14px;color:var(--ink-mid);line-height:1.65;">Every person deserves to be treated with humanity, respect, and worth.</div>
+          </div>
+          <div style="background:var(--bg);padding:36px 28px;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:32px;color:var(--accent);line-height:1;margin-bottom:12px;">II</div>
+            <div style="font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Compassion</div>
+            <div style="font-family:var(--font-serif);font-size:14px;color:var(--ink-mid);line-height:1.65;">Meaningful change begins with genuine human connection.</div>
+          </div>
+          <div style="background:var(--bg);padding:36px 28px;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:32px;color:var(--accent);line-height:1;margin-bottom:12px;">III</div>
+            <div style="font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Storytelling</div>
+            <div style="font-family:var(--font-serif);font-size:14px;color:var(--ink-mid);line-height:1.65;">We restore visibility, empathy, and action for overlooked communities through authentic stories.</div>
+          </div>
+          <div style="background:var(--bg);padding:36px 28px;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:32px;color:var(--accent);line-height:1;margin-bottom:12px;">IV</div>
+            <div style="font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Sustainability</div>
+            <div style="font-family:var(--font-serif);font-size:14px;color:var(--ink-mid);line-height:1.65;">We create long-term support systems that lead toward self-sufficiency and stability.</div>
+          </div>
+          <div style="background:var(--bg);padding:36px 28px;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:32px;color:var(--accent);line-height:1;margin-bottom:12px;">V</div>
+            <div style="font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Integrity</div>
+            <div style="font-family:var(--font-serif);font-size:14px;color:var(--ink-mid);line-height:1.65;">We value transparency, accountability, and responsible stewardship in everything we do.</div>
           </div>
         </div>
       </div>
@@ -1484,9 +2448,9 @@
             <div class="founder-name">Aiden Kim</div>
             <div class="founder-title">Licensed Pharmacist · Founder & President, TCF</div>
             <div class="founder-bio">
-              <p>Aiden Kim's journey began not in a boardroom, but on the street. A licensed pharmacist, he discovered his calling to serve underprivileged communities during his student years in Stockton, California.</p>
-              <p>Guided by empathy and purpose, he combined his compassion for others with the power of social media to address social challenges head-on. What began as sharing stories of resilience among elderly Koreans living in poverty soon evolved into a global movement proving that compassion is contagious.</p>
-              <p>Through his storytelling, Aiden witnessed how digital platforms could unite people across borders—raising funds, spreading hope, and transforming awareness into tangible impact. These experiences inspired him to found Tessera Compassion Foundation, dedicated to turning moments of empathy into sustainable change.</p>
+              <p>In high school, Aiden Kim met an unhoused elderly woman who declined his monetary donation—and instead explained her need for medication. That single encounter reshaped his understanding of compassion and set him on a path toward pharmacy and community service.</p>
+              <p>After years of medical outreach in underserved communities in Stockton and Compton, he used $10,000 of his personal savings to travel to Korea. What began as simple videos—providing rest, appreciation, and visibility to elderly individuals living in poverty—gradually evolved into a viral movement reaching millions.</p>
+              <p>Guided by the belief that social media could be a force for genuine human connection rather than spectacle, Aiden founded Tessera Compassion Foundation in 2025. Under his leadership, TCF operates with a clear voice: warm, honest, and never exploitative—restoring dignity one story at a time.</p>
             </div>
             <div class="founder-handles">
               <a class="handle-pill" href="https://instagram.com/aidenkim16" target="_blank">@aidenkim16</a>
@@ -1581,6 +2545,7 @@
       </div>
     </section>
 
+    <!-- MAIN DONATE LAYOUT -->
     <section>
       <div class="container">
         <div class="donate-layout">
@@ -1598,25 +2563,45 @@
               <li>Vocational training for widows & immigrants</li>
               <li>Once-in-a-lifetime experiences for those who've never had them</li>
             </ul>
-            <div style="margin-top:48px;padding:28px;border:1px solid var(--rule);">
-              <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-light);margin-bottom:12px;">Organization Info</div>
-              <div style="font-family:var(--font-display);font-size:14px;color:var(--ink-mid);line-height:1.8;">
+
+            <!-- FEE COMPARISON TABLE -->
+            <div style="margin-top:48px;border:1px solid var(--rule);overflow:hidden;">
+              <div style="font-family:var(--font-display);font-weight:700;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--ink-light);padding:16px 20px;border-bottom:1px solid var(--rule);">Fee Comparison — $500 Gift</div>
+              <div style="padding:0 20px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule);">
+                  <span style="font-family:var(--font-display);font-size:13px;color:var(--ink-mid);">Credit Card (standard)</span>
+                  <span style="font-family:var(--font-display);font-weight:700;font-size:13px;color:#c0392b;">−$14.80</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule);">
+                  <span style="font-family:var(--font-display);font-size:13px;color:var(--ink-mid);">Credit Card (nonprofit rate)</span>
+                  <span style="font-family:var(--font-display);font-weight:700;font-size:13px;color:#c0392b;">−$11.30</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule);background:rgba(61,92,74,0.04);margin:0 -20px;padding-left:20px;padding-right:20px;">
+                  <span style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--ink);">ACH Bank Transfer</span>
+                  <span style="font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--accent-2);">−$4.00 ✓</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;">
+                  <span style="font-family:var(--font-display);font-size:13px;color:var(--ink-mid);">Wire Transfer</span>
+                  <span style="font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--accent-2);">−$8 flat</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:28px;padding:20px;border:1px solid var(--rule);">
+              <div style="font-family:var(--font-display);font-weight:700;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-light);margin-bottom:10px;">Organization Info</div>
+              <div style="font-family:var(--font-display);font-size:14px;color:var(--ink-mid);line-height:1.9;">
                 Tessera Compassion Foundation<br>
-                501(c)(3) Nonprofit · EIN: [Your EIN]<br>
+                501(c)(3) Nonprofit · <strong style="color:var(--ink);">EIN: [YOUR-EIN]</strong><br>
                 aiden@tesseracompassion.com
               </div>
             </div>
           </div>
 
-          <!-- DONATION FORM -->
+          <!-- DONATION FORM — TABBED -->
           <div class="donation-form-wrap">
             <div class="form-title">Choose Your Impact</div>
 
-            <div class="stripe-config-notice">
-              <strong>⚙ Developer Setup Required</strong><br>
-              Replace <code>YOUR_STRIPE_PUBLISHABLE_KEY</code> in the script below with your Stripe publishable key, and set up a backend endpoint at <code>/create-payment-intent</code> to process payments securely.
-            </div>
-
+            <!-- AMOUNT SELECTOR (shared) -->
             <div class="amount-grid">
               <button class="amount-btn" onclick="selectAmount(25, this)">$25</button>
               <button class="amount-btn selected" onclick="selectAmount(50, this)">$50</button>
@@ -1625,12 +2610,30 @@
               <button class="amount-btn" onclick="selectAmount(500, this)">$500</button>
               <button class="amount-btn" onclick="selectAmount('custom', this)">Custom</button>
             </div>
-
             <div class="form-group" id="custom-amount-group" style="display:none">
               <label class="form-label">Enter Amount (USD)</label>
               <input type="number" class="form-input" id="custom-amount" placeholder="Enter amount" min="1" />
             </div>
 
+            <!-- PAYMENT METHOD TABS -->
+            <div class="pay-tabs">
+              <button class="pay-tab active" onclick="switchPayTab('card', this)">
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="1" y="1" width="14" height="10" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M1 4h14" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="7" width="4" height="1.5" rx="0.5" fill="currentColor"/></svg>
+                Card
+              </button>
+              <button class="pay-tab" onclick="switchPayTab('ach', this)">
+                <svg width="16" height="14" viewBox="0 0 16 14" fill="none"><path d="M2 10V6l6-4 6 4v4" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><rect x="5" y="7" width="6" height="6" stroke="currentColor" stroke-width="1.2"/></svg>
+                Bank / ACH
+                <span class="pay-tab-badge">Low Fee</span>
+              </button>
+              <button class="pay-tab" onclick="switchPayTab('daf', this)">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M7 4v3l2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                DAF
+                <span class="pay-tab-badge">Tax-Smart</span>
+              </button>
+            </div>
+
+            <!-- SHARED FIELDS -->
             <div class="form-group">
               <label class="form-label">Full Name</label>
               <input type="text" class="form-input" id="donor-name" placeholder="Your full name" />
@@ -1639,28 +2642,652 @@
               <label class="form-label">Email Address</label>
               <input type="email" class="form-input" id="donor-email" placeholder="your@email.com" />
             </div>
-            <div class="form-group">
-              <label class="form-label">Card Details</label>
-              <div id="card-element"></div>
-            </div>
-            <div class="stripe-note">
-              <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><rect x="1" y="5" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 5V3.5a3 3 0 016 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
-              Secured by Stripe — your card details are never stored
+
+            <!-- ── TAB: CARD ── -->
+            <div class="pay-panel active" id="panel-card">
+              <div class="stripe-config-notice">
+                <strong>⚙ Setup Required</strong> — Replace <code>YOUR_STRIPE_PUBLISHABLE_KEY</code> and configure <code>/create-payment-intent</code> backend endpoint.
+              </div>
+              <div class="form-group">
+                <label class="form-label">Card Details</label>
+                <div id="card-element"></div>
+              </div>
+              <div class="stripe-note">
+                <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><rect x="1" y="5" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 5V3.5a3 3 0 016 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
+                Secured by Stripe — card details are never stored
+              </div>
+              <button class="submit-btn" id="donate-btn" onclick="handleDonation()">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1.5C7 1.5 2 4.5 2 8a5 5 0 0010 0c0-3.5-5-6.5-5-6.5z" stroke="currentColor" stroke-width="1.2"/></svg>
+                Donate by Card
+              </button>
+              <div id="payment-message" style="display:none"></div>
             </div>
 
-            <button class="submit-btn" id="donate-btn" onclick="handleDonation()">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1.5C7 1.5 2 4.5 2 8a5 5 0 0010 0c0-3.5-5-6.5-5-6.5z" stroke="currentColor" stroke-width="1.2"/></svg>
-              Donate Now
+            <!-- ── TAB: ACH BANK TRANSFER ── -->
+            <div class="pay-panel" id="panel-ach">
+              <div class="ach-fee-badge">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1l1.2 2.4L9 3.8 7 5.7l.5 2.8L5 7.2 2.5 8.5 3 5.7 1 3.8l2.8-.4z" fill="currentColor"/></svg>
+                Fees capped at $5 — any gift above $625 costs just $5 (0.8%)
+              </div>
+              <div class="ach-info-box">
+                <strong>Why bank transfer?</strong> ACH via Stripe costs just 0.8%, capped at $5.00. On a $500 gift you save ~$10 vs a credit card — every dollar stays in the mission.
+              </div>
+              <div class="form-group">
+                <label class="form-label">Bank Routing Number</label>
+                <input type="text" class="form-input" id="ach-routing" placeholder="9-digit routing number" maxlength="9" inputmode="numeric" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Bank Account Number</label>
+                <input type="text" class="form-input" id="ach-account" placeholder="Account number" inputmode="numeric" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Account Type</label>
+                <select class="form-input" id="ach-type" style="cursor:pointer;">
+                  <option value="checking">Checking</option>
+                  <option value="savings">Savings</option>
+                </select>
+              </div>
+              <div class="stripe-note">
+                <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><rect x="1" y="5" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 5V3.5a3 3 0 016 0V5" stroke="currentColor" stroke-width="1.2"/></svg>
+                Bank info is encrypted and never stored · Funds arrive in 3–5 business days
+              </div>
+              <button class="submit-btn" id="ach-btn" onclick="handleACH()">
+                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M2 8V4.5l5-3 5 3V8" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><rect x="4.5" y="5.5" width="5" height="5.5" stroke="currentColor" stroke-width="1.2"/></svg>
+                Donate by Bank Transfer
+              </button>
+              <div id="ach-message" style="display:none;margin-top:16px;font-family:var(--font-display);font-size:13px;letter-spacing:0.06em;padding:12px 16px;"></div>
+            </div>
+
+            <!-- ── TAB: DAF ── -->
+            <div class="pay-panel" id="panel-daf">
+              <div class="daf-info-box">
+                <strong>Donor-Advised Fund (DAF)</strong> gifts are typically 24× larger than card donations and receive no additional processing overhead for the nonprofit. The average DAF gift is over $4,600.
+              </div>
+
+              <!-- EIN display -->
+              <div class="daf-ein-box">
+                <div class="daf-ein-label">Our EIN — use this to search for TCF in your DAF portal</div>
+                <div class="daf-ein-value">[YOUR-EIN-HERE]</div>
+                <div class="daf-ein-sub">Tessera Compassion Foundation · 501(c)(3)</div>
+              </div>
+
+              <!-- DAFpay Chariot info -->
+              <div class="daf-chariot-box">
+                <div class="daf-chariot-label">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M4 6l1.5 1.5L8 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  DAFpay by Chariot — TIME's Best Invention 2025
+                </div>
+                <div class="daf-chariot-body">Give directly from Fidelity Charitable, Schwab, Vanguard, or 1,000+ other DAF sponsors — in three clicks without leaving this page. Contact us to activate DAFpay on this form.</div>
+                <a href="https://givechariot.com" target="_blank" class="daf-chariot-link">
+                  Learn about DAFpay →
+                </a>
+              </div>
+
+              <!-- Direct links to major sponsors -->
+              <div style="font-family:var(--font-display);font-weight:600;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(200,184,154,0.5);margin-bottom:12px;">Give directly from your DAF sponsor</div>
+              <div class="daf-sponsors">
+                <a href="https://www.fidelitycharitable.org" target="_blank" class="daf-sponsor-btn">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1l4 4-4 4M1 5h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  Fidelity Charitable
+                </a>
+                <a href="https://www.schwabcharitable.org" target="_blank" class="daf-sponsor-btn">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1l4 4-4 4M1 5h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  Schwab Charitable
+                </a>
+                <a href="https://www.vanguardcharitable.org" target="_blank" class="daf-sponsor-btn">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1l4 4-4 4M1 5h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  Vanguard Charitable
+                </a>
+                <a href="mailto:aiden@tesseracompassion.com?subject=DAF%20Grant%20to%20TCF" class="daf-sponsor-btn">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="1" y="2" width="8" height="6" rx="0.5" stroke="currentColor" stroke-width="1.1"/><path d="M1 3l4 3 4-3" stroke="currentColor" stroke-width="1.1"/></svg>
+                  Email Us for Help
+                </a>
+              </div>
+
+              <div class="stripe-note" style="margin-top:8px;">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.1"/><path d="M6 5v3M6 3.5v.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Questions about DAF giving? Email aiden@tesseracompassion.com
+              </div>
+            </div>
+
+          </div><!-- /donation-form-wrap -->
+        </div>
+      </div>
+    </section>
+
+    <!-- WIRE + ACH BANK INSTRUCTIONS -->
+    <section class="wire-section">
+      <div class="container">
+        <div class="section-label">Low-Fee Giving Options</div>
+        <h2 class="section-title" style="font-size:clamp(32px,4vw,54px);">Wire & Bank Transfer<br>Instructions</h2>
+        <p style="font-family:var(--font-serif);font-size:17px;color:var(--ink-mid);max-width:600px;line-height:1.75;">For gifts of <strong>$1,000 or more</strong>, wire transfer is the most efficient method — near-zero fees, no processor markup. ACH bank transfer is ideal for any gift size and costs just 0.8% (max $5).</p>
+
+        <div class="wire-grid">
+
+          <!-- ACH CARD -->
+          <div class="wire-card">
+            <div class="wire-card-header">
+              <div>
+                <div style="font-family:var(--font-display);font-weight:600;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--ink-light);margin-bottom:6px;">Recommended for all gift sizes</div>
+                <div class="wire-card-title">ACH / eCheck Transfer</div>
+              </div>
+              <span class="wire-badge low">0.8% · Max $5</span>
+            </div>
+            <div class="wire-row">
+              <span class="wire-row-label">Bank Name</span>
+              <span class="wire-row-value">[Your Bank Name]</span>
+            </div>
+            <div class="wire-row">
+              <span class="wire-row-label">ABA / ACH Routing #</span>
+              <span class="wire-row-value" id="ach-routing-display">[Your ACH Routing #]</span>
+            </div>
+            <div class="wire-row">
+              <span class="wire-row-label">Account Name</span>
+              <span class="wire-row-value">Tessera Compassion Foundation</span>
+            </div>
+            <div class="wire-row">
+              <span class="wire-row-label">Account #</span>
+              <span class="wire-row-value">[Your Account #]</span>
+            </div>
+            <div class="wire-row">
+              <span class="wire-row-label">Account Type</span>
+              <span class="wire-row-value">Checking</span>
+            </div>
+            <div class="wire-note">
+              Please include your name and "TCF Donation" in the memo line. ACH transfers arrive within 3–5 business days. Send a confirmation email to aiden@tesseracompassion.com so we can acknowledge your gift promptly.
+            </div>
+            <button class="wire-copy-btn" onclick="copyACH()">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="0.8" stroke="currentColor" stroke-width="1.1"/><path d="M8 4V2.5A1.5 1.5 0 006.5 1H2.5A1.5 1.5 0 001 2.5v4A1.5 1.5 0 002.5 8H4" stroke="currentColor" stroke-width="1.1"/></svg>
+              Copy ACH Details
+              <span class="copy-confirm" id="ach-copy-confirm">Copied!</span>
             </button>
+          </div>
 
-            <div id="payment-message" style="display:none"></div>
+          <!-- WIRE CARD -->
+          <div class="wire-card">
+            <div class="wire-card-header">
+              <div>
+                <div style="font-family:var(--font-display);font-weight:600;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--ink-light);margin-bottom:6px;">Recommended for gifts $1,000+</div>
+                <div class="wire-card-title">Domestic Wire Transfer</div>
+              </div>
+              <span class="wire-badge flat">~$8 Flat Fee</span>
+            </div>
+            <div class="wire-row">
+              <span class="wire-row-label">Bank Name</span>
+              <span class="wire-row-value">[Your Bank Name]</span>
+            </div>
+            <div class="wire-row">
+              <span class="wire-row-label">Wire Routing #</span>
+              <span class="wire-row-value">[Your Wire Routing #]</span>
+            </div>
+            <div class="wire-row">
+              <span class="wire-row-label">SWIFT Code</span>
+              <span class="wire-row-value">[SWIFT if applicable]</span>
+            </div>
+            <div class="wire-row">
+              <span class="wire-row-label">Account Name</span>
+              <span class="wire-row-value">Tessera Compassion Foundation</span>
+            </div>
+            <div class="wire-row">
+              <span class="wire-row-label">Account #</span>
+              <span class="wire-row-value">[Your Account #]</span>
+            </div>
+            <div class="wire-row">
+              <span class="wire-row-label">Bank Address</span>
+              <span class="wire-row-value">[Your Bank Address]</span>
+            </div>
+            <div class="wire-note">
+              Our bank does not charge for incoming wires. Your sending bank may charge a fee (~$15–$35). Always include "TCF Donation" and your name in the wire memo. Email aiden@tesseracompassion.com with transfer confirmation for a tax receipt.
+            </div>
+            <button class="wire-copy-btn" onclick="copyWire()">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="0.8" stroke="currentColor" stroke-width="1.1"/><path d="M8 4V2.5A1.5 1.5 0 006.5 1H2.5A1.5 1.5 0 001 2.5v4A1.5 1.5 0 002.5 8H4" stroke="currentColor" stroke-width="1.1"/></svg>
+              Copy Wire Details
+              <span class="copy-confirm" id="wire-copy-confirm">Copied!</span>
+            </button>
           </div>
 
         </div>
       </div>
     </section>
 
+    <!-- DAF FULL SECTION -->
+    <section class="daf-section">
+      <div class="container">
+        <div class="section-label">Donor-Advised Funds</div>
+        <h2 class="section-title">Give from Your DAF</h2>
+        <p style="font-family:var(--font-serif);font-size:18px;color:rgba(232,230,223,0.65);max-width:620px;line-height:1.75;margin-top:20px;">DAFs hold over $326 billion in assets dedicated to charitable giving. The average DAF gift is 24× larger than a credit card donation. If you have a donor-advised fund, giving to TCF is simple.</p>
+
+        <div class="daf-main-grid">
+          <div class="daf-main-card">
+            <div class="daf-main-num">01</div>
+            <div class="daf-main-title">Log Into Your DAF Sponsor</div>
+            <div class="daf-main-body">Visit your DAF sponsor's portal — Fidelity Charitable, Schwab Charitable, Vanguard Charitable, or any of the 1,000+ other DAF providers. Search for us by name or EIN.</div>
+          </div>
+          <div class="daf-main-card">
+            <div class="daf-main-num">02</div>
+            <div class="daf-main-title">Search by EIN or Name</div>
+            <div class="daf-main-body">Search for <strong style="color:var(--accent);">Tessera Compassion Foundation</strong> or enter our EIN: <strong style="color:var(--accent);">[YOUR-EIN]</strong>. Our 501(c)(3) status makes us eligible to receive grants from any DAF sponsor.</div>
+          </div>
+          <div class="daf-main-card">
+            <div class="daf-main-num">03</div>
+            <div class="daf-main-title">Recommend a Grant</div>
+            <div class="daf-main-body">Enter your gift amount and submit your grant recommendation. You may also set up recurring grants — many DAF donors give monthly or annually this way. Email us for a receipt.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:40px;">
+          <div style="font-family:var(--font-display);font-weight:700;font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(200,184,154,0.5);margin-bottom:20px;">Major DAF Sponsors — Click to Give Directly</div>
+          <div class="daf-sponsor-grid">
+            <div class="daf-sponsor-card">
+              <div class="daf-sponsor-name">Fidelity Charitable</div>
+              <div class="daf-sponsor-desc">America's largest DAF sponsor — over $18.3 billion granted annually. Search for TCF by EIN to recommend a grant.</div>
+              <a href="https://www.fidelitycharitable.org" target="_blank" class="daf-sponsor-link">Open Fidelity Charitable →</a>
+            </div>
+            <div class="daf-sponsor-card">
+              <div class="daf-sponsor-name">Schwab Charitable</div>
+              <div class="daf-sponsor-desc">One of the largest national DAF programs. Donors can search nonprofits and recommend grants directly from the Schwab portal.</div>
+              <a href="https://www.schwabcharitable.org" target="_blank" class="daf-sponsor-link">Open Schwab Charitable →</a>
+            </div>
+            <div class="daf-sponsor-card">
+              <div class="daf-sponsor-name">Vanguard Charitable</div>
+              <div class="daf-sponsor-desc">Low-cost, high-impact DAF platform founded in 1997. Supports recurring and one-time grants to eligible nonprofits.</div>
+              <a href="https://www.vanguardcharitable.org" target="_blank" class="daf-sponsor-link">Open Vanguard Charitable →</a>
+            </div>
+            <div class="daf-sponsor-card">
+              <div class="daf-sponsor-name">DAFpay by Chariot</div>
+              <div class="daf-sponsor-desc">TIME's Best Invention 2025. Works with 1,000+ DAF sponsors. Three-click giving — without leaving our website. Contact us to activate.</div>
+              <a href="https://givechariot.com" target="_blank" class="daf-sponsor-link">Learn about DAFpay →</a>
+            </div>
+            <div class="daf-sponsor-card">
+              <div class="daf-sponsor-name">Bank of America</div>
+              <div class="daf-sponsor-desc">Charitable Gift Fund supports donors who bank with BoA and want a flexible, tax-smart charitable account.</div>
+              <a href="https://www.bankofamerica.com/philanthropic/charitable-gift-fund/" target="_blank" class="daf-sponsor-link">Open BofA Charitable →</a>
+            </div>
+            <div class="daf-sponsor-card">
+              <div class="daf-sponsor-name">Other / Need Help?</div>
+              <div class="daf-sponsor-desc">Don't see your DAF sponsor? Every US 501(c)(3) can receive grants from any DAF. Email us and we'll help you complete the grant.</div>
+              <a href="mailto:aiden@tesseracompassion.com?subject=DAF%20Grant%20Question" class="daf-sponsor-link">Email Aiden →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAF Stats bar -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(200,184,154,0.1);border:1px solid rgba(200,184,154,0.1);margin-top:48px;">
+          <div style="background:var(--ink);padding:28px;text-align:center;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:36px;color:var(--accent);line-height:1;">$326B</div>
+            <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(200,184,154,0.4);margin-top:6px;">Total DAF Assets</div>
+          </div>
+          <div style="background:var(--ink);padding:28px;text-align:center;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:36px;color:var(--accent);line-height:1;">$4,600</div>
+            <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(200,184,154,0.4);margin-top:6px;">Average DAF Gift</div>
+          </div>
+          <div style="background:var(--ink);padding:28px;text-align:center;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:36px;color:var(--accent);line-height:1;">10×</div>
+            <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(200,184,154,0.4);margin-top:6px;">More Than Card Donors</div>
+          </div>
+          <div style="background:var(--ink);padding:28px;text-align:center;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:36px;color:var(--accent);line-height:1;">80%</div>
+            <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(200,184,154,0.4);margin-top:6px;">Grant Repeat Rate</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
   </div><!-- /page-donate -->
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PAGE: ADOPT -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div id="page-adopt" class="page">
+
+    <!-- HERO -->
+    <section class="adopt-hero">
+      <div class="container">
+        <div class="section-label">Monthly Sponsorship</div>
+        <h1 class="section-title">Adopt an<br><span style="color:var(--accent-2)">Elder.</span></h1>
+        <p class="adopt-hero-body">Each of these individuals is still working, still striving, still carrying burdens most of us will never know. Your monthly sponsorship provides them with food, medication, warmth, and the knowledge that someone, somewhere, sees them.</p>
+        <div class="adopt-hero-meta">
+          <div class="adopt-meta-item">
+            <div class="adopt-meta-num">$30</div>
+            <div class="adopt-meta-label">Starting at / month</div>
+          </div>
+          <div class="adopt-meta-item">
+            <div class="adopt-meta-num">100%</div>
+            <div class="adopt-meta-label">Goes to the elder</div>
+          </div>
+          <div class="adopt-meta-item">
+            <div class="adopt-meta-num">Monthly</div>
+            <div class="adopt-meta-label">Updates & stories</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARD GRID -->
+    <section class="adopt-grid-section">
+      <div class="container">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px;">
+          <div>
+            <div class="section-label">Meet Them</div>
+            <h2 class="section-title" style="font-size:clamp(32px,4vw,52px);margin-bottom:0;">Those Who<br>Need You.</h2>
+          </div>
+          <p style="font-family:var(--font-display);font-size:12px;letter-spacing:0.12em;color:var(--ink-light);max-width:280px;line-height:1.6;">Hover over any card to hear their story and begin your sponsorship.</p>
+        </div>
+
+        <div class="adopt-filter-bar">
+          <button class="adopt-filter-btn active" onclick="filterAdopt('all', this)">All</button>
+          <button class="adopt-filter-btn" onclick="filterAdopt('available', this)">Available</button>
+          <button class="adopt-filter-btn" onclick="filterAdopt('sponsored', this)">Sponsored</button>
+        </div>
+
+        <div class="adopt-grid" id="adopt-grid">
+
+          <!-- CARD 1 -->
+          <div class="flip-card" data-status="available" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+            <div class="flip-card-inner">
+              <div class="flip-front">
+                <div class="flip-front-placeholder">
+                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
+                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
+                </div>
+                <div class="flip-front-hint">Hover to meet</div>
+                <div class="flip-front-overlay">
+                  <div class="flip-front-name">Grandmother Yun</div>
+                  <div class="flip-front-age">Age 81 · Seoul, Korea</div>
+                </div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-video">
+                  <div class="flip-back-video-placeholder">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
+                    Video Placeholder
+                  </div>
+                  <!-- <video src="videos/yun.mp4" loop muted playsinline></video> -->
+                </div>
+                <div class="flip-back-info">
+                  <div class="flip-back-name">Grandmother Yun</div>
+                  <div class="flip-back-story">Works collecting cardboard 12 hours a day. Has not seen a doctor in 6 years.</div>
+                  <div class="flip-back-price">$45 / month sponsors her fully</div>
+                  <button class="flip-sponsor-btn" onclick="sponsorElder('Grandmother Yun', 45)">Sponsor Her →</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2 -->
+          <div class="flip-card" data-status="available" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+            <div class="flip-card-inner">
+              <div class="flip-front">
+                <div class="flip-front-placeholder">
+                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
+                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
+                </div>
+                <div class="flip-front-hint">Hover to meet</div>
+                <div class="flip-front-overlay">
+                  <div class="flip-front-name">Grandfather Park</div>
+                  <div class="flip-front-age">Age 76 · Incheon, Korea</div>
+                </div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-video">
+                  <div class="flip-back-video-placeholder">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
+                    Video Placeholder
+                  </div>
+                </div>
+                <div class="flip-back-info">
+                  <div class="flip-back-name">Grandfather Park</div>
+                  <div class="flip-back-story">Sells vegetables at a street market since 5am daily. Lives alone after losing his wife.</div>
+                  <div class="flip-back-price">$35 / month sponsors him fully</div>
+                  <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Park', 35)">Sponsor Him →</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 3 -->
+          <div class="flip-card" data-status="sponsored" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+            <div class="flip-card-inner">
+              <div class="flip-front">
+                <div class="flip-front-placeholder">
+                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
+                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
+                </div>
+                <div class="flip-front-hint">Hover to meet</div>
+                <div style="position:absolute;top:12px;left:12px;background:var(--accent-2);color:var(--white);font-family:var(--font-display);font-weight:700;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 10px;">Sponsored</div>
+                <div class="flip-front-overlay">
+                  <div class="flip-front-name">Grandmother Kim</div>
+                  <div class="flip-front-age">Age 84 · Busan, Korea</div>
+                </div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-video">
+                  <div class="flip-back-video-placeholder">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
+                    Video Placeholder
+                  </div>
+                </div>
+                <div class="flip-back-info">
+                  <div class="flip-back-name">Grandmother Kim</div>
+                  <div class="flip-back-story">Knits and sells scarves near a fish market. Has been fully sponsored since March 2025.</div>
+                  <div class="flip-back-price" style="color:var(--accent-2);">✓ Currently Sponsored</div>
+                  <button class="flip-sponsor-btn" style="background:rgba(61,92,74,0.3);color:#9fcfb0;cursor:default;">Thank You to Her Sponsor</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 4 -->
+          <div class="flip-card" data-status="available" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+            <div class="flip-card-inner">
+              <div class="flip-front">
+                <div class="flip-front-placeholder">
+                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
+                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
+                </div>
+                <div class="flip-front-hint">Hover to meet</div>
+                <div class="flip-front-overlay">
+                  <div class="flip-front-name">Grandfather Choi</div>
+                  <div class="flip-front-age">Age 79 · Daegu, Korea</div>
+                </div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-video">
+                  <div class="flip-back-video-placeholder">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
+                    Video Placeholder
+                  </div>
+                </div>
+                <div class="flip-back-info">
+                  <div class="flip-back-name">Grandfather Choi</div>
+                  <div class="flip-back-story">A retired factory worker who collects aluminum cans for income. Walks 8km daily.</div>
+                  <div class="flip-back-price">$30 / month sponsors him fully</div>
+                  <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Choi', 30)">Sponsor Him →</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 5 -->
+          <div class="flip-card" data-status="available" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+            <div class="flip-card-inner">
+              <div class="flip-front">
+                <div class="flip-front-placeholder">
+                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
+                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
+                </div>
+                <div class="flip-front-hint">Hover to meet</div>
+                <div class="flip-front-overlay">
+                  <div class="flip-front-name">Grandmother Lee</div>
+                  <div class="flip-front-age">Age 88 · Seoul, Korea</div>
+                </div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-video">
+                  <div class="flip-back-video-placeholder">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
+                    Video Placeholder
+                  </div>
+                </div>
+                <div class="flip-back-info">
+                  <div class="flip-back-name">Grandmother Lee</div>
+                  <div class="flip-back-story">Sells handmade rice cakes from a small cart. Her hands are arthritic but she never stops.</div>
+                  <div class="flip-back-price">$50 / month sponsors her fully</div>
+                  <button class="flip-sponsor-btn" onclick="sponsorElder('Grandmother Lee', 50)">Sponsor Her →</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 6 -->
+          <div class="flip-card" data-status="available" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+            <div class="flip-card-inner">
+              <div class="flip-front">
+                <div class="flip-front-placeholder">
+                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
+                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
+                </div>
+                <div class="flip-front-hint">Hover to meet</div>
+                <div class="flip-front-overlay">
+                  <div class="flip-front-name">Grandfather Oh</div>
+                  <div class="flip-front-age">Age 73 · Incheon, Korea</div>
+                </div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-video">
+                  <div class="flip-back-video-placeholder">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
+                    Video Placeholder
+                  </div>
+                </div>
+                <div class="flip-back-info">
+                  <div class="flip-back-name">Grandfather Oh</div>
+                  <div class="flip-back-story">A veteran who works as a parking attendant 6 days a week. Sends most of his income to a sick relative.</div>
+                  <div class="flip-back-price">$40 / month sponsors him fully</div>
+                  <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Oh', 40)">Sponsor Him →</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 7 -->
+          <div class="flip-card" data-status="sponsored" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+            <div class="flip-card-inner">
+              <div class="flip-front">
+                <div class="flip-front-placeholder">
+                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
+                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
+                </div>
+                <div class="flip-front-hint">Hover to meet</div>
+                <div style="position:absolute;top:12px;left:12px;background:var(--accent-2);color:var(--white);font-family:var(--font-display);font-weight:700;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 10px;">Sponsored</div>
+                <div class="flip-front-overlay">
+                  <div class="flip-front-name">Grandmother Shin</div>
+                  <div class="flip-front-age">Age 82 · Suwon, Korea</div>
+                </div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-video">
+                  <div class="flip-back-video-placeholder">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
+                    Video Placeholder
+                  </div>
+                </div>
+                <div class="flip-back-info">
+                  <div class="flip-back-name">Grandmother Shin</div>
+                  <div class="flip-back-story">Known for her laugh and her persimmon kimchi. Sponsored since January 2025.</div>
+                  <div class="flip-back-price" style="color:var(--accent-2);">✓ Currently Sponsored</div>
+                  <button class="flip-sponsor-btn" style="background:rgba(61,92,74,0.3);color:#9fcfb0;cursor:default;">Thank You to Her Sponsor</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 8 — CTA -->
+          <div class="flip-card" style="cursor:default;" onclick="navigate('contact')">
+            <div class="flip-card-inner" style="transform:none!important;">
+              <div class="flip-front" style="background:var(--accent-2);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;cursor:pointer;">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="margin-bottom:20px;opacity:0.6;"><rect x="2" y="2" width="44" height="44" stroke="rgba(245,243,238,0.5)" stroke-width="1.5"/><path d="M24 16v16M16 24h16" stroke="rgba(245,243,238,0.7)" stroke-width="2" stroke-linecap="round"/></svg>
+                <div style="font-family:var(--font-display);font-weight:900;font-size:18px;letter-spacing:0.06em;text-transform:uppercase;color:var(--white);margin-bottom:12px;">Nominate an Elder</div>
+                <div style="font-family:var(--font-serif);font-size:14px;color:rgba(245,243,238,0.7);line-height:1.6;">Know someone who needs support? Tell us their story.</div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /adopt-grid -->
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="adopt-how">
+      <div class="container">
+        <div class="section-label" style="color:rgba(200,184,154,0.5);">How Sponsorship Works</div>
+        <h2 class="section-title" style="color:var(--bg);">Simple.<br>Transparent.<br>Direct.</h2>
+        <div class="adopt-how-grid">
+          <div class="adopt-how-card">
+            <div class="adopt-how-num">01</div>
+            <div class="adopt-how-title">Choose Your Elder</div>
+            <div class="adopt-how-body">Browse the grid above, hover to hear their story, and choose who you'd like to support. Every person has a specific monthly amount that covers their full needs.</div>
+          </div>
+          <div class="adopt-how-card">
+            <div class="adopt-how-num">02</div>
+            <div class="adopt-how-title">Set Up Monthly Giving</div>
+            <div class="adopt-how-body">Complete your monthly sponsorship via card or ACH bank transfer. Recurring ACH gifts have no expiry and cost just $5 max in processing fees—maximizing your impact.</div>
+          </div>
+          <div class="adopt-how-card">
+            <div class="adopt-how-num">03</div>
+            <div class="adopt-how-title">Receive Monthly Updates</div>
+            <div class="adopt-how-body">Every month, you'll receive a personal update—a photo, a short video, or a message from the elder or their community. You'll see exactly where your gift goes.</div>
+          </div>
+          <div class="adopt-how-card">
+            <div class="adopt-how-num">04</div>
+            <div class="adopt-how-title">Be Part of Their Story</div>
+            <div class="adopt-how-body">Your name (or anonymous contribution) becomes part of their tessera—the mosaic of people who refused to look away. Sponsorships are tax-deductible for US donors.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADOPT CTA -->
+    <section style="padding:80px 0;background:var(--bg);border-top:1px solid var(--rule);">
+      <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+        <div>
+          <div class="section-label">No One Should Be Forgotten</div>
+          <h2 class="section-title" style="font-size:clamp(36px,4vw,56px);">Every Person<br>Deserves<br>Dignity.</h2>
+        </div>
+        <div>
+          <p style="font-family:var(--font-serif);font-size:18px;color:var(--ink-mid);line-height:1.75;margin-bottom:32px;">For less than a dinner out, you can ensure that one person—one real, named, living person—has food, medicine, and the knowledge that they are not forgotten. That is the tessera.</p>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;">
+            <button class="btn-primary" onclick="document.getElementById('adopt-grid').scrollIntoView({behavior:'smooth'})">
+              Choose Your Elder
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+            <button class="btn-ghost" onclick="navigate('contact')">Nominate Someone</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPONSOR MODAL -->
+    <div id="sponsor-modal" style="display:none;position:fixed;inset:0;background:rgba(30,29,26,0.85);z-index:200;align-items:center;justify-content:center;">
+      <div style="background:var(--ink);max-width:420px;width:90%;padding:48px;position:relative;">
+        <button onclick="closeSponsorModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(232,230,223,0.4);font-size:20px;cursor:pointer;line-height:1;">✕</button>
+        <div style="font-family:var(--font-display);font-weight:300;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(200,184,154,0.5);margin-bottom:8px;">Monthly Sponsorship</div>
+        <div style="font-family:var(--font-display);font-weight:900;font-size:28px;text-transform:uppercase;color:var(--bg);margin-bottom:4px;" id="modal-name"></div>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--accent);margin-bottom:28px;" id="modal-price"></div>
+        <div style="font-family:var(--font-display);font-size:12px;letter-spacing:0.07em;color:rgba(232,230,223,0.5);line-height:1.6;margin-bottom:28px;">You'll be charged monthly. Cancel anytime. 100% of your sponsorship reaches this elder directly — Tessera covers all processing fees for recurring ACH gifts.</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <input type="text" placeholder="Your full name" style="background:rgba(255,255,255,0.05);border:1px solid rgba(200,184,154,0.2);color:var(--bg);font-family:var(--font-body);font-size:14px;padding:12px 14px;outline:none;width:100%;" id="modal-sponsor-name" />
+          <input type="email" placeholder="your@email.com" style="background:rgba(255,255,255,0.05);border:1px solid rgba(200,184,154,0.2);color:var(--bg);font-family:var(--font-body);font-size:14px;padding:12px 14px;outline:none;width:100%;" id="modal-sponsor-email" />
+        </div>
+        <button onclick="confirmSponsorship()" style="width:100%;background:var(--accent);color:var(--ink);font-family:var(--font-display);font-weight:800;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;padding:16px;border:none;cursor:pointer;margin-top:20px;transition:background 0.2s;" onmouseover="this.style.background='#3D5C4A';this.style.color='#F5F3EE'" onmouseout="this.style.background='#C8B89A';this.style.color='#1E1D1A'">
+          Begin Sponsorship →
+        </button>
+        <div id="modal-confirm" style="display:none;margin-top:16px;padding:12px 14px;background:rgba(61,92,74,0.3);color:#9fcfb0;font-family:var(--font-display);font-size:12px;letter-spacing:0.07em;line-height:1.6;"></div>
+      </div>
+    </div>
+
+  </div><!-- /page-adopt -->
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- PAGE: CONTACT -->
@@ -1766,13 +3393,14 @@
         <div>
           <div class="footer-brand-name">Tessera</div>
           <div class="footer-brand-sub">Compassion Foundation</div>
-          <div class="footer-tagline">Turning moments of kindness into measurable, lasting impact—transforming empathy into empowerment.</div>
+          <div class="footer-tagline">Restoring dignity and creating sustainable hope for vulnerable communities through compassion, storytelling, and action.</div>
         </div>
         <div>
           <div class="footer-col-title">Navigate</div>
           <ul class="footer-links">
             <li><a href="#" onclick="navigate('home')">Home</a></li>
             <li><a href="#" onclick="navigate('about')">About Us</a></li>
+            <li><a href="#" onclick="navigate('adopt')">Adopt an Elder</a></li>
             <li><a href="#" onclick="navigate('donate')">Donate</a></li>
             <li><a href="#" onclick="navigate('contact')">Contact</a></li>
           </ul>
@@ -1780,17 +3408,19 @@
         <div>
           <div class="footer-col-title">Who We Serve</div>
           <ul class="footer-links">
-            <li><a href="#">Individuals in Poverty</a></li>
-            <li><a href="#">Orphaned Youth</a></li>
+            <li><a href="#">Low-Income Families</a></li>
+            <li><a href="#">Children Without Parents</a></li>
             <li><a href="#">Widows</a></li>
-            <li><a href="#">Immigrants</a></li>
+            <li><a href="#">Immigrant Refugees</a></li>
           </ul>
         </div>
         <div>
           <div class="footer-col-title">Connect</div>
           <ul class="footer-links">
-            <li><a href="https://instagram.com/aidingwithaiden" target="_blank">@aidingwithaiden</a></li>
-            <li><a href="https://instagram.com/aidenkim16" target="_blank">@aidenkim16</a></li>
+            <li><a href="https://www.instagram.com/aidenkim16/" target="_blank">Instagram</a></li>
+            <li><a href="https://www.tiktok.com/@aidenkim16" target="_blank">TikTok</a></li>
+            <li><a href="https://www.youtube.com/@aidenkim16/videos" target="_blank">YouTube</a></li>
+            <li><a href="https://www.facebook.com/AJKinGeneral/" target="_blank">Facebook</a></li>
             <li><a href="mailto:aiden@tesseracompassion.com">Email Us</a></li>
           </ul>
         </div>
@@ -1807,6 +3437,210 @@
   </footer>
 
   <script>
+    // ═══════════════════════════════════════════════
+    // YOUTUBE SHORTS CAROUSEL
+    // ═══════════════════════════════════════════════
+
+    const YT_API_KEY      = 'YOUR_YOUTUBE_API_KEY';  // ← replace this
+    const YT_CHANNEL_HANDLE = 'aidenkim16';
+
+    // Fallback hardcoded Shorts (real video IDs from @aidenkim16)
+    const FALLBACK_SHORTS = [
+      { id: 'wf_EtROpY30', title: 'This was the first time she has ever received this much money' },
+      { id: 'lw_kjMyrVN4', title: 'How This Guy Single Handedly Helps The Elderly In Korea' },
+      { id: 'mun0uWVPC2I', title: 'Aiden Kim on helping elderly Koreans in poverty' },
+      { id: '_bYAZIniZwM', title: 'A day in the life of giving back' },
+      { id: 'Vz39pHOBnBQ', title: 'How BM Helped Fight Elderly Poverty' },
+      { id: 'wf_EtROpY30', title: 'Moments of compassion on the streets of Korea' },
+    ];
+
+    async function initShortsCarousel() {
+      const track   = document.getElementById('shorts-track');
+      const loading = document.getElementById('shorts-loading');
+      const wrap    = document.getElementById('shorts-track-wrap');
+      const notice  = document.getElementById('shorts-api-notice');
+
+      if (!track) return;
+
+      let shorts = [];
+
+      if (YT_API_KEY !== 'YOUR_YOUTUBE_API_KEY') {
+        try {
+          // Step 1: resolve channel handle → channel ID
+          const chanRes = await fetch(
+            `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=${YT_CHANNEL_HANDLE}&key=${YT_API_KEY}`
+          );
+          const chanData = await chanRes.json();
+          const uploadsPlaylist = chanData.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
+
+          if (uploadsPlaylist) {
+            // Step 2: fetch recent 40 uploads
+            const vidRes = await fetch(
+              `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=40&playlistId=${uploadsPlaylist}&key=${YT_API_KEY}`
+            );
+            const vidData = await vidRes.json();
+            const videoIds = (vidData.items || [])
+              .map(item => item.snippet?.resourceId?.videoId)
+              .filter(Boolean)
+              .join(',');
+
+            // Step 3: get duration to identify Shorts (≤ 180s)
+            if (videoIds) {
+              const detailRes = await fetch(
+                `https://www.googleapis.com/youtube/v3/videos?part=contentDetails,snippet&id=${videoIds}&key=${YT_API_KEY}`
+              );
+              const detailData = await detailRes.json();
+              shorts = (detailData.items || [])
+                .filter(v => {
+                  const dur = v.contentDetails?.duration || '';
+                  const match = dur.match(/PT(?:(\d+)M)?(?:(\d+)S)?/);
+                  if (!match) return false;
+                  const mins = parseInt(match[1] || '0');
+                  const secs = parseInt(match[2] || '0');
+                  return (mins * 60 + secs) <= 180;
+                })
+                .map(v => ({
+                  id: v.id,
+                  title: v.snippet?.title || ''
+                }))
+                .slice(0, 14);
+            }
+          }
+        } catch(e) {
+          console.warn('YouTube API error, using fallback:', e);
+        }
+      }
+
+      // Use fallback if API failed or key not set
+      if (shorts.length === 0) {
+        shorts = FALLBACK_SHORTS;
+        if (YT_API_KEY === 'YOUR_YOUTUBE_API_KEY') {
+          notice.classList.add('show');
+        }
+      }
+
+      // Render cards
+      track.innerHTML = shorts.map(s => `
+        <div class="short-card">
+          <div class="short-card-inner">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/${s.id}?rel=0&modestbranding=1&controls=0&loop=1&playlist=${s.id}&mute=1"
+              title="${s.title.replace(/"/g,'')}"
+              allow="autoplay; encrypted-media"
+              allowfullscreen
+              loading="lazy">
+            </iframe>
+            <a class="short-card-overlay" href="https://www.youtube.com/shorts/${s.id}" target="_blank" rel="noopener">
+              <div class="short-card-title">${s.title}</div>
+              <div class="short-card-watch">
+                <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M6 1l3 3-3 3M1 4h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Watch on YouTube
+              </div>
+            </a>
+            <div class="short-badge">Shorts</div>
+          </div>
+        </div>
+      `).join('');
+
+      // Show track, hide loader
+      loading.style.display = 'none';
+      wrap.style.display = 'block';
+
+      // Drag to scroll
+      initDragScroll(track);
+    }
+
+    function initDragScroll(el) {
+      let isDown = false, startX, scrollLeft;
+      el.addEventListener('mousedown', e => {
+        isDown = true;
+        el.style.cursor = 'grabbing';
+        startX    = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+      });
+      el.addEventListener('mouseleave', () => { isDown = false; el.style.cursor = 'grab'; });
+      el.addEventListener('mouseup',    () => { isDown = false; el.style.cursor = 'grab'; });
+      el.addEventListener('mousemove',  e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x    = e.pageX - el.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        el.scrollLeft = scrollLeft - walk;
+      });
+      // Touch
+      el.addEventListener('touchstart', e => {
+        startX     = e.touches[0].pageX;
+        scrollLeft = el.scrollLeft;
+      }, { passive: true });
+      el.addEventListener('touchmove', e => {
+        const x = e.touches[0].pageX;
+        el.scrollLeft = scrollLeft - (x - startX);
+      }, { passive: true });
+    }
+
+    function scrollShorts(dir) {
+      const track = document.getElementById('shorts-track');
+      if (!track) return;
+      const cardWidth = 200 + 16; // card + gap
+      track.scrollBy({ left: dir * cardWidth * 3, behavior: 'smooth' });
+    }
+
+    // ─── ADOPT PAGE ──────────────────────────────
+    function playVideo(card) {
+      const video = card.querySelector('video');
+      if (video) {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      }
+    }
+
+    function pauseVideo(card) {
+      const video = card.querySelector('video');
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    }
+
+    function filterAdopt(status, btn) {
+      document.querySelectorAll('.adopt-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.flip-card[data-status]').forEach(card => {
+        if (status === 'all' || card.dataset.status === status) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    let currentElder = { name: '', amount: 0 };
+    function sponsorElder(name, amount) {
+      currentElder = { name, amount };
+      document.getElementById('modal-name').textContent = name;
+      document.getElementById('modal-price').textContent = '$' + amount + ' / month';
+      document.getElementById('modal-confirm').style.display = 'none';
+      document.getElementById('sponsor-modal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSponsorModal() {
+      document.getElementById('sponsor-modal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    function confirmSponsorship() {
+      const name = document.getElementById('modal-sponsor-name').value.trim();
+      const email = document.getElementById('modal-sponsor-email').value.trim();
+      if (!name || !email) { alert('Please enter your name and email.'); return; }
+      const confirm = document.getElementById('modal-confirm');
+      confirm.textContent = '✓ Thank you, ' + name + '! We\'ve received your sponsorship intent for ' + currentElder.name + ' at $' + currentElder.amount + '/month. Aiden will reach out to ' + email + ' within 24 hours to complete setup.';
+      confirm.style.display = 'block';
+      setTimeout(closeSponsorModal, 5000);
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSponsorModal(); });
+
     // ─── NAVIGATION ─────────────────────────────
     function navigate(page) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1844,6 +3678,96 @@
       els.forEach(el => io.observe(el));
     }
     document.addEventListener('DOMContentLoaded', observeFadeIns);
+
+    // ─── PAYMENT TAB SWITCHING ───────────────────
+    function switchPayTab(tab, btn) {
+      document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.pay-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + tab).classList.add('active');
+    }
+
+    // ─── ACH HANDLER ────────────────────────────
+    async function handleACH() {
+      const btn = document.getElementById('ach-btn');
+      const msg = document.getElementById('ach-message');
+      const name = document.getElementById('donor-name').value.trim();
+      const email = document.getElementById('donor-email').value.trim();
+      const routing = document.getElementById('ach-routing').value.trim();
+      const account = document.getElementById('ach-account').value.trim();
+      const type = document.getElementById('ach-type').value;
+      const amount = selectedAmount === 'custom'
+        ? parseInt(document.getElementById('custom-amount').value) * 100
+        : selectedAmount * 100;
+
+      if (!name || !email) { showACHMsg('Please fill in your name and email.', 'error'); return; }
+      if (!routing || routing.length !== 9) { showACHMsg('Please enter a valid 9-digit routing number.', 'error'); return; }
+      if (!account) { showACHMsg('Please enter your account number.', 'error'); return; }
+      if (!amount || amount < 100) { showACHMsg('Minimum donation is $1.', 'error'); return; }
+
+      if (!stripe) {
+        showACHMsg('⚙ Stripe is not configured yet. Please set up your publishable key and payment intent endpoint.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+
+      try {
+        const res = await fetch('/create-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount, currency: 'usd', payment_method_types: ['us_bank_account'], name, email })
+        });
+        const { clientSecret } = await res.json();
+
+        const { error, paymentIntent } = await stripe.confirmUsBankAccountPayment(clientSecret, {
+          payment_method: {
+            us_bank_account: { routing_number: routing, account_number: account, account_holder_type: 'individual', account_type: type },
+            billing_details: { name, email }
+          }
+        });
+
+        if (error) {
+          showACHMsg(error.message, 'error');
+        } else {
+          showACHMsg('✓ Bank transfer initiated! Funds arrive in 3–5 business days. A confirmation has been sent to ' + email, 'success');
+        }
+      } catch(err) {
+        showACHMsg('Unable to connect to payment server. Please ensure the backend is configured, or use the manual bank transfer details below.', 'error');
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = '<svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M2 8V4.5l5-3 5 3V8" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><rect x="4.5" y="5.5" width="5" height="5.5" stroke="currentColor" stroke-width="1.2"/></svg> Donate by Bank Transfer';
+    }
+
+    function showACHMsg(text, type) {
+      const msg = document.getElementById('ach-message');
+      msg.textContent = text;
+      msg.style.display = 'block';
+      msg.style.background = type === 'success' ? 'rgba(61,92,74,0.3)' : 'rgba(180,60,60,0.2)';
+      msg.style.color = type === 'success' ? '#9fcfb0' : '#f0a0a0';
+      setTimeout(() => { msg.style.display = 'none'; }, 10000);
+    }
+
+    // ─── COPY TO CLIPBOARD ────────────────────────
+    function copyACH() {
+      const text = `Tessera Compassion Foundation — ACH Transfer Details\nBank: [Your Bank Name]\nACH Routing #: [Your ACH Routing #]\nAccount #: [Your Account #]\nAccount Type: Checking\nMemo: TCF Donation + Your Name\nEmail confirmation to: aiden@tesseracompassion.com`;
+      navigator.clipboard.writeText(text).then(() => {
+        const el = document.getElementById('ach-copy-confirm');
+        el.classList.add('show');
+        setTimeout(() => el.classList.remove('show'), 2500);
+      });
+    }
+
+    function copyWire() {
+      const text = `Tessera Compassion Foundation — Wire Transfer Details\nBank: [Your Bank Name]\nWire Routing #: [Your Wire Routing #]\nSWIFT: [SWIFT Code]\nAccount #: [Your Account #]\nAccount Name: Tessera Compassion Foundation\nBank Address: [Your Bank Address]\nMemo: TCF Donation + Your Name\nEmail confirmation to: aiden@tesseracompassion.com`;
+      navigator.clipboard.writeText(text).then(() => {
+        const el = document.getElementById('wire-copy-confirm');
+        el.classList.add('show');
+        setTimeout(() => el.classList.remove('show'), 2500);
+      });
+    }
 
     // ─── STRIPE SETUP ────────────────────────────
     let stripe, card, selectedAmount = 50;
@@ -1980,6 +3904,7 @@
     window.addEventListener('load', () => {
       initStripe();
       observeFadeIns();
+      initShortsCarousel();
     });
   </script>
 </body>
