@@ -123,12 +123,12 @@
       font-size: 11px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      background: var(--ink);
-      color: var(--bg);
+      background: var(--accent-2);
+      color: var(--white) !important;
       padding: 10px 22px;
       transition: background 0.2s, color 0.2s;
     }
-    .nav-cta:hover { background: var(--accent-2); color: var(--white); border-bottom-color: transparent !important; }
+    .nav-cta:hover { background: #2e4537; color: var(--white) !important; border-bottom-color: transparent !important; }
 
     /* hamburger */
     .nav-hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
@@ -263,20 +263,20 @@
     }
     .hero-reel-wrap iframe {
       position: absolute;
-      /* Extend past container on all sides to clip Instagram card UI */
-      width: 100%;
+      /* 150% wide + centered: scales video tall enough to fill the panel */
+      /* and pushes Instagram footer below the overflow:hidden clip boundary */
+      width: 150%;
       height: calc(100% + 300px);
-      top: -55px;   /* hide IG header (~55px) */
-      left: 0;
+      top: -55px;    /* hides Instagram header (~55px) */
+      left: -25%;    /* centers the oversized iframe */
       border: none;
-      pointer-events: auto;
     }
-    /* Gradient masks burn over the Instagram card UI cleanly */
+    /* Thin gradient masks for any remaining edge bleed */
     .hero-reel-wrap::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 70px;
+      height: 60px;
       background: linear-gradient(to bottom, #000 0%, transparent 100%);
       z-index: 5;
       pointer-events: none;
@@ -285,8 +285,8 @@
       content: '';
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      height: 240px;
-      background: linear-gradient(to top, #000 0%, rgba(0,0,0,0.7) 40%, transparent 100%);
+      height: 100px;
+      background: linear-gradient(to top, #000 0%, transparent 100%);
       z-index: 5;
       pointer-events: none;
     }
@@ -3469,39 +3469,9 @@
   <div id="page-adopt" class="page">
 
     <!-- HERO -->
-    <section class="adopt-hero">
-      <div class="container">
-        <div class="section-label">Monthly Sponsorship</div>
-        <h1 class="section-title">Adopt an<br><span style="color:var(--accent-2)">Elder.</span></h1>
-        <p class="adopt-hero-body">Each of these individuals is still working, still striving, still carrying burdens most of us will never know. Your monthly sponsorship provides them with food, medication, warmth, and the knowledge that someone, somewhere, sees them.</p>
-        <div class="adopt-hero-meta">
-          <div class="adopt-meta-item">
-            <div class="adopt-meta-num">$30</div>
-            <div class="adopt-meta-label">Starting at / month</div>
-          </div>
-          <div class="adopt-meta-item">
-            <div class="adopt-meta-num">100%</div>
-            <div class="adopt-meta-label">Goes to the elder</div>
-          </div>
-          <div class="adopt-meta-item">
-            <div class="adopt-meta-num">Monthly</div>
-            <div class="adopt-meta-label">Updates & stories</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- CARD GRID -->
-    <section class="adopt-grid-section">
+    <section class="adopt-grid-section" style="padding-top:60px;">
       <div class="container">
-        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px;">
-          <div>
-            <div class="section-label">Meet Them</div>
-            <h2 class="section-title" style="font-size:clamp(32px,4vw,52px);margin-bottom:0;">Those Who<br>Need You.</h2>
-          </div>
-          <p style="font-family:var(--font-display);font-size:12px;letter-spacing:0.12em;color:var(--ink-light);max-width:280px;line-height:1.6;">Hover over any card to hear their story and begin your sponsorship.</p>
-        </div>
-
         <div class="adopt-filter-bar">
           <button class="adopt-filter-btn active" onclick="filterAdopt('all', this)">All</button>
           <button class="adopt-filter-btn" onclick="filterAdopt('available', this)">Available</button>
