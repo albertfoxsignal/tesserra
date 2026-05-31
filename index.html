@@ -13,12 +13,15 @@
     /* ─── TOKENS ──────────────────────────────── */
     :root {
       --bg:        #E8E6DF;
-      --bg-dark:   #1E1D1A;
+      --bg-warm:   #F2EFE8;
+      --bg-dark:   #252017;
       --ink:       #1E1D1A;
       --ink-mid:   #4A4840;
       --ink-light: #8A8778;
       --accent:    #C8B89A;
       --accent-2:  #3D5C4A;
+      --forest:    #1D2318;
+      --warm-dark: #2A2520;
       --white:     #F5F3EE;
       --rule:      rgba(30,29,26,0.15);
 
@@ -134,7 +137,7 @@
       display: none;
       position: fixed;
       top: 61px; left: 0; right: 0; bottom: 0;
-      background: var(--bg);
+      background: var(--bg-warm);
       z-index: 99;
       flex-direction: column;
       align-items: center;
@@ -159,7 +162,7 @@
       position: relative;
       min-height: calc(100vh - 61px);
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 420px;
       overflow: hidden;
     }
     .hero-left {
@@ -246,93 +249,214 @@
 
     .hero-right {
       position: relative;
-      background: var(--ink);
+      background: #000;
       overflow: hidden;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: stretch;
     }
-    .hero-right-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 40px;
-      padding: 80px;
-      text-align: center;
-      color: var(--bg);
+    .hero-reel-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: calc(100vh - 61px);
     }
-    .hero-tessera-large {
-      opacity: 0.12;
+    .hero-reel-wrap iframe {
       position: absolute;
-      bottom: -40px;
-      right: -40px;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
     }
-    .hero-stat {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .hero-stat-num {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: 56px;
-      line-height: 1;
-      color: var(--accent);
-    }
-    .hero-stat-label {
-      font-family: var(--font-display);
-      font-weight: 300;
-      font-size: 10px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: rgba(232,230,223,0.5);
-      margin-top: 6px;
-    }
-    .hero-stats-row {
-      display: flex;
-      gap: 40px;
-    }
-    .hero-quote {
-      font-family: var(--font-serif);
-      font-size: 18px;
-      font-style: italic;
-      color: rgba(232,230,223,0.7);
-      max-width: 320px;
-      line-height: 1.6;
-    }
-    .hero-scroll {
+    .hero-reel-badge {
       position: absolute;
-      bottom: 32px;
-      left: 80px;
+      bottom: 28px;
+      left: 28px;
       display: flex;
       align-items: center;
       gap: 10px;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .hero-reel-badge-inner {
       font-family: var(--font-display);
-      font-weight: 300;
+      font-weight: 700;
       font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--ink-light);
+      color: rgba(255,255,255,0.7);
+      background: rgba(0,0,0,0.5);
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
     }
-    .scroll-line {
-      width: 40px;
-      height: 1px;
+    .hero-reel-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #E1306C;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .hero-scroll { display: none; }
+    .scroll-line { display: none; }
+
+    /* Persistent donate CTA animation */
+    @keyframes donatePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(200,184,154,0.5); }
+      50%       { box-shadow: 0 0 0 10px rgba(200,184,154,0); }
+    }
+    .btn-donate-animated {
+      animation: donatePulse 2s ease-in-out infinite;
+    }
+
+    /* Adopt button — warm amber */
+    .btn-adopt {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
       background: var(--accent);
-      position: relative;
-      overflow: hidden;
+      color: var(--ink);
+      padding: 16px 36px;
+      border: 1px solid var(--accent);
+      transition: all 0.25s var(--ease);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
     }
-    .scroll-line::after {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
+    .btn-adopt:hover { background: #b8a485; border-color: #b8a485; }
+
+    /* ─── PARTNER CARDS ────────────────────────── */
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 1fr;
+      gap: 0;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-top: 48px;
+    }
+    .partner-card {
+      background: var(--bg);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: background 0.25s;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .partner-card:hover { background: var(--bg-warm); }
+    .partner-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
       background: var(--ink);
-      animation: scrollLine 2s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 15px;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      margin-bottom: 14px;
     }
-    @keyframes scrollLine {
-      0% { left: -100%; }
-      100% { left: 100%; }
+    .partner-name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
+    .partner-role {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 8px;
+    }
+    .partner-handle {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: #E1306C;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 14px;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .partner-handle::before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E1306C'%3E%3Cpath d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z'/%3E%3C/svg%3E") center/contain no-repeat;
+      flex-shrink: 0;
+    }
+    .partner-handle:hover { opacity: 0.7; }
+    .partner-tag {
+      display: inline-flex;
+      align-self: flex-start;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 9px;
+      border: 1px solid var(--rule);
+      color: var(--ink-light);
+      margin-top: auto;
+    }
+    @media (max-width: 1024px) { .partners-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px)  { .partners-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ─── SHORTS EDGE ARROWS ───────────────────── */
+    .shorts-track-wrap { position: relative; }
+    .shorts-arrow {
+      position: absolute;
+      top: 45%;
+      transform: translateY(-50%);
+      z-index: 20;
+      width: 44px;
+      height: 44px;
+      background: rgba(30,29,26,0.75);
+      border: 1px solid rgba(200,184,154,0.25);
+      color: var(--accent);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      backdrop-filter: blur(4px);
+    }
+    .shorts-arrow:hover { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+    .shorts-arrow-left  { left: -4px; }
+    .shorts-arrow-right { right: -4px; }
 
     /* MISSION STRIP — removed */
 
@@ -416,11 +540,11 @@
     /* THEORY STRIP */
     .theory-section {
       padding: 120px 0;
-      background: var(--ink);
+      background: var(--accent-2);
       color: var(--bg);
     }
-    .theory-section .section-label { color: rgba(200,184,154,0.6); }
-    .theory-section .section-label::before { background: var(--accent); }
+    .theory-section .section-label { color: rgba(232,230,223,0.5); }
+    .theory-section .section-label::before { background: rgba(200,184,154,0.6); }
     .theory-section .section-title { color: var(--bg); }
     .theory-steps {
       display: grid;
@@ -575,7 +699,7 @@
 
     .founder-section {
       padding: 100px 0;
-      background: var(--ink);
+      background: var(--warm-dark);
       color: var(--bg);
     }
     .founder-grid {
@@ -772,7 +896,7 @@
 
     /* DONATION FORM */
     .donation-form-wrap {
-      background: var(--ink);
+      background: var(--warm-dark);
       color: var(--bg);
       padding: 48px;
       position: sticky;
@@ -1188,7 +1312,7 @@
     /* ─── DAF FULL SECTION ────────────────────── */
     .daf-section {
       padding: 80px 0;
-      background: var(--ink);
+      background: var(--warm-dark);
       color: var(--bg);
     }
     .daf-section .section-label { color: rgba(200,184,154,0.5); }
@@ -1283,7 +1407,7 @@
       min-height: calc(100vh - 61px);
     }
     .contact-left {
-      background: var(--ink);
+      background: var(--warm-dark);
       color: var(--bg);
       padding: 100px 80px;
       display: flex;
@@ -1426,7 +1550,7 @@
 
     /* ─── FOOTER ──────────────────────────────── */
     footer {
-      background: var(--ink);
+      background: var(--warm-dark);
       color: rgba(232,230,223,0.5);
       padding: 60px 0 32px;
       border-top: 1px solid rgba(255,255,255,0.05);
@@ -1498,7 +1622,7 @@
     /* ─── SHORTS CAROUSEL ─────────────────────── */
     .shorts-section {
       padding: 80px 0 100px;
-      background: var(--ink);
+      background: var(--forest);
       color: var(--bg);
       overflow: hidden;
     }
@@ -1588,6 +1712,8 @@
       border: 1px solid rgba(200,184,154,0.08);
       overflow: hidden;
       transition: transform 0.3s var(--ease), border-color 0.3s;
+      display: flex;
+      flex-direction: column;
     }
     .short-card:hover { transform: translateY(-4px); border-color: rgba(200,184,154,0.25); }
     .short-card-inner {
@@ -1595,34 +1721,30 @@
       width: 100%;
       aspect-ratio: 9 / 16;
       overflow: hidden;
+      flex-shrink: 0;
     }
     .short-card iframe {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
       border: none;
-      pointer-events: none; /* click goes to overlay link */
+      pointer-events: auto;
     }
     .short-card-overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(to top,
-        rgba(30,29,26,0.92) 0%,
-        rgba(30,29,26,0.15) 45%,
+        rgba(30,29,26,0.85) 0%,
+        rgba(30,29,26,0.1) 40%,
         transparent 100%);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       padding: 14px;
-      text-decoration: none;
-      transition: background 0.3s;
+      pointer-events: none;
+      transition: opacity 0.3s;
     }
-    .short-card:hover .short-card-overlay {
-      background: linear-gradient(to top,
-        rgba(30,29,26,0.98) 0%,
-        rgba(30,29,26,0.3) 50%,
-        transparent 100%);
-    }
+    .short-card:hover .short-card-overlay { opacity: 0; }
     .short-card-title {
       font-family: var(--font-display);
       font-weight: 700;
@@ -1630,29 +1752,14 @@
       letter-spacing: 0.03em;
       line-height: 1.35;
       color: var(--bg);
-      margin-bottom: 8px;
+      margin-bottom: 0;
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
     .short-card-watch {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      opacity: 0;
-      transform: translateY(4px);
-      transition: opacity 0.25s, transform 0.25s;
-    }
-    .short-card:hover .short-card-watch {
-      opacity: 1;
-      transform: translateY(0);
+      display: none;
     }
     .short-badge {
       position: absolute;
@@ -1666,6 +1773,41 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
       padding: 3px 7px;
+      pointer-events: none;
+    }
+    .short-ext-link {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 28px;
+      height: 28px;
+      background: rgba(30,29,26,0.7);
+      border: 1px solid rgba(200,184,154,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(232,230,223,0.7);
+      transition: all 0.2s;
+      z-index: 2;
+      text-decoration: none;
+    }
+    .short-ext-link:hover { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+    .short-caption {
+      padding: 10px 12px;
+      background: rgba(15,14,13,0.95);
+      border-top: 1px solid rgba(200,184,154,0.08);
+    }
+    .short-caption-text {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.03em;
+      color: rgba(232,230,223,0.7);
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     /* Placeholder card (shown when API key not set) */
@@ -1898,7 +2040,7 @@
     /* BACK */
     .flip-back {
       transform: rotateY(180deg);
-      background: var(--ink);
+      background: var(--warm-dark);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -1992,7 +2134,7 @@
     /* HOW IT WORKS */
     .adopt-how {
       padding: 80px 0;
-      background: var(--ink);
+      background: var(--warm-dark);
       color: var(--bg);
     }
     .adopt-how-grid {
@@ -2047,9 +2189,36 @@
 
     /* ─── RESPONSIVE ──────────────────────────── */
     @media (max-width: 1024px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-right { display: none; }
-      .hero-left { padding: 80px 40px; }
+      /* Hero: reel becomes full-bleed background on tablet/mobile */
+      .hero {
+        grid-template-columns: 1fr;
+        position: relative;
+        min-height: calc(100vh - 61px);
+      }
+      .hero-right {
+        display: block !important;
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        min-height: calc(100vh - 61px);
+      }
+      .hero-reel-wrap { min-height: calc(100vh - 61px); }
+      .hero-reel-badge { display: none; }
+      .hero-left {
+        position: relative;
+        z-index: 1;
+        padding: 80px 40px 80px;
+        min-height: calc(100vh - 61px);
+        background: linear-gradient(130deg,
+          rgba(30,29,26,0.88) 0%,
+          rgba(30,29,26,0.72) 55%,
+          rgba(30,29,26,0.35) 100%);
+      }
+      .hero-headline { color: var(--bg); }
+      .hero-eyebrow  { color: rgba(200,184,154,0.8); }
+      .hero-body     { color: rgba(232,230,223,0.85); }
+      .hero-scroll   { display: none; }
+
       .quartet-grid { grid-template-columns: 1fr 1fr; }
       .theory-steps { grid-template-columns: 1fr; gap: 40px; }
       .theory-arrow { display: none; }
@@ -2080,7 +2249,7 @@
       .team-grid { grid-template-columns: 1fr; max-width: 320px; }
       .footer-top { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
-      .hero-left { padding: 60px 24px; }
+      .hero-left { padding: 60px 24px 60px; }
       .section { padding: 80px 0; }
       .donate-layout { padding: 60px 0; }
     }
@@ -2092,12 +2261,12 @@
   <!-- NAV -->
   <nav id="main-nav">
     <div class="nav-logo" onclick="navigate('home')" style="cursor:pointer">
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="2" y="2" width="32" height="32" stroke="#1E1D1A" stroke-width="1.5"/>
-        <circle cx="2" cy="2" r="3" fill="#1E1D1A"/>
-        <circle cx="34" cy="2" r="3" fill="#1E1D1A"/>
-        <circle cx="2" cy="34" r="3" fill="#1E1D1A"/>
-        <circle cx="34" cy="34" r="3" fill="#1E1D1A"/>
+      <!-- Exact TCF "4" logo mark traced from pitch deck -->
+      <svg width="30" height="34" viewBox="0 0 42 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="0,30 26,0 26,30" fill="#1E1D1A"/>
+        <rect x="28" y="0" width="14" height="30" fill="#1E1D1A"/>
+        <rect x="0" y="34" width="26" height="14" fill="#1E1D1A"/>
+        <rect x="28" y="34" width="14" height="14" fill="#1E1D1A"/>
       </svg>
       <div class="nav-logo-text">
         <span class="name">Tessera</span>
@@ -2142,42 +2311,33 @@
           Tessera Compassion Foundation restores dignity and creates sustainable hope for vulnerable communities—low-income families, children without parents, widows, and immigrant refugees—through compassion, storytelling, and action.
         </p>
         <div class="hero-actions">
-          <button class="btn-primary" onclick="navigate('donate')">
+          <button class="btn-primary btn-donate-animated" onclick="navigate('donate')">
             Donate Now
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
-          <button class="btn-ghost" onclick="navigate('adopt')">Adopt an Elder</button>
-        </div>
-        <div class="hero-scroll">
-          <div class="scroll-line"></div>
-          Scroll to Explore
+          <button class="btn-adopt" onclick="navigate('adopt')">
+            Adopt an Elder
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
         </div>
       </div>
       <div class="hero-right">
-        <div class="hero-right-inner">
-          <div class="hero-quote">"Restoring Dignity, One Story at a Time."</div>
-          <div class="hero-stats-row">
-            <div class="hero-stat">
-              <div class="hero-stat-num">650K+</div>
-              <div class="hero-stat-label">Combined Followers</div>
+        <div class="hero-reel-wrap">
+          <iframe
+            src="https://www.instagram.com/reel/DJ-nc5yPOA8/embed/"
+            allowtransparency="true"
+            allowfullscreen
+            scrolling="no"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+          ></iframe>
+          <div class="hero-reel-badge">
+            <div class="hero-reel-badge-inner">
+              <span class="hero-reel-badge-dot"></span>
+              @aidenkim16 on Instagram
             </div>
-            <div class="hero-stat">
-              <div class="hero-stat-num">4</div>
-              <div class="hero-stat-label">Populations Served</div>
-            </div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-num">2025</div>
-            <div class="hero-stat-label">Year Founded</div>
           </div>
         </div>
-        <svg class="hero-tessera-large" width="400" height="400" viewBox="0 0 400 400" fill="none">
-          <rect x="10" y="10" width="380" height="380" stroke="white" stroke-width="2"/>
-          <circle cx="10" cy="10" r="20" fill="white"/>
-          <circle cx="390" cy="10" r="20" fill="white"/>
-          <circle cx="10" cy="390" r="20" fill="white"/>
-          <circle cx="390" cy="390" r="20" fill="white"/>
-        </svg>
       </div>
     </section>
 
@@ -2207,19 +2367,11 @@
 
         <!-- Carousel track -->
         <div class="shorts-track-wrap" id="shorts-track-wrap" style="display:none;">
-          <div class="shorts-track" id="shorts-track"></div>
-        </div>
-
-        <!-- API key notice -->
-        <div class="shorts-api-notice" id="shorts-api-notice">
-          <strong>⚙ YouTube API Key Required</strong> — To load live Shorts from the channel, add a YouTube Data API v3 key: replace <code>YOUR_YOUTUBE_API_KEY</code> in the script. Get a free key at <a href="https://console.cloud.google.com" target="_blank" style="color:var(--accent);">console.cloud.google.com</a> → Enable "YouTube Data API v3" → Create credentials. Until then, videos below are hardcoded previews.
-        </div>
-
-        <div class="shorts-nav">
-          <button class="shorts-nav-btn" id="shorts-prev" onclick="scrollShorts(-1)" aria-label="Previous">
+          <button class="shorts-arrow shorts-arrow-left" onclick="scrollShorts(-1)" aria-label="Previous">
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5.5 1L1 5l4.5 4M1 5h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
-          <button class="shorts-nav-btn" id="shorts-next" onclick="scrollShorts(1)" aria-label="Next">
+          <div class="shorts-track" id="shorts-track"></div>
+          <button class="shorts-arrow shorts-arrow-right" onclick="scrollShorts(1)" aria-label="Next">
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5l-4.5 4M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
@@ -2289,19 +2441,19 @@
         <div class="impact-nums">
           <div class="impact-item">
             <div class="impact-num">650K+</div>
-            <div class="impact-label">Combined Followers</div>
+            <div class="impact-label">Online Followers</div>
           </div>
           <div class="impact-item">
-            <div class="impact-num">4</div>
-            <div class="impact-label">Vulnerable Groups</div>
+            <div class="impact-num">$300K+</div>
+            <div class="impact-label">Raised for Impact</div>
           </div>
           <div class="impact-item">
-            <div class="impact-num">30+</div>
-            <div class="impact-label">Partners & Collaborators</div>
+            <div class="impact-num">2.1M</div>
+            <div class="impact-label">First Viral Video Views</div>
           </div>
           <div class="impact-item">
-            <div class="impact-num">2</div>
-            <div class="impact-label">Countries Served</div>
+            <div class="impact-num">Thousands</div>
+            <div class="impact-label">Lives Impacted</div>
           </div>
         </div>
       </div>
@@ -2313,22 +2465,103 @@
         <div class="section-label">Our Partners</div>
         <h2 class="section-title" style="font-size:clamp(30px,3vw,44px)">A Network of Compassion</h2>
         <div class="partners-grid">
-          <span class="partner-chip">Jay Park</span>
-          <span class="partner-chip">Jamie Chung</span>
-          <span class="partner-chip">Dumbfoundead</span>
-          <span class="partner-chip">Mighty Mouth</span>
-          <span class="partner-chip">Big Matthew (BM)</span>
-          <span class="partner-chip">LAFC</span>
-          <span class="partner-chip">t3micro</span>
-          <span class="partner-chip">Samho Travels</span>
-          <span class="partner-chip">The Maya Salon</span>
-          <span class="partner-chip">Somang Society</span>
-          <span class="partner-chip">DJ Soda</span>
-          <span class="partner-chip">Tapestry LA</span>
-          <span class="partner-chip">Goldhouse</span>
-          <span class="partner-chip">Super 73</span>
-          <span class="partner-chip">Kinjaz</span>
-          <span class="partner-chip">AKP Sports Foundation</span>
+
+          <div class="partner-card">
+            <div class="partner-avatar">JP</div>
+            <div class="partner-name">Jay Park</div>
+            <div class="partner-role">Singer · K-Pop Artist</div>
+            <a href="https://www.instagram.com/moresojuplease/" target="_blank" class="partner-handle">@moresojuplease</a>
+            <span class="partner-tag">Music</span>
+          </div>
+
+          <div class="partner-card">
+            <div class="partner-avatar">JC</div>
+            <div class="partner-name">Jamie Chung</div>
+            <div class="partner-role">Actor</div>
+            <a href="https://www.instagram.com/jamiejchung/" target="_blank" class="partner-handle">@jamiejchung</a>
+            <span class="partner-tag">Film & TV</span>
+          </div>
+
+          <div class="partner-card">
+            <div class="partner-avatar">DP</div>
+            <div class="partner-name">Dumbfoundead</div>
+            <div class="partner-role">Rapper · Actor</div>
+            <a href="https://www.instagram.com/dumbfoundead/" target="_blank" class="partner-handle">@dumbfoundead</a>
+            <span class="partner-tag">Music · Film</span>
+          </div>
+
+          <div class="partner-card">
+            <div class="partner-avatar">MM</div>
+            <div class="partner-name">Mighty Mouth</div>
+            <div class="partner-role">Musician</div>
+            <a href="https://www.instagram.com/mightymouth237/" target="_blank" class="partner-handle">@mightymouth237</a>
+            <span class="partner-tag">Music</span>
+          </div>
+
+          <div class="partner-card">
+            <div class="partner-avatar">BM</div>
+            <div class="partner-name">Big Matthew</div>
+            <div class="partner-role">Musician · KARD</div>
+            <a href="https://www.instagram.com/bigmatthewww/" target="_blank" class="partner-handle">@bigmatthewww</a>
+            <span class="partner-tag">Music</span>
+          </div>
+
+          <div class="partner-card">
+            <div class="partner-avatar">DS</div>
+            <div class="partner-name">DJ Soda</div>
+            <div class="partner-role">DJ · Artist</div>
+            <a href="https://www.instagram.com/deejaysoda/" target="_blank" class="partner-handle">@deejaysoda</a>
+            <span class="partner-tag">Music</span>
+          </div>
+
+          <div class="partner-card">
+            <div class="partner-avatar">FC</div>
+            <div class="partner-name">LAFC</div>
+            <div class="partner-role">LA Football Club</div>
+            <a href="https://www.instagram.com/lafc/" target="_blank" class="partner-handle">@lafc</a>
+            <span class="partner-tag">Sports</span>
+          </div>
+
+          <div class="partner-card">
+            <div class="partner-avatar">T3</div>
+            <div class="partner-name">t3micro</div>
+            <div class="partner-role">Beauty Tech Brand</div>
+            <a href="https://www.instagram.com/t3micro/" target="_blank" class="partner-handle">@t3micro</a>
+            <span class="partner-tag">Brand</span>
+          </div>
+
+          <div class="partner-card">
+            <div class="partner-avatar">GH</div>
+            <div class="partner-name">Goldhouse</div>
+            <div class="partner-role">Asian Pacific Collective</div>
+            <a href="https://www.instagram.com/goldhouse/" target="_blank" class="partner-handle">@goldhouse</a>
+            <span class="partner-tag">Community</span>
+          </div>
+
+          <div class="partner-card">
+            <div class="partner-avatar">TL</div>
+            <div class="partner-name">Tapestry LA</div>
+            <div class="partner-role">Community Church</div>
+            <a href="https://www.instagram.com/tapestrylachurch/" target="_blank" class="partner-handle">@tapestrylachurch</a>
+            <span class="partner-tag">Community</span>
+          </div>
+
+          <div class="partner-card">
+            <div class="partner-avatar">S7</div>
+            <div class="partner-name">Super 73</div>
+            <div class="partner-role">Electric Bike Brand</div>
+            <a href="https://www.instagram.com/super73/" target="_blank" class="partner-handle">@super73</a>
+            <span class="partner-tag">Brand</span>
+          </div>
+
+          <div class="partner-card">
+            <div class="partner-avatar">SS</div>
+            <div class="partner-name">Somang Society</div>
+            <div class="partner-role">Korean Nonprofit</div>
+            <a href="https://www.instagram.com/somangsociety/" target="_blank" class="partner-handle">@somangsociety</a>
+            <span class="partner-tag">Nonprofit</span>
+          </div>
+
         </div>
       </div>
     </section>
@@ -2338,7 +2571,7 @@
       <div class="container" style="text-align:center;">
         <div style="font-family:var(--font-display);font-weight:300;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,243,238,0.6);margin-bottom:20px;">Join The Movement</div>
         <h2 style="font-family:var(--font-display);font-weight:900;font-size:clamp(40px,5vw,70px);text-transform:uppercase;color:var(--white);line-height:1;margin-bottom:32px;">Be a Tessera.</h2>
-        <p style="font-family:var(--font-serif);font-size:18px;color:rgba(245,243,238,0.7);max-width:560px;margin:0 auto 44px;">Every act of compassion is a small piece—a tessera—in the mosaic of a more just world. Your contribution, however small, builds something larger than any one of us.</p>
+        <p style="font-family:var(--font-serif);font-size:20px;font-style:italic;color:rgba(245,243,238,0.85);max-width:560px;margin:0 auto 44px;">"Compassion becomes powerful when people move together."</p>
         <button class="btn-primary" onclick="navigate('donate')" style="background:var(--white);color:var(--accent-2);border-color:var(--white);margin:0 auto;">
           Make a Donation
           <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -2491,18 +2724,37 @@
                 <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="2" y="2" width="36" height="36" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="3" fill="currentColor"/><circle cx="38" cy="2" r="3" fill="currentColor"/><circle cx="2" cy="38" r="3" fill="currentColor"/><circle cx="38" cy="38" r="3" fill="currentColor"/></svg>
               </div>
             </div>
-            <div class="team-name">Charles Choe</div>
-            <div class="team-role">Board Member</div>
+            <div class="team-name">Charles Choi</div>
+            <div class="team-role">Board Member · Lead Pastor, Tapestry LA Church</div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- INITIATIVES -->
-    <section style="padding:100px 0; background:var(--bg-dark); color:var(--bg);">
+    <section style="padding:100px 0; background:var(--warm-dark); color:var(--bg);">
       <div class="container">
         <div class="section-label" style="color:rgba(200,184,154,0.5)">What We've Done & Where We're Going</div>
         <h2 class="section-title" style="color:var(--bg); margin-bottom:60px;">Initiatives</h2>
+        <!-- 4 pillars from pitch deck -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(200,184,154,0.08);border:1px solid rgba(200,184,154,0.08);margin-bottom:60px;">
+          <div style="background:var(--bg-dark);padding:32px 28px;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Emergency Relief</div>
+            <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;">Providing emergency support through food, housing, and medical aid to those in immediate need.</div>
+          </div>
+          <div style="background:var(--bg-dark);padding:32px 28px;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Storytelling & Awareness</div>
+            <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;">Using digital storytelling to inspire awareness and action—making the unseen visible.</div>
+          </div>
+          <div style="background:var(--bg-dark);padding:32px 28px;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Community Partnerships</div>
+            <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;">Partnering with communities, celebrities, global leaders, influencers, brands, and volunteers.</div>
+          </div>
+          <div style="background:var(--bg-dark);padding:32px 28px;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Long-Term Sustainability</div>
+            <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;">Creating pathways through education, jobs, mentorship, and social enterprise.</div>
+          </div>
+        </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;">
           <div>
             <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:28px;">Projects Completed</div>
@@ -2511,20 +2763,96 @@
               <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Walkers, strollers & mobility assistance</li>
               <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Cash assistance & bill payment support</li>
               <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Heater replacement for vulnerable households</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> VIP play experience & Michelin-star dining for orphans</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Funeral costs relief for grieving elderly parents</li>
               <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Rent & shelter assistance</li>
               <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Food vouchers & seasonal donations for elderly</li>
             </ul>
           </div>
           <div>
-            <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:28px;">Planned Initiatives</div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:28px;">2026–2027 Vision</div>
             <ul style="list-style:none;display:flex;flex-direction:column;gap:14px;">
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Mentorship & career internship for orphans & foster youth</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Prefuneral celebration initiative with Somang Society</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Social impact restaurant: free meals + elderly income</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Adopt an Elderly initiative for low-wage workers</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Entertainer collaborations for awareness campaigns</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Korea expansion & Tessera Korea incorporation</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Coupang item donations and marketplace</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Community restaurant initiative</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Pre-funeral celebration program with Somang Society</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Refugee assistance program</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Mentorship & scholarship for orphans</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Mental health counseling programs</li>
             </ul>
+          </div>
+        </div>
+        <div style="margin-top:60px;padding-top:40px;border-top:1px solid rgba(200,184,154,0.1);font-family:var(--font-serif);font-size:18px;font-style:italic;color:rgba(200,184,154,0.6);text-align:center;">"Compassion should not only provide temporary relief, but also should create lasting change."</div>
+      </div>
+    </section>
+
+    <!-- IMPACT STORIES -->
+    <section style="padding:100px 0;">
+      <div class="container">
+        <div class="section-label">Stories Behind the Mission</div>
+        <h2 class="section-title" style="font-size:clamp(36px,4vw,60px);margin-bottom:48px;">Impact</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);">
+          <div style="background:var(--bg);padding:48px 40px;">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent-2);margin-bottom:16px;">Hearing Aid Support</div>
+            <div style="font-family:var(--font-serif);font-size:17px;color:var(--ink-mid);line-height:1.75;">A 70-year-old grandmother raising her disabled daughter while collecting cardboard for a living received support to purchase a hearing aid her daughter could never afford.</div>
+          </div>
+          <div style="background:var(--bg);padding:48px 40px;border-left:1px solid var(--rule);">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent-2);margin-bottom:16px;">Recovery Assistance</div>
+            <div style="font-family:var(--font-serif);font-size:17px;color:var(--ink-mid);line-height:1.75;">An elderly street vendor facing physical abuse and financial hardship received support to leave her unsafe work environment and access proper medical care.</div>
+          </div>
+          <div style="background:var(--bg);padding:48px 40px;border-top:1px solid var(--rule);">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent-2);margin-bottom:16px;">Funeral Relief</div>
+            <div style="font-family:var(--font-serif);font-size:17px;color:var(--ink-mid);line-height:1.75;">After losing their son to suicide, elderly parents who spent their life savings on funeral costs received emergency financial restoration and ongoing emotional support.</div>
+          </div>
+          <div style="background:var(--bg);padding:48px 40px;border-top:1px solid var(--rule);border-left:1px solid var(--rule);">
+            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent-2);margin-bottom:16px;">Dental & Literacy Support</div>
+            <div style="font-family:var(--font-serif);font-size:17px;color:var(--ink-mid);line-height:1.75;">A widowed grandmother caring for her incapable son received dentures, literacy education, and additional support for food and living expenses.</div>
+          </div>
+        </div>
+        <div style="margin-top:32px;text-align:center;">
+          <p style="font-family:var(--font-display);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-light);margin-bottom:20px;">Behind every statistic is a human story.</p>
+          <button class="btn-primary" onclick="navigate('donate')" style="margin:0 auto;">Support the Mission <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section style="padding:100px 0;background:var(--warm-dark);color:var(--bg);">
+      <div class="container">
+        <div class="section-label" style="color:rgba(200,184,154,0.5);">How We Got Here</div>
+        <h2 class="section-title" style="color:var(--bg);margin-bottom:64px;">Timeline</h2>
+        <div style="position:relative;">
+          <div style="position:absolute;top:20px;left:0;right:0;height:1px;background:rgba(200,184,154,0.15);"></div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;">
+            <div style="padding:0 20px 0 0;padding-top:0;">
+              <div style="width:10px;height:10px;background:var(--accent);border-radius:50%;margin-bottom:24px;margin-top:16px;position:relative;z-index:1;"></div>
+              <div style="font-family:var(--font-display);font-weight:900;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Jan 2024</div>
+              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--bg);margin-bottom:8px;">First Trip to Korea</div>
+              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.45);line-height:1.6;">Took $10,000 of personal savings to uplift elderly street vendors and cardboard collectors.</div>
+            </div>
+            <div style="padding:0 20px;padding-top:0;">
+              <div style="width:10px;height:10px;background:var(--accent);border-radius:50%;margin-bottom:24px;margin-top:16px;position:relative;z-index:1;"></div>
+              <div style="font-family:var(--font-display);font-weight:900;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Apr 2024</div>
+              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--bg);margin-bottom:8px;">First Viral Video</div>
+              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.45);line-height:1.6;">2.1M views — first Korean American creating kindness content on the streets.</div>
+            </div>
+            <div style="padding:0 20px;padding-top:0;">
+              <div style="width:10px;height:10px;background:var(--accent);border-radius:50%;margin-bottom:24px;margin-top:16px;position:relative;z-index:1;"></div>
+              <div style="font-family:var(--font-display);font-weight:900;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Aug 2024</div>
+              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--bg);margin-bottom:8px;">100K on Instagram</div>
+              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.45);line-height:1.6;">Exponential growth driven by genuineness and community connection.</div>
+            </div>
+            <div style="padding:0 20px;padding-top:0;">
+              <div style="width:10px;height:10px;background:var(--accent);border-radius:50%;margin-bottom:24px;margin-top:16px;position:relative;z-index:1;"></div>
+              <div style="font-family:var(--font-display);font-weight:900;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Feb 2025</div>
+              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--bg);margin-bottom:8px;">TCF Incorporated</div>
+              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.45);line-height:1.6;">Turned a simple online awareness project into a scalable 501(c)(3) nonprofit.</div>
+            </div>
+            <div style="padding:0 0 0 20px;padding-top:0;">
+              <div style="width:10px;height:10px;background:rgba(200,184,154,0.3);border-radius:50%;margin-bottom:24px;margin-top:16px;position:relative;z-index:1;border:1px solid rgba(200,184,154,0.4);"></div>
+              <div style="font-family:var(--font-display);font-weight:900;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(200,184,154,0.4);margin-bottom:8px;">Jun 2026</div>
+              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:rgba(232,230,223,0.5);margin-bottom:8px;">Tessera Korea</div>
+              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.3);line-height:1.6;">Korea incorporation in progress — expanding operations on the ground.</div>
+            </div>
           </div>
         </div>
       </div>
@@ -2563,6 +2891,46 @@
               <li>Vocational training for widows & immigrants</li>
               <li>Once-in-a-lifetime experiences for those who've never had them</li>
             </ul>
+
+            <!-- FUNDRAISING GOAL -->
+            <div style="margin-top:48px;border:1px solid var(--rule);overflow:hidden;">
+              <div style="background:var(--ink);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+                <div>
+                  <div style="font-family:var(--font-display);font-weight:300;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(200,184,154,0.5);margin-bottom:4px;">Fundraising Goal</div>
+                  <div style="font-family:var(--font-display);font-weight:900;font-size:32px;color:var(--accent);line-height:1;">$650,000</div>
+                </div>
+                <div style="font-family:var(--font-display);font-size:11px;letter-spacing:0.08em;color:rgba(200,184,154,0.4);">$300K+ raised to date</div>
+              </div>
+              <div style="padding:20px 24px;border-top:1px solid var(--rule);">
+                <div style="font-family:var(--font-display);font-weight:700;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-light);margin-bottom:16px;">How Your Gift Is Allocated</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="height:6px;background:var(--accent-2);border-radius:1px;width:30.8%;flex-shrink:0;"></div>
+                    <span style="font-family:var(--font-display);font-size:12px;color:var(--ink-mid);">Restaurant Initiative — $200K <span style="color:var(--ink-light);">30.8%</span></span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="height:6px;background:#5A8C6A;border-radius:1px;width:23.1%;flex-shrink:0;"></div>
+                    <span style="font-family:var(--font-display);font-size:12px;color:var(--ink-mid);">Direct Help Projects — $150K <span style="color:var(--ink-light);">23.1%</span></span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="height:6px;background:var(--accent);border-radius:1px;width:15.4%;flex-shrink:0;"></div>
+                    <span style="font-family:var(--font-display);font-size:12px;color:var(--ink-mid);">U.S. Operations — $100K <span style="color:var(--ink-light);">15.4%</span></span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="height:6px;background:#8BA89A;border-radius:1px;width:7.7%;flex-shrink:0;"></div>
+                    <span style="font-family:var(--font-display);font-size:12px;color:var(--ink-mid);">Korea Operations — $50K <span style="color:var(--ink-light);">7.7%</span></span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="height:6px;background:#B8A8D0;border-radius:1px;width:7.7%;flex-shrink:0;"></div>
+                    <span style="font-family:var(--font-display);font-size:12px;color:var(--ink-mid);">Pre-Funeral Celebration — $50K <span style="color:var(--ink-light);">7.7%</span></span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="height:6px;background:rgba(30,29,26,0.15);border-radius:1px;width:12.3%;flex-shrink:0;"></div>
+                    <span style="font-family:var(--font-display);font-size:12px;color:var(--ink-mid);">Operations & Office — $80K <span style="color:var(--ink-light);">12.3%</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <!-- FEE COMPARISON TABLE -->
             <div style="margin-top:48px;border:1px solid var(--rule);overflow:hidden;">
@@ -3309,19 +3677,27 @@
               <a href="mailto:aiden@tesseracompassion.com" class="contact-detail-value">aiden@tesseracompassion.com</a>
             </div>
             <div class="contact-detail-item">
-              <span class="contact-detail-label">Instagram</span>
-              <a href="https://instagram.com/aidingwithaiden" target="_blank" class="contact-detail-value">@aidingwithaiden</a>
+              <span class="contact-detail-label">Phone</span>
+              <a href="tel:+12136764606" class="contact-detail-value">+1 (213) 676-4606</a>
             </div>
             <div class="contact-detail-item">
-              <span class="contact-detail-label">Personal</span>
-              <a href="https://instagram.com/aidenkim16" target="_blank" class="contact-detail-value">@aidenkim16</a>
+              <span class="contact-detail-label">Address</span>
+              <span class="contact-detail-value" style="font-size:14px;line-height:1.5;">727 W 7th St #623<br>Los Angeles, CA 90017</span>
+            </div>
+            <div class="contact-detail-item">
+              <span class="contact-detail-label">Instagram</span>
+              <a href="https://www.instagram.com/aidenkim16/" target="_blank" class="contact-detail-value">@aidenkim16</a>
+            </div>
+            <div class="contact-detail-item">
+              <span class="contact-detail-label">Foundation</span>
+              <a href="https://www.instagram.com/tesseracompassion/" target="_blank" class="contact-detail-value">@tesseracompassion</a>
             </div>
           </div>
           <div class="contact-social">
-            <a class="social-tag" href="https://instagram.com/aidingwithaiden" target="_blank">Instagram</a>
-            <a class="social-tag" href="https://tiktok.com/@aidenkim16" target="_blank">TikTok</a>
-            <a class="social-tag" href="https://facebook.com" target="_blank">Facebook</a>
-            <a class="social-tag" href="https://youtube.com" target="_blank">YouTube</a>
+            <a class="social-tag" href="https://www.instagram.com/aidenkim16/" target="_blank">Instagram</a>
+            <a class="social-tag" href="https://www.tiktok.com/@aidenkim16" target="_blank">TikTok</a>
+            <a class="social-tag" href="https://www.facebook.com/AJKinGeneral/" target="_blank">Facebook</a>
+            <a class="social-tag" href="https://www.youtube.com/@aidenkim16/videos" target="_blank">YouTube</a>
           </div>
         </div>
       </div>
@@ -3391,9 +3767,20 @@
     <div class="container">
       <div class="footer-top">
         <div>
-          <div class="footer-brand-name">Tessera</div>
-          <div class="footer-brand-sub">Compassion Foundation</div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+            <svg width="26" height="30" viewBox="0 0 42 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="0,30 26,0 26,30" fill="rgba(232,230,223,0.45)"/>
+              <rect x="28" y="0" width="14" height="30" fill="rgba(232,230,223,0.45)"/>
+              <rect x="0" y="34" width="26" height="14" fill="rgba(232,230,223,0.45)"/>
+              <rect x="28" y="34" width="14" height="14" fill="rgba(232,230,223,0.45)"/>
+            </svg>
+            <div class="footer-brand-name">Tessera</div>
+          </div>
+          <div class="footer-brand-sub">Compassion Foundation · 501(c)(3)</div>
           <div class="footer-tagline">Restoring dignity and creating sustainable hope for vulnerable communities through compassion, storytelling, and action.</div>
+          <div style="margin-top:20px;font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.25);line-height:1.7;">
+            727 W 7th St #623<br>Los Angeles, CA 90017<br>+1 (213) 676-4606
+          </div>
         </div>
         <div>
           <div class="footer-col-title">Navigate</div>
@@ -3426,7 +3813,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© 2025 Tessera Compassion Foundation · 501(c)(3) Nonprofit</span>
+        <span>© 2026 Tessera Compassion Foundation · 501(c)(3) · EIN: [Your EIN]</span>
         <div class="footer-bottom-right">
           <a href="#">Privacy</a>
           <a href="#">Terms</a>
@@ -3524,20 +3911,22 @@
         <div class="short-card">
           <div class="short-card-inner">
             <iframe
-              src="https://www.youtube-nocookie.com/embed/${s.id}?rel=0&modestbranding=1&controls=0&loop=1&playlist=${s.id}&mute=1"
+              src="https://www.youtube-nocookie.com/embed/${s.id}?rel=0&modestbranding=1&controls=1&playsinline=1"
               title="${s.title.replace(/"/g,'')}"
-              allow="autoplay; encrypted-media"
+              allow="autoplay; encrypted-media; picture-in-picture"
               allowfullscreen
               loading="lazy">
             </iframe>
-            <a class="short-card-overlay" href="https://www.youtube.com/shorts/${s.id}" target="_blank" rel="noopener">
+            <div class="short-card-overlay">
               <div class="short-card-title">${s.title}</div>
-              <div class="short-card-watch">
-                <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M6 1l3 3-3 3M1 4h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-                Watch on YouTube
-              </div>
-            </a>
+            </div>
             <div class="short-badge">Shorts</div>
+            <a class="short-ext-link" href="https://www.youtube.com/shorts/${s.id}" target="_blank" rel="noopener" title="Open in YouTube">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5.5 1H9v3.5M9 1L4 6M2 3H1v6h6V8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+          <div class="short-caption">
+            <div class="short-caption-text">${s.title}</div>
           </div>
         </div>
       `).join('');
