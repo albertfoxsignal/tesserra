@@ -384,24 +384,15 @@
     /* QUARTET SECTION */
     .section { padding: 120px 0; }
     .section-label {
-      font-family: var(--font-display);
-      font-weight: 300;
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .section-label::before {
-      content: '';
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 15px;
+      color: var(--accent-2);
+      margin-bottom: 16px;
       display: block;
-      width: 24px;
-      height: 1px;
-      background: var(--accent);
+      letter-spacing: 0.01em;
     }
+    .section-label::before { display: none; }
     .section-title {
       font-family: var(--font-display);
       font-weight: 900;
@@ -415,47 +406,37 @@
     .quartet-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--rule);
-      border: 1px solid var(--rule);
+      gap: 0;
+      border-top: 1px solid var(--rule);
+      border-left: 1px solid var(--rule);
+      margin-top: 48px;
     }
     .quartet-card {
       background: var(--bg);
-      padding: 40px 32px;
+      padding: 44px 36px;
       transition: background 0.3s;
-      position: relative;
-      overflow: hidden;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
     }
-    .quartet-card::before {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 0; height: 2px;
-      background: var(--accent-2);
-      transition: width 0.4s var(--ease);
-    }
-    .quartet-card:hover::before { width: 100%; }
     .quartet-card:hover { background: var(--white); }
-    .quartet-num {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: 64px;
-      line-height: 1;
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
+    .quartet-num { display: none; }
     .quartet-title {
       font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 14px;
-      letter-spacing: 0.1em;
+      font-weight: 900;
+      font-size: 17px;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      color: var(--ink);
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--accent-2);
+      display: inline-block;
     }
     .quartet-body {
-      font-size: 13px;
+      font-family: var(--font-serif);
+      font-size: 15px;
       color: var(--ink-mid);
-      line-height: 1.6;
+      line-height: 1.72;
     }
 
     /* THEORY STRIP */
@@ -464,8 +445,11 @@
       background: var(--accent-2);
       color: var(--bg);
     }
-    .theory-section .section-label { color: rgba(232,230,223,0.5); }
-    .theory-section .section-label::before { background: rgba(200,184,154,0.6); }
+    /* Dark section label overrides */
+    .founder-section .section-label,
+    [style*="background:var(--warm-dark)"] .section-label,
+    [style*="background:var(--ink)"] .section-label { color: rgba(200,184,154,0.65); }
+    .theory-section .section-label { color: rgba(232,230,223,0.55); }
     .theory-section .section-title { color: var(--bg); }
     .theory-steps {
       display: grid;
@@ -508,9 +492,10 @@
 
     /* IMPACT BAND */
     .impact-band {
-      padding: 80px 0;
+      padding: 0;
       border-top: 1px solid var(--rule);
       border-bottom: 1px solid var(--rule);
+      overflow: hidden;
     }
     .impact-nums {
       display: grid;
@@ -518,26 +503,28 @@
       gap: 0;
     }
     .impact-item {
-      padding: 40px;
+      padding: 48px 44px;
       border-right: 1px solid var(--rule);
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 6px;
     }
     .impact-item:last-child { border-right: none; }
     .impact-num {
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: 52px;
+      font-size: clamp(40px, 4vw, 64px);
       line-height: 1;
       color: var(--ink);
-      margin-bottom: 8px;
+      letter-spacing: -0.02em;
     }
     .impact-label {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 14px;
       color: var(--ink-light);
+      letter-spacing: 0;
     }
 
     /* PARTNERS CAROUSEL */
@@ -3949,6 +3936,7 @@
           <a href="#">Privacy</a>
           <a href="#">Terms</a>
           <a href="#" onclick="navigate('donate')">Donate</a>
+          <span style="color:rgba(232,230,223,0.18);font-size:10px;letter-spacing:0.04em;">Site by <a href="https://foxsignal.co/local.html" target="_blank" rel="noopener" style="color:rgba(232,230,223,0.28);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(200,184,154,0.7)'" onmouseout="this.style.color='rgba(232,230,223,0.28)'">Fox Signal Local</a> →</span>
         </div>
       </div>
     </div>
