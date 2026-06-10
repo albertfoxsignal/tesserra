@@ -130,6 +130,31 @@
     }
     .nav-cta:hover { background: #2e4537; color: var(--white) !important; border-bottom-color: transparent !important; }
 
+    /* Language toggle */
+    .lang-toggle { display: flex; gap: 4px; align-items: center; margin-left: 12px; }
+    .lang-btn {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 5px 9px;
+      border: 1px solid var(--rule);
+      background: none;
+      color: var(--ink-light);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .lang-btn:hover:not(.active) { border-color: var(--ink); color: var(--ink); }
+
+    /* i18n visibility helpers */
+    [data-lang-show] { display: none; }
+    .lang-en [data-lang-show="en"],
+    .lang-ko [data-lang-show="ko"] { display: block; }
+    .lang-en [data-lang-show="ko"],
+    .lang-ko [data-lang-show="en"] { display: none !important; }
+
     /* hamburger */
     .nav-hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
     .nav-hamburger span { display: block; width: 24px; height: 1.5px; background: var(--ink); transition: all 0.3s; }
@@ -2097,83 +2122,83 @@
       background: rgba(200,184,154,0.4);
     }
 
-    /* BACK */
+    /* BACK — Linktree episode links */
     .flip-back {
       transform: rotateY(180deg);
       background: var(--warm-dark);
       display: flex;
       flex-direction: column;
       overflow: hidden;
-    }
-    .flip-back-video {
-      position: relative;
-      flex: 1;
-      background: #0a0a09;
-      overflow: hidden;
-    }
-    .flip-back-video video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .flip-back-video-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 10px;
-      color: rgba(200,184,154,0.2);
-      font-family: var(--font-display);
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-    .flip-back-video-placeholder svg { opacity: 0.3; }
-    .play-indicator {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 44px;
-      height: 44px;
-      background: rgba(200,184,154,0.15);
-      border: 1px solid rgba(200,184,154,0.3);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-    }
-    .flip-back-info {
-      padding: 16px;
-      flex-shrink: 0;
+      padding: 20px;
     }
     .flip-back-name {
       font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 15px;
-      letter-spacing: 0.06em;
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       color: var(--bg);
-      margin-bottom: 2px;
+      margin-bottom: 4px;
+    }
+    .flip-back-meta {
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
     }
     .flip-back-story {
       font-family: var(--font-serif);
       font-size: 12px;
-      color: rgba(232,230,223,0.55);
+      color: rgba(232,230,223,0.5);
       line-height: 1.5;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
     }
-    .flip-back-price {
+    .flip-episodes-label {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(200,184,154,0.4);
+      margin-bottom: 8px;
+    }
+    .flip-episode-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      margin-bottom: 4px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      text-decoration: none;
+      transition: background 0.2s;
+      border-radius: 2px;
+    }
+    .flip-episode-link:hover { background: rgba(200,184,154,0.1); }
+    .flip-ep-num {
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: 13px;
+      font-size: 9px;
+      letter-spacing: 0.12em;
       color: var(--accent);
-      letter-spacing: 0.06em;
-      margin-bottom: 10px;
+      flex-shrink: 0;
+      min-width: 28px;
+    }
+    .flip-ep-title {
+      font-family: var(--font-display);
+      font-size: 11px;
+      color: rgba(232,230,223,0.7);
+      flex: 1;
+      line-height: 1.3;
+    }
+    .flip-ep-arrow {
+      color: rgba(200,184,154,0.3);
+      font-size: 10px;
+      flex-shrink: 0;
     }
     .flip-sponsor-btn {
       width: 100%;
@@ -2183,6 +2208,15 @@
       font-weight: 800;
       font-size: 10px;
       letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 11px;
+      border: none;
+      cursor: pointer;
+      margin-top: auto;
+      padding-top: 14px;
+      transition: background 0.2s;
+    }
+    .flip-sponsor-btn:hover { background: #b8a485; }
       text-transform: uppercase;
       padding: 10px;
       border: none;
@@ -2348,7 +2382,7 @@
   <nav id="main-nav">
     <div class="nav-logo" onclick="navigate('home')" style="cursor:pointer">
       <!-- Exact TCF "4" logo mark traced from pitch deck -->
-      <svg width="30" height="34" viewBox="0 0 42 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="28" height="33" viewBox="-1 -1 44 51" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
         <polygon points="0,30 26,0 26,30" fill="#1E1D1A"/>
         <rect x="28" y="0" width="14" height="30" fill="#1E1D1A"/>
         <rect x="0" y="34" width="26" height="14" fill="#1E1D1A"/>
@@ -2365,8 +2399,12 @@
       <li><a href="#" onclick="navigate('adopt')" data-page="adopt">Adopt</a></li>
       <li><a href="#" onclick="navigate('donate')" data-page="donate">Donate</a></li>
       <li><a href="#" onclick="navigate('contact')" data-page="contact">Contact</a></li>
-      <li><a href="#" onclick="navigate('donate')" class="nav-cta">Give Now</a></li>
+      <li><a href="#" onclick="navigate('donate')" class="nav-cta" data-i18n="nav.give">Give Now</a></li>
     </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lang-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="lang-ko" onclick="setLang('ko')">한국어</button>
+    </div>
     <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleMobile()">
       <span></span><span></span><span></span>
     </button>
@@ -2390,20 +2428,18 @@
     <section class="hero">
       <div class="hero-left">
         <div class="hero-eyebrow">Est. 2025 · 501(c)(3) Nonprofit</div>
-        <h1 class="hero-headline">
+        <h1 class="hero-headline" data-i18n="hero.headline">
           Every<br>Person<br>Deserves<br><em>Dignity.</em>
         </h1>
-        <p class="hero-body">
+        <p class="hero-body" data-i18n="hero.body">
           Tessera Compassion Foundation restores dignity and creates sustainable hope for vulnerable communities—low-income families, children without parents, widows, and immigrant refugees—through compassion, storytelling, and action.
         </p>
         <div class="hero-actions">
-          <button class="btn-primary btn-donate-animated" onclick="navigate('donate')">
+          <button class="btn-primary btn-donate-animated" onclick="navigate('donate')" data-i18n="hero.donate">
             Donate Now
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
-          <button class="btn-adopt" onclick="navigate('adopt')">
+          <button class="btn-adopt" onclick="navigate('adopt')" data-i18n="hero.adopt">
             Adopt an Elder
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
       </div>
@@ -2435,23 +2471,28 @@
             <div class="section-label">YouTube · @aidenkim16</div>
             <h2 class="shorts-title">Compassion<br><em>in Action.</em></h2>
           </div>
-          <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="shorts-yt-link">
-            <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M15.5 2.5S15.3 1.2 14.7.6C13.9-.2 13-.2 12.6-.2 10.5-.3 7.5-.3 7.5-.3s-3 0-5.1.1C2 -.2 1-.2.3.6-.3 1.2-.5 2.5-.5 2.5S-.7 4-.7 5.5v1.4C-.7 8.4-.5 9.7-.5 9.7S-.3 11 .3 11.6c.8.8 1.8.8 2.3.8C4.2 12.5 7.5 12.5 7.5 12.5s3 0 5.1-.2c.4 0 1.3 0 2.1-.8.6-.6.8-1.9.8-1.9S16 8.4 16 6.9V5.5C16 4 15.5 2.5 15.5 2.5zM6 8.5v-5l5 2.5L6 8.5z" fill="currentColor"/></svg>
-            Watch All Shorts
-          </a>
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <!-- Video tabs -->
+            <div style="display:flex;gap:0;border:1px solid rgba(200,184,154,0.15);">
+              <button id="tab-shorts" onclick="switchVideoTab('shorts')" style="font-family:var(--font-display);font-weight:700;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:8px 18px;background:var(--accent);color:var(--ink);border:none;cursor:pointer;transition:all 0.2s;">Shorts</button>
+              <button id="tab-videos" onclick="switchVideoTab('videos')" style="font-family:var(--font-display);font-weight:700;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:8px 18px;background:transparent;color:rgba(200,184,154,0.5);border:none;cursor:pointer;transition:all 0.2s;">Videos</button>
+            </div>
+            <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="shorts-yt-link" id="yt-link-shorts">
+              <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M15.5 2.5S15.3 1.2 14.7.6C13.9-.2 13-.2 12.6-.2 10.5-.3 7.5-.3 7.5-.3s-3 0-5.1.1C2 -.2 1-.2.3.6-.3 1.2-.5 2.5-.5 2.5S-.7 4-.7 5.5v1.4C-.7 8.4-.5 9.7-.5 9.7S-.3 11 .3 11.6c.8.8 1.8.8 2.3.8C4.2 12.5 7.5 12.5 7.5 12.5s3 0 5.1-.2c.4 0 1.3 0 2.1-.8.6-.6.8-1.9.8-1.9S16 8.4 16 6.9V5.5C16 4 15.5 2.5 15.5 2.5zM6 8.5v-5l5 2.5L6 8.5z" fill="currentColor"/></svg>
+              Watch All Shorts
+            </a>
+          </div>
         </div>
 
-        <!-- Loading state (shown briefly) -->
+        <!-- Loading state -->
         <div class="shorts-loading" id="shorts-loading">
           <div class="shorts-skeleton"></div>
           <div class="shorts-skeleton"></div>
           <div class="shorts-skeleton"></div>
           <div class="shorts-skeleton"></div>
-          <div class="shorts-skeleton"></div>
-          <div class="shorts-skeleton"></div>
         </div>
 
-        <!-- Carousel track -->
+        <!-- SHORTS carousel -->
         <div class="shorts-track-wrap" id="shorts-track-wrap" style="display:none;">
           <button class="shorts-arrow shorts-arrow-left" onclick="scrollShorts(-1)" aria-label="Previous">
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5.5 1L1 5l4.5 4M1 5h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -2461,6 +2502,32 @@
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5l-4.5 4M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
+
+        <!-- LONG-FORM VIDEOS grid (hidden by default) -->
+        <div id="videos-grid" style="display:none;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:24px;">
+          <a href="https://www.youtube.com/watch?v=wf_EtROpY30" target="_blank" style="display:block;text-decoration:none;background:rgba(255,255,255,0.04);border:1px solid rgba(200,184,154,0.08);transition:background 0.2s;" onmouseover="this.style.background='rgba(200,184,154,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+            <img src="https://i.ytimg.com/vi/wf_EtROpY30/mqdefault.jpg" alt="Video" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
+            <div style="padding:14px 16px;">
+              <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.8);line-height:1.4;">Her First Paycheck — Full Story</div>
+              <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.12em;color:rgba(200,184,154,0.4);margin-top:4px;">@aidenkim16</div>
+            </div>
+          </a>
+          <a href="https://www.youtube.com/watch?v=lw_kjMyrVN4" target="_blank" style="display:block;text-decoration:none;background:rgba(255,255,255,0.04);border:1px solid rgba(200,184,154,0.08);transition:background 0.2s;" onmouseover="this.style.background='rgba(200,184,154,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+            <img src="https://i.ytimg.com/vi/lw_kjMyrVN4/mqdefault.jpg" alt="Video" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
+            <div style="padding:14px 16px;">
+              <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.8);line-height:1.4;">How This Guy Single Handedly Helps The Elderly</div>
+              <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.12em;color:rgba(200,184,154,0.4);margin-top:4px;">@aidenkim16</div>
+            </div>
+          </a>
+          <a href="https://www.youtube.com/watch?v=Vz39pHOBnBQ" target="_blank" style="display:block;text-decoration:none;background:rgba(255,255,255,0.04);border:1px solid rgba(200,184,154,0.08);transition:background 0.2s;" onmouseover="this.style.background='rgba(200,184,154,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+            <img src="https://i.ytimg.com/vi/Vz39pHOBnBQ/mqdefault.jpg" alt="Video" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
+            <div style="padding:14px 16px;">
+              <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.8);line-height:1.4;">How BM Helped Fight Elderly Poverty — Full</div>
+              <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.12em;color:rgba(200,184,154,0.4);margin-top:4px;">@aidenkim16</div>
+            </div>
+          </a>
+        </div>
+
       </div>
     </section>
 
@@ -2558,49 +2625,41 @@
               <div class="partner-card">
                 <div class="partner-avatar">JP</div>
                 <div class="partner-name">Jay Park</div>
-                <div class="partner-role">Singer · K-Pop Artist</div>
+                <div class="partner-role">Rapper</div>
                 <a href="https://www.instagram.com/moresojuplease/" target="_blank" class="partner-handle">@moresojuplease</a>
                 <span class="partner-tag">Music</span>
               </div>
 
               <div class="partner-card">
-                <div class="partner-avatar">JC</div>
-                <div class="partner-name">Jamie Chung</div>
-                <div class="partner-role">Actor</div>
-                <a href="https://www.instagram.com/jamiejchung/" target="_blank" class="partner-handle">@jamiejchung</a>
-                <span class="partner-tag">Film & TV</span>
-              </div>
-
-              <div class="partner-card">
-                <div class="partner-avatar">DP</div>
-                <div class="partner-name">Dumbfoundead</div>
-                <div class="partner-role">Rapper · Actor</div>
-                <a href="https://www.instagram.com/dumbfoundead/" target="_blank" class="partner-handle">@dumbfoundead</a>
-                <span class="partner-tag">Music · Film</span>
-              </div>
-
-              <div class="partner-card">
-                <div class="partner-avatar">MM</div>
-                <div class="partner-name">Mighty Mouth</div>
-                <div class="partner-role">Musician</div>
-                <a href="https://www.instagram.com/mightymouth237/" target="_blank" class="partner-handle">@mightymouth237</a>
-                <span class="partner-tag">Music</span>
+                <div class="partner-avatar">CP</div>
+                <div class="partner-name">Coupang</div>
+                <div class="partner-role">E-Commerce Platform</div>
+                <a href="https://www.instagram.com/coupang/" target="_blank" class="partner-handle">@coupang</a>
+                <span class="partner-tag">Brand</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">BM</div>
-                <div class="partner-name">Big Matthew</div>
-                <div class="partner-role">Musician · KARD</div>
+                <div class="partner-name">BM</div>
+                <div class="partner-role">Rapper · Actor</div>
                 <a href="https://www.instagram.com/bigmatthewww/" target="_blank" class="partner-handle">@bigmatthewww</a>
-                <span class="partner-tag">Music</span>
+                <span class="partner-tag">Music · Film</span>
               </div>
 
               <div class="partner-card">
-                <div class="partner-avatar">DS</div>
-                <div class="partner-name">DJ Soda</div>
-                <div class="partner-role">DJ · Artist</div>
-                <a href="https://www.instagram.com/deejaysoda/" target="_blank" class="partner-handle">@deejaysoda</a>
-                <span class="partner-tag">Music</span>
+                <div class="partner-avatar">DA</div>
+                <div class="partner-name">Dan_am_i</div>
+                <div class="partner-role">Hypercar Collector</div>
+                <a href="https://www.instagram.com/dan_am_i/" target="_blank" class="partner-handle">@dan_am_i</a>
+                <span class="partner-tag">Creator</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">BF</div>
+                <div class="partner-name">Berify.io</div>
+                <div class="partner-role">Verification Tech</div>
+                <a href="https://www.instagram.com/berifyio/" target="_blank" class="partner-handle">@berifyio</a>
+                <span class="partner-tag">Technology</span>
               </div>
 
               <div class="partner-card">
@@ -2612,94 +2671,87 @@
               </div>
 
               <div class="partner-card">
+                <div class="partner-avatar">CK</div>
+                <div class="partner-name">CKA</div>
+                <div class="partner-role">Korean American Organization</div>
+                <a href="https://www.instagram.com/cka_us/" target="_blank" class="partner-handle">@cka_us</a>
+                <span class="partner-tag">Community</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">NK</div>
+                <div class="partner-name">NetKAL</div>
+                <div class="partner-role">Korean American Network</div>
+                <a href="https://www.instagram.com/netkal/" target="_blank" class="partner-handle">@netkal</a>
+                <span class="partner-tag">Community</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">LW</div>
+                <div class="partner-name">Latham &amp; Watkins</div>
+                <div class="partner-role">Global Law Firm</div>
+                <a href="https://www.instagram.com/lathamwatkins/" target="_blank" class="partner-handle">@lathamwatkins</a>
+                <span class="partner-tag">Legal</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">YC</div>
+                <div class="partner-name">Yulchon</div>
+                <div class="partner-role">Korean Law Firm</div>
+                <a href="https://www.instagram.com/yulchon_llc/" target="_blank" class="partner-handle">@yulchon_llc</a>
+                <span class="partner-tag">Legal</span>
+              </div>
+
+              <div class="partner-card">
                 <div class="partner-avatar">T3</div>
-                <div class="partner-name">t3micro</div>
+                <div class="partner-name">T3Micro</div>
                 <div class="partner-role">Beauty Tech Brand</div>
                 <a href="https://www.instagram.com/t3micro/" target="_blank" class="partner-handle">@t3micro</a>
                 <span class="partner-tag">Brand</span>
               </div>
 
               <div class="partner-card">
-                <div class="partner-avatar">GH</div>
-                <div class="partner-name">Goldhouse</div>
-                <div class="partner-role">Asian Pacific Collective</div>
-                <a href="https://www.instagram.com/goldhouse/" target="_blank" class="partner-handle">@goldhouse</a>
-                <span class="partner-tag">Community</span>
-              </div>
-
-              <div class="partner-card">
-                <div class="partner-avatar">TL</div>
-                <div class="partner-name">Tapestry LA</div>
-                <div class="partner-role">Community Church</div>
-                <a href="https://www.instagram.com/tapestrylachurch/" target="_blank" class="partner-handle">@tapestrylachurch</a>
-                <span class="partner-tag">Community</span>
-              </div>
-
-              <div class="partner-card">
-                <div class="partner-avatar">S7</div>
-                <div class="partner-name">Super 73</div>
-                <div class="partner-role">Electric Bike Brand</div>
-                <a href="https://www.instagram.com/super73/" target="_blank" class="partner-handle">@super73</a>
-                <span class="partner-tag">Brand</span>
-              </div>
-
-              <div class="partner-card">
-                <div class="partner-avatar">SS</div>
-                <div class="partner-name">Somang Society</div>
-                <div class="partner-role">Korean Nonprofit</div>
-                <a href="https://www.instagram.com/somangsociety/" target="_blank" class="partner-handle">@somangsociety</a>
-                <span class="partner-tag">Nonprofit</span>
-              </div>
-
-              <div class="partner-card">
-                <div class="partner-avatar">ST</div>
-                <div class="partner-name">Samho Travels</div>
-                <div class="partner-role">Travel Agency</div>
-                <a href="https://www.instagram.com/samhotravels/" target="_blank" class="partner-handle">@samhotravels</a>
-                <span class="partner-tag">Travel</span>
-              </div>
-
-              <div class="partner-card">
-                <div class="partner-avatar">MS</div>
-                <div class="partner-name">The Maya Salon</div>
-                <div class="partner-role">Beauty · South Pasadena</div>
-                <a href="https://www.instagram.com/themayasalon/" target="_blank" class="partner-handle">@themayasalon</a>
-                <span class="partner-tag">Beauty</span>
-              </div>
-
-              <div class="partner-card">
-                <div class="partner-avatar">KJ</div>
-                <div class="partner-name">Kinjaz</div>
-                <div class="partner-role">Dance Crew</div>
-                <a href="https://www.instagram.com/kinjaz/" target="_blank" class="partner-handle">@kinjaz</a>
-                <span class="partner-tag">Dance · Arts</span>
-              </div>
-
-              <div class="partner-card">
-                <div class="partner-avatar">AK</div>
-                <div class="partner-name">Austin Kang</div>
-                <div class="partner-role">Chef · Mukjung Seoul</div>
-                <a href="https://www.instagram.com/austinkangg/" target="_blank" class="partner-handle">@austinkangg</a>
-                <span class="partner-tag">Food</span>
-              </div>
-
-              <div class="partner-card">
-                <div class="partner-avatar">JK</div>
-                <div class="partner-name">Jaykeeout</div>
-                <div class="partner-role">Content Creator</div>
-                <a href="https://www.instagram.com/jaykeeout/" target="_blank" class="partner-handle">@jaykeeout</a>
+                <div class="partner-avatar">IF</div>
+                <div class="partner-name">Iamfromkorea</div>
+                <div class="partner-role">YouTuber</div>
+                <a href="https://www.instagram.com/iamfromkorea/" target="_blank" class="partner-handle">@iamfromkorea</a>
                 <span class="partner-tag">Creator</span>
               </div>
 
               <div class="partner-card">
-                <div class="partner-avatar">AK</div>
-                <div class="partner-name">AKP Sports</div>
-                <div class="partner-role">Sports Foundation</div>
-                <a href="https://www.instagram.com/akpsportsfoundation/" target="_blank" class="partner-handle">@akpsportsfoundation</a>
-                <span class="partner-tag">Sports</span>
+                <div class="partner-avatar">DP</div>
+                <div class="partner-name">Dumbfoundead</div>
+                <div class="partner-role">Rapper · Actor</div>
+                <a href="https://www.instagram.com/dumbfoundead/" target="_blank" class="partner-handle">@dumbfoundead</a>
+                <span class="partner-tag">Music · Film</span>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-avatar">SS</div>
+                <div class="partner-name">Sean Solo</div>
+                <div class="partner-role">Influencer</div>
+                <a href="https://www.instagram.com/seansolo_/" target="_blank" class="partner-handle">@seansolo_</a>
+                <span class="partner-tag">Creator</span>
               </div>
 
             </div><!-- /partners-track -->
+          </div>
+
+          <div class="partners-nav">
+            <div class="partners-dots" id="partners-dots"></div>
+            <div class="partners-arrows">
+              <button class="partner-arrow" id="partners-prev" onclick="partnerSlide(-1)" aria-label="Previous">
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5.5 1L1 5l4.5 4M1 5h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+              <button class="partner-arrow" id="partners-next" onclick="partnerSlide(1)" aria-label="Next">
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5l-4.5 4M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+          <div class="partners-tr
           </div><!-- /partners-track-outer -->
 
           <div class="partners-nav">
@@ -3482,13 +3534,10 @@
         <div class="adopt-grid" id="adopt-grid">
 
           <!-- CARD 1 -->
-          <div class="flip-card" data-status="available" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+          <div class="flip-card" data-status="available">
             <div class="flip-card-inner">
               <div class="flip-front">
-                <div class="flip-front-placeholder">
-                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
-                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
-                </div>
+                <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
                 <div class="flip-front-hint">Hover to meet</div>
                 <div class="flip-front-overlay">
                   <div class="flip-front-name">Grandmother Yun</div>
@@ -3496,94 +3545,72 @@
                 </div>
               </div>
               <div class="flip-back">
-                <div class="flip-back-video">
-                  <div class="flip-back-video-placeholder">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
-                    Video Placeholder
-                  </div>
-                  <!-- <video src="videos/yun.mp4" loop muted playsinline></video> -->
-                </div>
-                <div class="flip-back-info">
-                  <div class="flip-back-name">Grandmother Yun</div>
-                  <div class="flip-back-story">Works collecting cardboard 12 hours a day. Has not seen a doctor in 6 years.</div>
-                  <div class="flip-back-price">$45 / month sponsors her fully</div>
-                  <button class="flip-sponsor-btn" onclick="sponsorElder('Grandmother Yun', 45)">Sponsor Her →</button>
-                </div>
+                <div class="flip-back-name">Grandmother Yun</div>
+                <div class="flip-back-meta">Age 81 · Seoul · Available</div>
+                <div class="flip-back-story">Collects cardboard 12 hours a day. Has not seen a doctor in 6 years.</div>
+                <div class="flip-episodes-label">Her Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">Finding Grandmother Yun</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">Her first doctor visit in years</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">3 months later — an update</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandmother Yun', 45)">Sponsor Her →</button>
               </div>
             </div>
           </div>
 
           <!-- CARD 2 -->
-          <div class="flip-card" data-status="available" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+          <div class="flip-card" data-status="available">
             <div class="flip-card-inner">
               <div class="flip-front">
-                <div class="flip-front-placeholder">
-                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
-                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
-                </div>
+                <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
                 <div class="flip-front-hint">Hover to meet</div>
                 <div class="flip-front-overlay">
                   <div class="flip-front-name">Grandfather Park</div>
-                  <div class="flip-front-age">Age 76 · Incheon, Korea</div>
+                  <div class="flip-front-age">Age 77 · Busan, Korea</div>
                 </div>
               </div>
               <div class="flip-back">
-                <div class="flip-back-video">
-                  <div class="flip-back-video-placeholder">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
-                    Video Placeholder
-                  </div>
-                </div>
-                <div class="flip-back-info">
-                  <div class="flip-back-name">Grandfather Park</div>
-                  <div class="flip-back-story">Sells vegetables at a street market since 5am daily. Lives alone after losing his wife.</div>
-                  <div class="flip-back-price">$35 / month sponsors him fully</div>
-                  <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Park', 35)">Sponsor Him →</button>
-                </div>
+                <div class="flip-back-name">Grandfather Park</div>
+                <div class="flip-back-meta">Age 77 · Busan · Available</div>
+                <div class="flip-back-story">Rolls kimbap at 5am every morning, summer and winter, to earn $3 a day.</div>
+                <div class="flip-episodes-label">His Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">Meeting him at the street corner</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">His first real meal in years</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">Following up — is he okay?</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Park', 35)">Sponsor Him →</button>
               </div>
             </div>
           </div>
 
           <!-- CARD 3 -->
-          <div class="flip-card" data-status="sponsored" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+          <div class="flip-card" data-status="sponsored">
             <div class="flip-card-inner">
               <div class="flip-front">
-                <div class="flip-front-placeholder">
-                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
-                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
-                </div>
+                <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
                 <div class="flip-front-hint">Hover to meet</div>
                 <div style="position:absolute;top:12px;left:12px;background:var(--accent-2);color:var(--white);font-family:var(--font-display);font-weight:700;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 10px;">Sponsored</div>
                 <div class="flip-front-overlay">
                   <div class="flip-front-name">Grandmother Kim</div>
-                  <div class="flip-front-age">Age 84 · Busan, Korea</div>
+                  <div class="flip-front-age">Age 82 · Seoul, Korea</div>
                 </div>
               </div>
               <div class="flip-back">
-                <div class="flip-back-video">
-                  <div class="flip-back-video-placeholder">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
-                    Video Placeholder
-                  </div>
-                </div>
-                <div class="flip-back-info">
-                  <div class="flip-back-name">Grandmother Kim</div>
-                  <div class="flip-back-story">Knits and sells scarves near a fish market. Has been fully sponsored since March 2025.</div>
-                  <div class="flip-back-price" style="color:var(--accent-2);">✓ Currently Sponsored</div>
-                  <button class="flip-sponsor-btn" style="background:rgba(61,92,74,0.3);color:#9fcfb0;cursor:default;">Thank You to Her Sponsor</button>
-                </div>
+                <div class="flip-back-name">Grandmother Kim</div>
+                <div class="flip-back-meta">Age 82 · Seoul · Sponsored ✓</div>
+                <div class="flip-back-story">Knits scarves near a fish market. Fully sponsored since March 2025.</div>
+                <div class="flip-episodes-label">Her Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">Meeting Grandma Kim</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">Getting her hearing aid</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">6 months later — her new life</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" style="background:rgba(61,92,74,0.4);color:#9fcfb0;cursor:default;">✓ Currently Sponsored</button>
               </div>
             </div>
           </div>
 
           <!-- CARD 4 -->
-          <div class="flip-card" data-status="available" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+          <div class="flip-card" data-status="available">
             <div class="flip-card-inner">
               <div class="flip-front">
-                <div class="flip-front-placeholder">
-                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
-                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
-                </div>
+                <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
                 <div class="flip-front-hint">Hover to meet</div>
                 <div class="flip-front-overlay">
                   <div class="flip-front-name">Grandfather Choi</div>
@@ -3591,30 +3618,23 @@
                 </div>
               </div>
               <div class="flip-back">
-                <div class="flip-back-video">
-                  <div class="flip-back-video-placeholder">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
-                    Video Placeholder
-                  </div>
-                </div>
-                <div class="flip-back-info">
-                  <div class="flip-back-name">Grandfather Choi</div>
-                  <div class="flip-back-story">A retired factory worker who collects aluminum cans for income. Walks 8km daily.</div>
-                  <div class="flip-back-price">$30 / month sponsors him fully</div>
-                  <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Choi', 30)">Sponsor Him →</button>
-                </div>
+                <div class="flip-back-name">Grandfather Choi</div>
+                <div class="flip-back-meta">Age 79 · Daegu · Available</div>
+                <div class="flip-back-story">Retired factory worker collecting cans. Walks 8km daily in all weather.</div>
+                <div class="flip-episodes-label">His Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">Walking 8km to survive</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">A full day of rest — finally</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">What changed for him</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Choi', 30)">Sponsor Him →</button>
               </div>
             </div>
           </div>
 
           <!-- CARD 5 -->
-          <div class="flip-card" data-status="available" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+          <div class="flip-card" data-status="available">
             <div class="flip-card-inner">
               <div class="flip-front">
-                <div class="flip-front-placeholder">
-                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
-                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
-                </div>
+                <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
                 <div class="flip-front-hint">Hover to meet</div>
                 <div class="flip-front-overlay">
                   <div class="flip-front-name">Grandmother Lee</div>
@@ -3622,30 +3642,23 @@
                 </div>
               </div>
               <div class="flip-back">
-                <div class="flip-back-video">
-                  <div class="flip-back-video-placeholder">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
-                    Video Placeholder
-                  </div>
-                </div>
-                <div class="flip-back-info">
-                  <div class="flip-back-name">Grandmother Lee</div>
-                  <div class="flip-back-story">Sells handmade rice cakes from a small cart. Her hands are arthritic but she never stops.</div>
-                  <div class="flip-back-price">$50 / month sponsors her fully</div>
-                  <button class="flip-sponsor-btn" onclick="sponsorElder('Grandmother Lee', 50)">Sponsor Her →</button>
-                </div>
+                <div class="flip-back-name">Grandmother Lee</div>
+                <div class="flip-back-meta">Age 88 · Seoul · Available</div>
+                <div class="flip-back-story">Sells rice cakes from a small cart. Arthritic hands — but she never stops.</div>
+                <div class="flip-episodes-label">Her Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">The rice cake grandmother</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">Her hands — and her story</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">Visiting her 4 months later</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandmother Lee', 50)">Sponsor Her →</button>
               </div>
             </div>
           </div>
 
           <!-- CARD 6 -->
-          <div class="flip-card" data-status="available" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+          <div class="flip-card" data-status="available">
             <div class="flip-card-inner">
               <div class="flip-front">
-                <div class="flip-front-placeholder">
-                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
-                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
-                </div>
+                <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
                 <div class="flip-front-hint">Hover to meet</div>
                 <div class="flip-front-overlay">
                   <div class="flip-front-name">Grandfather Oh</div>
@@ -3653,30 +3666,23 @@
                 </div>
               </div>
               <div class="flip-back">
-                <div class="flip-back-video">
-                  <div class="flip-back-video-placeholder">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
-                    Video Placeholder
-                  </div>
-                </div>
-                <div class="flip-back-info">
-                  <div class="flip-back-name">Grandfather Oh</div>
-                  <div class="flip-back-story">A veteran who works as a parking attendant 6 days a week. Sends most of his income to a sick relative.</div>
-                  <div class="flip-back-price">$40 / month sponsors him fully</div>
-                  <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Oh', 40)">Sponsor Him →</button>
-                </div>
+                <div class="flip-back-name">Grandfather Oh</div>
+                <div class="flip-back-meta">Age 73 · Incheon · Available</div>
+                <div class="flip-back-story">A veteran working as a parking attendant, sending most of his income to a sick relative.</div>
+                <div class="flip-episodes-label">His Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">The veteran who keeps giving</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">Why he works so hard</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">His relative gets the help they need</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Oh', 40)">Sponsor Him →</button>
               </div>
             </div>
           </div>
 
           <!-- CARD 7 -->
-          <div class="flip-card" data-status="sponsored" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+          <div class="flip-card" data-status="sponsored">
             <div class="flip-card-inner">
               <div class="flip-front">
-                <div class="flip-front-placeholder">
-                  <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="2" y="2" width="48" height="48" stroke="currentColor" stroke-width="1"/><circle cx="2" cy="2" r="4" fill="currentColor"/><circle cx="50" cy="2" r="4" fill="currentColor"/><circle cx="2" cy="50" r="4" fill="currentColor"/><circle cx="50" cy="50" r="4" fill="currentColor"/></svg>
-                  <span style="font-size:10px;letter-spacing:0.2em;">Photo Placeholder</span>
-                </div>
+                <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
                 <div class="flip-front-hint">Hover to meet</div>
                 <div style="position:absolute;top:12px;left:12px;background:var(--accent-2);color:var(--white);font-family:var(--font-display);font-weight:700;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 10px;">Sponsored</div>
                 <div class="flip-front-overlay">
@@ -3685,26 +3691,22 @@
                 </div>
               </div>
               <div class="flip-back">
-                <div class="flip-back-video">
-                  <div class="flip-back-video-placeholder">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/><path d="M16 14l12 6-12 6V14z" fill="currentColor"/></svg>
-                    Video Placeholder
-                  </div>
-                </div>
-                <div class="flip-back-info">
-                  <div class="flip-back-name">Grandmother Shin</div>
-                  <div class="flip-back-story">Known for her laugh and her persimmon kimchi. Sponsored since January 2025.</div>
-                  <div class="flip-back-price" style="color:var(--accent-2);">✓ Currently Sponsored</div>
-                  <button class="flip-sponsor-btn" style="background:rgba(61,92,74,0.3);color:#9fcfb0;cursor:default;">Thank You to Her Sponsor</button>
-                </div>
+                <div class="flip-back-name">Grandmother Shin</div>
+                <div class="flip-back-meta">Age 82 · Suwon · Sponsored ✓</div>
+                <div class="flip-back-story">Known for her laugh and her persimmon kimchi. Sponsored since January 2025.</div>
+                <div class="flip-episodes-label">Her Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">The grandmother who laughs</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">Making kimchi together</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">One year later — still smiling</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" style="background:rgba(61,92,74,0.4);color:#9fcfb0;cursor:default;">✓ Currently Sponsored</button>
               </div>
             </div>
           </div>
 
           <!-- CARD 8 — CTA -->
-          <div class="flip-card" style="cursor:default;" onclick="navigate('contact')">
+          <div class="flip-card" style="cursor:pointer;" onclick="navigate('contact')">
             <div class="flip-card-inner" style="transform:none!important;">
-              <div class="flip-front" style="background:var(--accent-2);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;cursor:pointer;">
+              <div class="flip-front" style="background:var(--accent-2);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;">
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="margin-bottom:20px;opacity:0.6;"><rect x="2" y="2" width="44" height="44" stroke="rgba(245,243,238,0.5)" stroke-width="1.5"/><path d="M24 16v16M16 24h16" stroke="rgba(245,243,238,0.7)" stroke-width="2" stroke-linecap="round"/></svg>
                 <div style="font-family:var(--font-display);font-weight:900;font-size:18px;letter-spacing:0.06em;text-transform:uppercase;color:var(--white);margin-bottom:12px;">Nominate an Elder</div>
                 <div style="font-family:var(--font-serif);font-size:14px;color:rgba(245,243,238,0.7);line-height:1.6;">Know someone who needs support? Tell us their story.</div>
@@ -3950,13 +3952,16 @@
     const YT_API_KEY      = 'YOUR_YOUTUBE_API_KEY';  // ← replace this
     const YT_CHANNEL_HANDLE = 'aidenkim16';
 
-    // Fallback hardcoded Shorts (real video IDs from @aidenkim16)
-    const FALLBACK_SHORTS = [
+    // Pinned Shorts always appear first
+    const PINNED_SHORTS = [
       { id: 'wf_EtROpY30', title: 'This was the first time she has ever received this much money' },
+      { id: 'Vz39pHOBnBQ', title: 'How BM Helped Fight Elderly Poverty' },
       { id: 'lw_kjMyrVN4', title: 'How This Guy Single Handedly Helps The Elderly In Korea' },
+    ];
+    // Remaining fallback Shorts (sorted by most recent in production via API)
+    const FALLBACK_SHORTS = [
       { id: 'mun0uWVPC2I', title: 'Aiden Kim on helping elderly Koreans in poverty' },
       { id: '_bYAZIniZwM', title: 'A day in the life of giving back' },
-      { id: 'Vz39pHOBnBQ', title: 'How BM Helped Fight Elderly Poverty' },
       { id: 'wf_EtROpY30', title: 'Moments of compassion on the streets of Korea' },
     ];
 
@@ -4007,10 +4012,11 @@
         }
       }
 
-      // Always fall back to hardcoded IDs if nothing fetched
-      if (shorts.length === 0) {
-        shorts = FALLBACK_SHORTS;
-      }
+      // Always prepend pinned, then append remaining (deduped)
+      if (shorts.length === 0) shorts = FALLBACK_SHORTS;
+      const pinnedIds = new Set(PINNED_SHORTS.map(s => s.id));
+      const remaining = shorts.filter(s => !pinnedIds.has(s.id));
+      shorts = [...PINNED_SHORTS, ...remaining];
 
       // Render cards
       track.innerHTML = shorts.map(s => `
@@ -4135,6 +4141,87 @@
     }
 
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSponsorModal(); });
+
+    // ─── LANGUAGE / i18n ────────────────────────
+    const TRANSLATIONS = {
+      en: {
+        'hero.headline': 'Every<br>Person<br>Deserves<br><em>Dignity.</em>',
+        'hero.body': 'Tessera Compassion Foundation restores dignity and creates sustainable hope for vulnerable communities—low-income families, children without parents, widows, and immigrant refugees—through compassion, storytelling, and action.',
+        'hero.donate': 'Donate Now',
+        'hero.adopt': 'Adopt an Elder',
+        'nav.give': 'Give Now',
+        'donate.title': 'Make a<br>Difference',
+        'donate.body': 'Your donation directly funds programs that provide hearing aids, food, shelter, mentorship, and life-changing experiences to those who need it most.',
+        'adopt.filter.all': 'All', 'adopt.filter.available': 'Available', 'adopt.filter.sponsored': 'Sponsored',
+        'contact.title': "Let's<br><em>Build</em><br>Together.",
+      },
+      ko: {
+        'hero.headline': '모든 사람은<br>존엄하게<br>살 권리가<br><em>있습니다.</em>',
+        'hero.body': '테세라 컴패션 파운데이션은 취약계층—저소득 가정, 부모 없는 아이들, 과부, 이민자 난민—의 존엄성을 회복하고 지속 가능한 희망을 만들어갑니다.',
+        'hero.donate': '지금 기부하기',
+        'hero.adopt': '어르신 후원하기',
+        'nav.give': '지금 후원',
+        'donate.title': '변화를<br>만들어주세요',
+        'donate.body': '여러분의 기부는 보청기, 식품, 주거, 멘토십, 그리고 삶을 변화시키는 경험을 필요한 분들에게 직접 제공합니다.',
+        'adopt.filter.all': '전체', 'adopt.filter.available': '후원 가능', 'adopt.filter.sponsored': '후원 중',
+        'contact.title': "함께<br><em>만들어</em><br>갑시다.",
+      }
+    };
+
+    let currentLang = localStorage.getItem('tcf-lang') || 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('tcf-lang', lang);
+
+      // Toggle button states
+      document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+      document.getElementById('lang-ko').classList.toggle('active', lang === 'ko');
+
+      // Apply translations
+      const t = TRANSLATIONS[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.innerHTML = t[key];
+      });
+
+      // Korean donate page: show KRW/Korean bank section, hide USD Stripe tab
+      document.querySelectorAll('[data-lang-show]').forEach(el => {
+        const show = el.getAttribute('data-lang-show');
+        el.style.display = (show === lang) ? '' : 'none';
+      });
+
+      // Body class for CSS targeting
+      document.body.className = document.body.className.replace(/lang-\w+/, '');
+      document.body.classList.add(`lang-${lang}`);
+    }
+
+    // ─── VIDEO TABS ──────────────────────────────
+    function switchVideoTab(tab) {
+      const shortsWrap = document.getElementById('shorts-track-wrap');
+      const videosGrid = document.getElementById('videos-grid');
+      const tabShorts  = document.getElementById('tab-shorts');
+      const tabVideos  = document.getElementById('tab-videos');
+      const ytLink     = document.getElementById('yt-link-shorts');
+
+      if (tab === 'shorts') {
+        if (shortsWrap) shortsWrap.style.display = 'block';
+        if (videosGrid) videosGrid.style.display = 'none';
+        tabShorts.style.background = 'var(--accent)';
+        tabShorts.style.color = 'var(--ink)';
+        tabVideos.style.background = 'transparent';
+        tabVideos.style.color = 'rgba(200,184,154,0.5)';
+        if (ytLink) { ytLink.href = 'https://www.youtube.com/@aidenkim16/shorts'; ytLink.textContent = 'Watch All Shorts'; }
+      } else {
+        if (shortsWrap) shortsWrap.style.display = 'none';
+        if (videosGrid) { videosGrid.style.display = 'grid'; }
+        tabVideos.style.background = 'var(--accent)';
+        tabVideos.style.color = 'var(--ink)';
+        tabShorts.style.background = 'transparent';
+        tabShorts.style.color = 'rgba(200,184,154,0.5)';
+        if (ytLink) { ytLink.href = 'https://www.youtube.com/@aidenkim16/videos'; ytLink.textContent = 'Watch All Videos'; }
+      }
+    }
 
     // ─── PARTNER CAROUSEL ────────────────────────
     let partnerIndex = 0;
@@ -4471,6 +4558,7 @@
       observeFadeIns();
       initShortsCarousel();
       initPartnerCarousel();
+      setLang(currentLang);
     });
 
     window.addEventListener('resize', () => {
