@@ -6,28 +6,32 @@
   <title>Tessera Compassion Foundation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet" />
   <script src="https://js.stripe.com/v3/"></script>
 
   <style>
     /* ─── TOKENS ──────────────────────────────── */
     :root {
-      --bg:        #E8E6DF;
-      --bg-warm:   #F2EFE8;
-      --bg-dark:   #252017;
-      --ink:       #1E1D1A;
-      --ink-mid:   #4A4840;
-      --ink-light: #8A8778;
-      --accent:    #C8B89A;
+      --bg:        #FFFFFF;
+      --bg-warm:   #F0F5FB;
+      --bg-blue:   #D4E8F7;
+      --blue:      #7FAAC8;
+      --blue-dark: #5A8BB0;
+      --blue-light:#EBF4FB;
+      --ink:       #1A1A1A;
+      --ink-mid:   #444444;
+      --ink-light: #888888;
+      --accent:    #7FAAC8;
       --accent-2:  #3D5C4A;
-      --forest:    #1D2318;
-      --warm-dark: #2A2520;
-      --white:     #F5F3EE;
-      --rule:      rgba(30,29,26,0.15);
+      --warm-dark: #1A2535;
+      --forest:    #1A2535;
+      --bg-dark:   #1A2535;
+      --white:     #FFFFFF;
+      --rule:      rgba(0,0,0,0.1);
 
-      --font-display: 'Barlow Condensed', sans-serif;
-      --font-body:    'Barlow', sans-serif;
-      --font-serif:   'EB Garamond', serif;
+      --font-display: 'Montserrat', sans-serif;
+      --font-body:    'Montserrat', sans-serif;
+      --font-serif:   'Montserrat', sans-serif;
 
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
       --dur: 0.6s;
@@ -68,7 +72,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: var(--bg);
+      background: var(--white);
       border-bottom: 1px solid var(--rule);
       transition: background 0.3s;
     }
@@ -123,12 +127,12 @@
       font-size: 11px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      background: var(--accent-2);
+      background: var(--blue);
       color: var(--white) !important;
       padding: 10px 22px;
       transition: background 0.2s, color 0.2s;
     }
-    .nav-cta:hover { background: #2e4537; color: var(--white) !important; border-bottom-color: transparent !important; }
+    .nav-cta:hover { background: var(--blue-dark); color: var(--white) !important; border-bottom-color: transparent !important; }
 
     /* Language toggle */
     .lang-toggle { display: flex; gap: 4px; align-items: center; margin-left: 12px; }
@@ -162,7 +166,7 @@
       display: none;
       position: fixed;
       top: 61px; left: 0; right: 0; bottom: 0;
-      background: var(--bg-warm);
+      background: var(--white);
       z-index: 99;
       flex-direction: column;
       align-items: center;
@@ -193,51 +197,42 @@
     .hero-left {
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: center;
       padding: 80px 60px 80px 80px;
       position: relative;
       z-index: 2;
-      max-width: 680px;
+      background: var(--bg-blue);
     }
     .hero-eyebrow {
       font-family: var(--font-display);
-      font-weight: 300;
+      font-weight: 600;
       font-size: 11px;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      color: var(--blue-dark);
+      margin-bottom: 20px;
+      opacity: 0.9;
     }
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 30px;
-      height: 1px;
-      background: var(--accent);
-    }
+    .hero-eyebrow::before { display: none; }
     .hero-headline {
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: clamp(64px, 7vw, 100px);
-      line-height: 0.92;
+      font-size: clamp(44px, 5vw, 72px);
+      line-height: 1.05;
       text-transform: uppercase;
-      letter-spacing: -0.01em;
-      margin-bottom: 36px;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      color: var(--ink);
     }
-    .hero-headline em {
-      font-style: normal;
-      color: var(--accent-2);
-    }
+    .hero-headline em { font-style: normal; color: var(--blue-dark); }
     .hero-body {
-      font-family: var(--font-serif);
-      font-size: 18px;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 15px;
       color: var(--ink-mid);
-      max-width: 420px;
-      line-height: 1.7;
-      margin-bottom: 48px;
+      max-width: 460px;
+      line-height: 1.75;
+      margin-bottom: 44px;
     }
     .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
     .btn-primary {
@@ -246,10 +241,10 @@
       font-size: 11px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      background: var(--ink);
-      color: var(--bg);
-      padding: 16px 36px;
-      border: 1px solid var(--ink);
+      background: var(--blue);
+      color: var(--white);
+      padding: 14px 32px;
+      border: 1px solid var(--blue);
       transition: all 0.25s var(--ease);
       display: inline-flex;
       align-items: center;
@@ -355,8 +350,8 @@
 
     /* Persistent donate CTA animation */
     @keyframes donatePulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(200,184,154,0.5); }
-      50%       { box-shadow: 0 0 0 10px rgba(200,184,154,0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(127,170,200,0.5); }
+      50%       { box-shadow: 0 0 0 10px rgba(127,170,200,0); }
     }
     .btn-donate-animated {
       animation: donatePulse 2s ease-in-out infinite;
@@ -369,17 +364,17 @@
       font-size: 11px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      background: var(--accent);
-      color: var(--ink);
-      padding: 16px 36px;
-      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--blue-dark);
+      padding: 14px 32px;
+      border: 2px solid var(--blue-dark);
       transition: all 0.25s var(--ease);
       display: inline-flex;
       align-items: center;
       gap: 10px;
       cursor: pointer;
     }
-    .btn-adopt:hover { background: #b8a485; border-color: #b8a485; }
+    .btn-adopt:hover { background: var(--blue-dark); color: var(--white); border-color: var(--blue-dark); }
 
     /* ─── SHORTS EDGE ARROWS ───────────────────── */
     .shorts-track-wrap { position: relative; }
@@ -409,13 +404,14 @@
     /* QUARTET SECTION */
     .section { padding: 120px 0; }
     .section-label {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 15px;
-      color: var(--accent-2);
-      margin-bottom: 16px;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 14px;
       display: block;
-      letter-spacing: 0.01em;
     }
     .section-label::before { display: none; }
     .section-title {
@@ -454,7 +450,7 @@
       color: var(--ink);
       margin-bottom: 20px;
       padding-bottom: 20px;
-      border-bottom: 2px solid var(--accent-2);
+      border-bottom: 2px solid var(--blue);
       display: inline-block;
     }
     .quartet-body {
@@ -473,7 +469,7 @@
     /* Dark section label overrides */
     .founder-section .section-label,
     [style*="background:var(--warm-dark)"] .section-label,
-    [style*="background:var(--ink)"] .section-label { color: rgba(200,184,154,0.65); }
+    [style*="background:var(--ink)"] .section-label { color: rgba(127,198,230,0.65); }
     .theory-section .section-label { color: rgba(232,230,223,0.55); }
     .theory-section .section-title { color: var(--bg); }
     .theory-steps {
@@ -541,7 +537,7 @@
       font-weight: 900;
       font-size: clamp(40px, 4vw, 64px);
       line-height: 1;
-      color: var(--ink);
+      color: var(--blue-dark);
       letter-spacing: -0.02em;
     }
     .impact-label {
@@ -580,19 +576,19 @@
       transition: background 0.25s;
     }
     .partner-card:last-child { border-right: none; }
-    .partner-card:hover { background: var(--bg-warm); }
+    .partner-card:hover { background: var(--white); }
     .partner-avatar {
       width: 52px;
       height: 52px;
       border-radius: 50%;
-      background: var(--ink);
+      background: var(--blue-light);
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: var(--font-display);
-      font-weight: 900;
-      font-size: 16px;
-      color: var(--accent);
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--blue-dark);
       margin-bottom: 20px;
       flex-shrink: 0;
     }
@@ -756,7 +752,7 @@
 
     .founder-section {
       padding: 100px 0;
-      background: var(--warm-dark);
+      background: var(--bg-dark);
       color: var(--bg);
     }
     .founder-grid {
@@ -953,7 +949,7 @@
 
     /* DONATION FORM */
     .donation-form-wrap {
-      background: var(--warm-dark);
+      background: var(--bg-dark);
       color: var(--bg);
       padding: 40px;
       position: sticky;
@@ -1032,8 +1028,8 @@
     }
     .submit-btn {
       width: 100%;
-      background: var(--accent);
-      color: var(--ink);
+      background: var(--blue);
+      color: var(--white);
       font-family: var(--font-display);
       font-weight: 800;
       font-size: 13px;
@@ -1376,7 +1372,7 @@
     /* ─── DAF FULL SECTION ────────────────────── */
     .daf-section {
       padding: 80px 0;
-      background: var(--warm-dark);
+      background: var(--bg-dark);
       color: var(--bg);
     }
     .daf-section .section-label { color: rgba(200,184,154,0.5); }
@@ -1471,7 +1467,7 @@
       min-height: calc(100vh - 61px);
     }
     .contact-left {
-      background: var(--warm-dark);
+      background: var(--bg-dark);
       color: var(--bg);
       padding: 100px 80px;
       display: flex;
@@ -1614,8 +1610,8 @@
 
     /* ─── FOOTER ──────────────────────────────── */
     footer {
-      background: var(--warm-dark);
-      color: rgba(232,230,223,0.5);
+      background: var(--bg-dark);
+      color: rgba(255,255,255,0.5);
       padding: 60px 0 32px;
       border-top: 1px solid rgba(255,255,255,0.05);
     }
@@ -1707,8 +1703,8 @@
     /* ─── SHORTS CAROUSEL ─────────────────────── */
     .shorts-section {
       padding: 80px 0 100px;
-      background: var(--forest);
-      color: var(--bg);
+      background: var(--bg-dark);
+      color: var(--white);
       overflow: hidden;
     }
     .shorts-header {
@@ -2125,7 +2121,7 @@
     /* BACK — Linktree episode links */
     .flip-back {
       transform: rotateY(180deg);
-      background: var(--warm-dark);
+      background: var(--bg-dark);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -2202,8 +2198,8 @@
     }
     .flip-sponsor-btn {
       width: 100%;
-      background: var(--accent);
-      color: var(--ink);
+      background: var(--blue);
+      color: var(--white);
       font-family: var(--font-display);
       font-weight: 800;
       font-size: 10px;
@@ -2216,7 +2212,7 @@
       padding-top: 14px;
       transition: background 0.2s;
     }
-    .flip-sponsor-btn:hover { background: #b8a485; }
+    .flip-sponsor-btn:hover { background: var(--blue-dark); }
       text-transform: uppercase;
       padding: 10px;
       border: none;
@@ -2228,7 +2224,7 @@
     /* HOW IT WORKS */
     .adopt-how {
       padding: 80px 0;
-      background: var(--warm-dark);
+      background: var(--bg-dark);
       color: var(--bg);
     }
     .adopt-how-grid {
@@ -3068,6 +3064,8 @@
   <!-- ═══════════════════════════════════════════ -->
   <div id="page-donate" class="page">
 
+    <!-- ENGLISH DONATION PAGE (lang=en) -->
+    <div data-lang-show="en" style="display:block;">
     <section style="padding:0;">
       <div class="container">
         <div class="donate-layout" style="padding-top:60px;">
@@ -3501,6 +3499,132 @@
       </div>
     </section>
 
+    </div><!-- /lang-en donate -->
+
+    <!-- KOREAN DONATION PAGE (lang=ko) -->
+    <div data-lang-show="ko" style="display:none;">
+      <div style="background:var(--bg-blue);padding:60px 0 40px;">
+        <div class="container">
+          <div class="section-label">헌금 안내</div>
+          <h1 style="font-family:var(--font-display);font-weight:900;font-size:clamp(36px,4vw,56px);text-transform:uppercase;letter-spacing:-0.02em;color:var(--ink);margin-bottom:16px;">테세라 컴패션<br>헌금 작정</h1>
+          <p style="font-family:var(--font-display);font-size:15px;color:var(--ink-mid);max-width:560px;line-height:1.7;">하나님 나라 확장과 취약계층 지원을 위한 귀한 헌금에 감사드립니다. 아래에서 편리한 방법으로 헌금 작정을 해주세요.</p>
+        </div>
+      </div>
+
+      <div class="container" style="padding-top:60px;padding-bottom:80px;">
+        <div style="display:grid;grid-template-columns:1fr 440px;gap:60px;align-items:start;">
+
+          <!-- LEFT: Info -->
+          <div>
+            <h2 style="font-family:var(--font-display);font-weight:800;font-size:26px;margin-bottom:24px;color:var(--ink);">헌금 사용 안내</h2>
+            <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:40px;">
+              <div style="display:flex;gap:16px;align-items:flex-start;">
+                <div style="width:4px;height:4px;background:var(--blue);border-radius:50%;margin-top:9px;flex-shrink:0;"></div>
+                <p style="font-family:var(--font-display);font-size:14px;color:var(--ink-mid);line-height:1.65;">어르신 보청기, 틀니, 보행 보조기 지원</p>
+              </div>
+              <div style="display:flex;gap:16px;align-items:flex-start;">
+                <div style="width:4px;height:4px;background:var(--blue);border-radius:50%;margin-top:9px;flex-shrink:0;"></div>
+                <p style="font-family:var(--font-display);font-size:14px;color:var(--ink-mid);line-height:1.65;">식품 바우처 및 긴급 현금 지원</p>
+              </div>
+              <div style="display:flex;gap:16px;align-items:flex-start;">
+                <div style="width:4px;height:4px;background:var(--blue);border-radius:50%;margin-top:9px;flex-shrink:0;"></div>
+                <p style="font-family:var(--font-display);font-size:14px;color:var(--ink-mid);line-height:1.65;">고아 및 위탁 청소년 멘토십 · 교육 지원</p>
+              </div>
+              <div style="display:flex;gap:16px;align-items:flex-start;">
+                <div style="width:4px;height:4px;background:var(--blue);border-radius:50%;margin-top:9px;flex-shrink:0;"></div>
+                <p style="font-family:var(--font-display);font-size:14px;color:var(--ink-mid);line-height:1.65;">과부 직업 훈련 및 이민자 정착 지원</p>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-warm);border:1px solid var(--rule);padding:28px;border-radius:2px;">
+              <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:16px;">계좌 직접 이체</div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--rule);">
+                  <span style="font-family:var(--font-display);font-size:12px;color:var(--ink-light);">은행명</span>
+                  <span style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--ink);">신한은행 (Shinhan Bank)</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--rule);">
+                  <span style="font-family:var(--font-display);font-size:12px;color:var(--ink-light);">계좌번호</span>
+                  <span style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--ink);">[계좌번호 입력]</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;">
+                  <span style="font-family:var(--font-display);font-size:12px;color:var(--ink-light);">예금주</span>
+                  <span style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--ink);">테세라컴패션파운데이션</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:24px;padding:20px 24px;background:rgba(127,170,200,0.08);border-left:3px solid var(--blue);">
+              <p style="font-family:var(--font-display);font-size:13px;color:var(--ink-mid);line-height:1.65;">취소/환불 및 이의신청은 <strong>aiden@tesseracompassion.com</strong> 으로 문의해주세요.</p>
+            </div>
+          </div>
+
+          <!-- RIGHT: Form -->
+          <div style="background:var(--white);border:1px solid var(--rule);padding:36px;position:sticky;top:72px;">
+            <div style="font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--ink);margin-bottom:6px;">헌금 작정하기</div>
+            <div style="font-family:var(--font-display);font-size:13px;color:var(--ink-light);margin-bottom:28px;">정기 자동이체 또는 카카오페이로 신청하세요</div>
+
+            <!-- Payment method toggle -->
+            <div style="margin-bottom:24px;">
+              <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:10px;">결제 방식</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);">
+                <button id="ko-kakao-btn" onclick="selectKoPayment('kakao')" style="font-family:var(--font-display);font-weight:700;font-size:12px;padding:12px;background:var(--blue);color:var(--white);border:none;cursor:pointer;transition:all 0.2s;">
+                  💛 카카오페이
+                </button>
+                <button id="ko-cms-btn" onclick="selectKoPayment('cms')" style="font-family:var(--font-display);font-weight:700;font-size:12px;padding:12px;background:var(--white);color:var(--ink-mid);border:none;border-left:1px solid var(--rule);cursor:pointer;transition:all 0.2s;">
+                  🏦 CMS 자동이체
+                </button>
+              </div>
+            </div>
+
+            <!-- Form fields -->
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div>
+                <label style="font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-light);display:block;margin-bottom:5px;">이름 *</label>
+                <input type="text" placeholder="주민등록상의 본명" style="width:100%;padding:10px 12px;border:1px solid var(--rule);font-family:var(--font-display);font-size:14px;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--rule)'">
+              </div>
+              <div>
+                <label style="font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-light);display:block;margin-bottom:5px;">연락처 *</label>
+                <input type="tel" placeholder="010-0000-0000" style="width:100%;padding:10px 12px;border:1px solid var(--rule);font-family:var(--font-display);font-size:14px;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--rule)'">
+              </div>
+              <div id="ko-dob-field">
+                <label style="font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-light);display:block;margin-bottom:5px;">생년월일 * <span style="font-weight:400;text-transform:none;letter-spacing:0;">(CMS 전용)</span></label>
+                <input type="text" placeholder="예: 19901209" style="width:100%;padding:10px 12px;border:1px solid var(--rule);font-family:var(--font-display);font-size:14px;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--rule)'">
+              </div>
+              <div>
+                <label style="font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-light);display:block;margin-bottom:5px;">헌금 금액 (원) *</label>
+                <input type="number" placeholder="최소 1,000원 ~ 최대 500,000원" min="1000" max="500000" step="1000" style="width:100%;padding:10px 12px;border:1px solid var(--rule);font-family:var(--font-display);font-size:14px;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--rule)'">
+              </div>
+              <div id="ko-debit-date" style="display:none;">
+                <label style="font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-light);display:block;margin-bottom:5px;">자동 출금일 *</label>
+                <select style="width:100%;padding:10px 12px;border:1px solid var(--rule);font-family:var(--font-display);font-size:14px;outline:none;background:white;appearance:none;">
+                  <option>매월 1일</option><option>매월 5일</option><option>매월 10일</option>
+                  <option>매월 15일</option><option>매월 20일</option><option>매월 25일</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Privacy consent -->
+            <div style="margin-top:20px;padding:14px;background:var(--bg-warm);border:1px solid var(--rule);font-family:var(--font-display);font-size:11px;color:var(--ink-light);line-height:1.65;">
+              수집된 개인정보는 테세라 컴패션 파운데이션의 헌금 기록을 위해 수집 및 이용됩니다. 작정 해지 시 파기되며, 사전 동의 없이 외부에 제공하지 않습니다.
+            </div>
+            <label style="display:flex;gap:10px;align-items:flex-start;margin-top:12px;cursor:pointer;">
+              <input type="checkbox" style="margin-top:2px;accent-color:var(--blue);">
+              <span style="font-family:var(--font-display);font-size:12px;color:var(--ink-mid);">개인정보 수집 및 이용에 동의합니다 *</span>
+            </label>
+
+            <!-- Submit -->
+            <button id="ko-submit-btn" style="width:100%;margin-top:20px;background:var(--blue);color:var(--white);font-family:var(--font-display);font-weight:800;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;padding:16px;border:none;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='var(--blue-dark)'" onmouseout="this.style.background='var(--blue)'">
+              💛 카카오페이로 작정하기
+            </button>
+
+            <p style="margin-top:12px;font-family:var(--font-display);font-size:11px;color:var(--ink-light);text-align:center;line-height:1.5;">매월 선택하신 날짜에 자동 출금됩니다</p>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /lang-ko donate -->
+
   </div><!-- /page-donate -->
 
   <!-- ═══════════════════════════════════════════ -->
@@ -3881,10 +4005,10 @@
         <div>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
             <svg width="26" height="30" viewBox="0 0 42 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="0,30 26,0 26,30" fill="rgba(232,230,223,0.45)"/>
-              <rect x="28" y="0" width="14" height="30" fill="rgba(232,230,223,0.45)"/>
-              <rect x="0" y="34" width="26" height="14" fill="rgba(232,230,223,0.45)"/>
-              <rect x="28" y="34" width="14" height="14" fill="rgba(232,230,223,0.45)"/>
+              <polygon points="0,30 26,0 26,30" fill="rgba(255,255,255,0.55)"/>
+              <rect x="28" y="0" width="14" height="30" fill="rgba(255,255,255,0.55)"/>
+              <rect x="0" y="34" width="26" height="14" fill="rgba(255,255,255,0.55)"/>
+              <rect x="28" y="34" width="14" height="14" fill="rgba(255,255,255,0.55)"/>
             </svg>
             <div class="footer-brand-name">Tessera</div>
           </div>
@@ -4185,10 +4309,10 @@
         if (t[key]) el.innerHTML = t[key];
       });
 
-      // Korean donate page: show KRW/Korean bank section, hide USD Stripe tab
+      // Apply lang-show visibility
       document.querySelectorAll('[data-lang-show]').forEach(el => {
         const show = el.getAttribute('data-lang-show');
-        el.style.display = (show === lang) ? '' : 'none';
+        el.style.display = (show === lang) ? 'block' : 'none';
       });
 
       // Body class for CSS targeting
@@ -4291,6 +4415,30 @@
       // Arrows
       if (prev) prev.disabled = partnerIndex === 0;
       if (next) next.disabled = partnerIndex >= slides - 1;
+    }
+
+    // ─── KOREAN PAYMENT FORM ─────────────────────
+    function selectKoPayment(method) {
+      const kakaoBtn = document.getElementById('ko-kakao-btn');
+      const cmsBtn   = document.getElementById('ko-cms-btn');
+      const dobField = document.getElementById('ko-dob-field');
+      const debitDate = document.getElementById('ko-debit-date');
+      const submitBtn = document.getElementById('ko-submit-btn');
+      if (!kakaoBtn) return;
+
+      if (method === 'kakao') {
+        kakaoBtn.style.background = 'var(--blue)'; kakaoBtn.style.color = 'var(--white)';
+        cmsBtn.style.background = 'var(--white)';  cmsBtn.style.color = 'var(--ink-mid)';
+        if (dobField) dobField.style.display = 'none';
+        if (debitDate) debitDate.style.display = 'none';
+        if (submitBtn) submitBtn.textContent = '💛 카카오페이로 작정하기';
+      } else {
+        cmsBtn.style.background = 'var(--blue)'; cmsBtn.style.color = 'var(--white)';
+        kakaoBtn.style.background = 'var(--white)'; kakaoBtn.style.color = 'var(--ink-mid)';
+        if (dobField) dobField.style.display = 'block';
+        if (debitDate) debitDate.style.display = 'block';
+        if (submitBtn) submitBtn.textContent = '🏦 CMS 자동이체 신청하기';
+      }
     }
 
     // ─── NAVIGATION ─────────────────────────────
