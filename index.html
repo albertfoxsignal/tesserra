@@ -115,12 +115,24 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--ink-mid);
-      transition: color 0.2s;
+      transition: color 0.25s;
       padding-bottom: 2px;
-      border-bottom: 1px solid transparent;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -1px;
+      width: 100%; height: 1px;
+      background: var(--blue-dark);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.35s var(--ease);
     }
     .nav-links a:hover,
-    .nav-links a.active { color: var(--ink); border-bottom-color: var(--ink); }
+    .nav-links a.active { color: var(--ink); }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { transform: scaleX(1); transform-origin: left; }
     .nav-cta {
       font-family: var(--font-display);
       font-weight: 700;
@@ -130,9 +142,14 @@
       background: var(--blue);
       color: var(--white) !important;
       padding: 10px 22px;
-      transition: background 0.2s, color 0.2s;
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.2s;
     }
-    .nav-cta:hover { background: var(--blue-dark); color: var(--white) !important; border-bottom-color: transparent !important; }
+    .nav-cta:hover {
+      background: var(--blue-dark);
+      color: var(--white) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(90,139,176,0.35);
+    }
 
     /* Language toggle */
     .lang-toggle { display: flex; gap: 4px; align-items: center; margin-left: 12px; }
@@ -245,12 +262,32 @@
       color: var(--white);
       padding: 14px 32px;
       border: 1px solid var(--blue);
-      transition: all 0.25s var(--ease);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s var(--ease);
       display: inline-flex;
       align-items: center;
       gap: 10px;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
     }
-    .btn-primary:hover { background: var(--accent-2); border-color: var(--accent-2); }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--blue-dark);
+      transform: translateX(-101%);
+      transition: transform 0.4s var(--ease);
+      z-index: -1;
+    }
+    .btn-primary:hover::before { transform: translateX(0); }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(90,139,176,0.35);
+      border-color: var(--blue-dark);
+    }
+    .btn-primary svg { transition: transform 0.3s var(--ease); }
+    .btn-primary:hover svg { transform: translateX(4px); }
+
     .btn-ghost {
       font-family: var(--font-display);
       font-weight: 600;
@@ -261,12 +298,19 @@
       color: var(--ink);
       padding: 16px 36px;
       border: 1px solid var(--rule);
-      transition: all 0.25s var(--ease);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease);
       display: inline-flex;
       align-items: center;
       gap: 10px;
     }
-    .btn-ghost:hover { border-color: var(--ink); }
+    .btn-ghost:hover {
+      border-color: var(--blue);
+      color: var(--blue-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(90,139,176,0.15);
+    }
+    .btn-ghost svg { transition: transform 0.3s var(--ease); }
+    .btn-ghost:hover svg { transform: translateX(4px); }
 
     .hero-right {
       position: relative;
@@ -357,7 +401,7 @@
       animation: donatePulse 2s ease-in-out infinite;
     }
 
-    /* Adopt button — warm amber */
+    /* Adopt button */
     .btn-adopt {
       font-family: var(--font-display);
       font-weight: 700;
@@ -368,15 +412,46 @@
       color: var(--blue-dark);
       padding: 14px 32px;
       border: 2px solid var(--blue-dark);
-      transition: all 0.25s var(--ease);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s var(--ease), color 0.3s var(--ease);
       display: inline-flex;
       align-items: center;
       gap: 10px;
       cursor: pointer;
     }
-    .btn-adopt:hover { background: var(--blue-dark); color: var(--white); border-color: var(--blue-dark); }
+    .btn-adopt svg { transition: transform 0.3s var(--ease); }
+    .btn-adopt:hover svg { transform: translateX(4px); }
+    .btn-adopt:hover {
+      background: var(--blue-dark);
+      color: var(--white);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(90,139,176,0.3);
+    }
 
     /* ─── SHORTS EDGE ARROWS ───────────────────── */
+    /* Dark-section pillar/stat cards (About Initiatives, DAF stats) */
+    .pillar-card, .daf-stat-card {
+      background: rgba(255,255,255,0.04);
+      border-radius: 14px;
+      transition: transform 0.35s var(--ease), background 0.35s var(--ease), box-shadow 0.35s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+    .pillar-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--blue-light));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s var(--ease);
+    }
+    .pillar-card:hover::before { transform: scaleX(1); }
+    .pillar-card:hover, .daf-stat-card:hover {
+      background: rgba(255,255,255,0.07);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.25);
+    }
     .shorts-track-wrap { position: relative; }
     .shorts-arrow {
       position: absolute;
@@ -385,17 +460,18 @@
       z-index: 20;
       width: 44px;
       height: 44px;
-      background: rgba(30,29,26,0.75);
-      border: 1px solid rgba(200,184,154,0.25);
-      color: var(--accent);
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s;
+      transition: transform 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease);
       backdrop-filter: blur(4px);
     }
-    .shorts-arrow:hover { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+    .shorts-arrow:hover { background: var(--blue); color: var(--white); border-color: var(--blue); transform: translateY(-50%) scale(1.1); }
     .shorts-arrow-left  { left: -4px; }
     .shorts-arrow-right { right: -4px; }
 
@@ -427,37 +503,62 @@
     .quartet-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      border-top: 1px solid var(--rule);
-      border-left: 1px solid var(--rule);
+      gap: 20px;
       margin-top: 48px;
     }
     .quartet-card {
-      background: var(--bg);
-      padding: 44px 36px;
-      transition: background 0.3s;
-      border-right: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
+      background: var(--white);
+      padding: 40px 32px;
+      border-radius: 18px;
+      box-shadow: 0 2px 16px rgba(90,139,176,0.10);
+      transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+      position: relative;
+      overflow: hidden;
     }
-    .quartet-card:hover { background: var(--white); }
+    .quartet-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--blue) 0%, var(--blue-dark) 100%);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s var(--ease);
+    }
+    .quartet-card:hover::before { transform: scaleX(1); }
+    .quartet-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(90,139,176,0.22);
+    }
     .quartet-num { display: none; }
     .quartet-title {
       font-family: var(--font-display);
-      font-weight: 900;
-      font-size: 17px;
-      letter-spacing: 0.04em;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.02em;
       text-transform: uppercase;
       color: var(--ink);
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 2px solid var(--blue);
-      display: inline-block;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
+    .quartet-title::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+      transition: transform 0.3s var(--ease);
+    }
+    .quartet-card:hover .quartet-title::before { transform: scale(1.6); }
     .quartet-body {
-      font-family: var(--font-serif);
-      font-size: 15px;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 14px;
       color: var(--ink-mid);
-      line-height: 1.72;
+      line-height: 1.68;
     }
 
     /* THEORY STRIP */
@@ -513,50 +614,66 @@
 
     /* IMPACT BAND */
     .impact-band {
-      padding: 0;
-      border-top: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-      overflow: hidden;
+      padding: 80px 0;
+      background: var(--bg-warm);
     }
     .impact-nums {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 0;
+      gap: 20px;
     }
     .impact-item {
-      padding: 48px 44px;
-      border-right: 1px solid var(--rule);
+      background: var(--white);
+      border-radius: 18px;
+      padding: 40px 32px;
+      box-shadow: 0 2px 16px rgba(90,139,176,0.08);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       gap: 6px;
+      transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
     }
-    .impact-item:last-child { border-right: none; }
+    .impact-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(90,139,176,0.2);
+    }
     .impact-num {
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: clamp(40px, 4vw, 64px);
+      font-size: clamp(26px, 2.4vw, 40px);
       line-height: 1;
       color: var(--blue-dark);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
+      transition: transform 0.4s var(--ease), opacity 0.5s ease;
+      display: inline-block;
+      width: fit-content;
+      white-space: nowrap;
+      opacity: 0;
+      animation: impactNumFallback 0s 2.5s forwards;
     }
+    @keyframes impactNumFallback { to { opacity: 1; } }
+    .impact-band.in-view .impact-num { opacity: 1; animation: none; }
+    .impact-band.in-view .impact-item:nth-child(1) .impact-num { transition-delay: 0s; }
+    .impact-band.in-view .impact-item:nth-child(2) .impact-num { transition-delay: 0.08s; }
+    .impact-band.in-view .impact-item:nth-child(3) .impact-num { transition-delay: 0.16s; }
+    .impact-band.in-view .impact-item:nth-child(4) .impact-num { transition-delay: 0.24s; }
+    .impact-item:hover .impact-num { transform: scale(1.08); }
     .impact-label {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 14px;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 13px;
       color: var(--ink-light);
-      letter-spacing: 0;
     }
 
     /* PARTNERS CAROUSEL */
-    .partners-section { padding: 80px 0; overflow: hidden; }
+    .partners-section { padding: 80px 0; overflow: hidden; background: var(--bg-warm); }
     .partners-carousel-wrap {
       position: relative;
       margin-top: 48px;
     }
     .partners-track-outer {
       overflow: hidden;
-      border: 1px solid var(--rule);
+      padding: 12px 0;
     }
     .partners-track {
       display: flex;
@@ -567,16 +684,21 @@
     .partner-card {
       flex: 0 0 calc(100% / 3);
       min-width: calc(100% / 3);
-      padding: 40px 36px;
-      background: var(--bg);
-      border-right: 1px solid var(--rule);
+      padding: 36px 32px;
+      background: transparent;
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
-      transition: background 0.25s;
+      position: relative;
+      transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-radius 0.35s var(--ease);
     }
-    .partner-card:last-child { border-right: none; }
-    .partner-card:hover { background: var(--white); }
+    .partner-card:hover {
+      transform: scale(1.04);
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 20px 44px rgba(90,139,176,0.22);
+      z-index: 5;
+    }
     .partner-avatar {
       width: 52px;
       height: 52px;
@@ -591,6 +713,12 @@
       color: var(--blue-dark);
       margin-bottom: 20px;
       flex-shrink: 0;
+      transition: transform 0.35s var(--ease), background 0.35s var(--ease);
+    }
+    .partner-card:hover .partner-avatar {
+      transform: scale(1.12);
+      background: var(--blue);
+      color: var(--white);
     }
     .partner-name {
       font-family: var(--font-display);
@@ -640,56 +768,63 @@
       font-size: 9px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border: 1px solid var(--rule);
+      border-radius: 30px;
       color: var(--ink-light);
       margin-top: auto;
+      transition: border-color 0.3s var(--ease), color 0.3s var(--ease);
     }
-    /* Carousel nav */
+    .partner-card:hover .partner-tag { border-color: var(--blue); color: var(--blue-dark); }
+    /* Carousel nav — arrows split to edges, dots centered */
     .partners-nav {
-      display: flex;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
-      justify-content: space-between;
+      gap: 20px;
       margin-top: 24px;
     }
     .partners-dots {
       display: flex;
       gap: 8px;
       align-items: center;
+      justify-content: center;
+      justify-self: center;
     }
     .partner-dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--rule);
+      background: transparent;
       border: 1px solid var(--ink-light);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.35s var(--ease);
       padding: 0;
     }
+    .partner-dot:hover { border-color: var(--blue); }
     .partner-dot.active {
-      background: var(--ink);
-      border-color: var(--ink);
-      width: 20px;
+      background: var(--blue);
+      border-color: var(--blue);
+      width: 22px;
       border-radius: 3px;
     }
-    .partners-arrows { display: flex; gap: 8px; }
     .partner-arrow {
       width: 44px;
       height: 44px;
+      border-radius: 50%;
       border: 1px solid var(--rule);
-      background: transparent;
+      background: var(--white);
       color: var(--ink);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s;
+      transition: transform 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease), color 0.25s var(--ease);
     }
-    .partner-arrow:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .partner-arrow:hover:not(:disabled) { background: var(--blue); color: var(--white); border-color: var(--blue); transform: scale(1.1); }
     .partner-arrow:disabled { opacity: 0.25; cursor: not-allowed; }
     @media (max-width: 768px) {
-      .partner-card { flex: 0 0 100%; min-width: 100%; border-right: none; border-bottom: 1px solid var(--rule); }
+      .partner-card { flex: 0 0 100%; min-width: 100%; }
       .partner-card:last-child { border-bottom: none; }
     }
 
@@ -2008,15 +2143,16 @@
       font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      padding: 9px 18px;
+      padding: 9px 20px;
       border: 1px solid var(--rule);
       background: transparent;
       color: var(--ink-mid);
       cursor: pointer;
-      transition: all 0.2s;
+      border-radius: 30px;
+      transition: transform 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
     }
-    .adopt-filter-btn:hover,
-    .adopt-filter-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .adopt-filter-btn:hover { border-color: var(--blue); color: var(--blue-dark); transform: translateY(-2px); }
+    .adopt-filter-btn.active { background: var(--blue); color: var(--white); border-color: var(--blue); }
 
     .adopt-grid {
       display: grid;
@@ -2124,9 +2260,21 @@
       background: var(--bg-dark);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      overflow-y: auto;
+      overflow-x: hidden;
       padding: 20px;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(127,170,200,0.4) transparent;
     }
+    .flip-back::-webkit-scrollbar { width: 5px; }
+    .flip-back::-webkit-scrollbar-track { background: transparent; }
+    .flip-back::-webkit-scrollbar-thumb {
+      background: rgba(127,170,200,0.4);
+      border-radius: 3px;
+    }
+    .flip-back::-webkit-scrollbar-thumb:hover { background: rgba(127,170,200,0.7); }
     .flip-back-name {
       font-family: var(--font-display);
       font-weight: 900;
@@ -2169,12 +2317,14 @@
       padding: 8px 10px;
       margin-bottom: 4px;
       background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
+      border: none;
       text-decoration: none;
-      transition: background 0.2s;
-      border-radius: 2px;
+      transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+      border-radius: 6px;
     }
-    .flip-episode-link:hover { background: rgba(200,184,154,0.1); }
+    .flip-episode-link:hover { background: rgba(127,170,200,0.18); transform: translateX(4px); }
+    .flip-episode-link .flip-ep-arrow { transition: transform 0.25s var(--ease); }
+    .flip-episode-link:hover .flip-ep-arrow { transform: translateX(3px); }
     .flip-ep-num {
       font-family: var(--font-display);
       font-weight: 900;
@@ -2209,17 +2359,10 @@
       border: none;
       cursor: pointer;
       margin-top: auto;
-      padding-top: 14px;
+      flex-shrink: 0;
       transition: background 0.2s;
     }
     .flip-sponsor-btn:hover { background: var(--blue-dark); }
-      text-transform: uppercase;
-      padding: 10px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .flip-sponsor-btn:hover { background: var(--accent-2); color: var(--white); }
 
     /* HOW IT WORKS */
     .adopt-how {
@@ -2313,9 +2456,6 @@
       .theory-steps { grid-template-columns: 1fr; gap: 40px; }
       .theory-arrow { display: none; }
       .impact-nums { grid-template-columns: 1fr 1fr; }
-      .impact-item:nth-child(2) { border-right: none; }
-      .impact-item:nth-child(3) { border-top: 1px solid var(--rule); }
-      .impact-item:nth-child(4) { border-top: 1px solid var(--rule); border-right: none; }
       .about-hero-grid { grid-template-columns: 1fr; gap: 40px; }
       .founder-grid { grid-template-columns: 1fr; }
       .founder-photo-wrap { max-width: 320px; }
@@ -2585,19 +2725,19 @@
     </div>
 
     <!-- IMPACT BAND -->
-    <div class="impact-band fade-in">
+    <div class="impact-band fade-in" id="impact-band">
       <div class="container">
         <div class="impact-nums">
           <div class="impact-item">
-            <div class="impact-num">650K+</div>
+            <div class="impact-num" data-count-target="650" data-count-suffix="K+">650K+</div>
             <div class="impact-label">Online Followers</div>
           </div>
           <div class="impact-item">
-            <div class="impact-num">$300K+</div>
+            <div class="impact-num" data-count-prefix="$" data-count-target="300" data-count-suffix="K+">$300K+</div>
             <div class="impact-label">Raised for Impact</div>
           </div>
           <div class="impact-item">
-            <div class="impact-num">2.1M</div>
+            <div class="impact-num" data-count-target="2.1" data-count-decimals="1" data-count-suffix="M">2.1M</div>
             <div class="impact-label">First Viral Video Views</div>
           </div>
           <div class="impact-item">
@@ -2734,32 +2874,13 @@
           </div>
 
           <div class="partners-nav">
+            <button class="partner-arrow" id="partners-prev" onclick="partnerSlide(-1)" aria-label="Previous">
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5.5 1L1 5l4.5 4M1 5h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
             <div class="partners-dots" id="partners-dots"></div>
-            <div class="partners-arrows">
-              <button class="partner-arrow" id="partners-prev" onclick="partnerSlide(-1)" aria-label="Previous">
-                <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5.5 1L1 5l4.5 4M1 5h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </button>
-              <button class="partner-arrow" id="partners-next" onclick="partnerSlide(1)" aria-label="Next">
-                <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5l-4.5 4M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-          <div class="partners-tr
-          </div><!-- /partners-track-outer -->
-
-          <div class="partners-nav">
-            <div class="partners-dots" id="partners-dots"></div>
-            <div class="partners-arrows">
-              <button class="partner-arrow" id="partners-prev" onclick="partnerSlide(-1)" aria-label="Previous">
-                <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5.5 1L1 5l4.5 4M1 5h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </button>
-              <button class="partner-arrow" id="partners-next" onclick="partnerSlide(1)" aria-label="Next">
-                <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5l-4.5 4M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </button>
-            </div>
+            <button class="partner-arrow" id="partners-next" onclick="partnerSlide(1)" aria-label="Next">
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5l-4.5 4M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -2936,20 +3057,20 @@
         <div class="section-label" style="color:rgba(200,184,154,0.5)">What We've Done & Where We're Going</div>
         <h2 class="section-title" style="color:var(--bg); margin-bottom:60px;">Initiatives</h2>
         <!-- 4 pillars from pitch deck -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(200,184,154,0.08);border:1px solid rgba(200,184,154,0.08);margin-bottom:60px;">
-          <div style="background:var(--bg-dark);padding:32px 28px;">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:60px;">
+          <div class="pillar-card" style="padding:32px 28px;">
             <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Emergency Relief</div>
             <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;">Providing emergency support through food, housing, and medical aid to those in immediate need.</div>
           </div>
-          <div style="background:var(--bg-dark);padding:32px 28px;">
+          <div class="pillar-card" style="padding:32px 28px;">
             <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Storytelling & Awareness</div>
             <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;">Using digital storytelling to inspire awareness and action—making the unseen visible.</div>
           </div>
-          <div style="background:var(--bg-dark);padding:32px 28px;">
+          <div class="pillar-card" style="padding:32px 28px;">
             <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Community Partnerships</div>
             <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;">Partnering with communities, celebrities, global leaders, influencers, brands, and volunteers.</div>
           </div>
-          <div style="background:var(--bg-dark);padding:32px 28px;">
+          <div class="pillar-card" style="padding:32px 28px;">
             <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Long-Term Sustainability</div>
             <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;">Creating pathways through education, jobs, mentorship, and social enterprise.</div>
           </div>
@@ -3477,20 +3598,20 @@
         </div>
 
         <!-- DAF Stats bar -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(200,184,154,0.1);border:1px solid rgba(200,184,154,0.1);margin-top:48px;">
-          <div style="background:var(--ink);padding:28px;text-align:center;">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px;">
+          <div class="daf-stat-card" style="padding:28px;text-align:center;">
             <div style="font-family:var(--font-display);font-weight:900;font-size:36px;color:var(--accent);line-height:1;">$326B</div>
             <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(200,184,154,0.4);margin-top:6px;">Total DAF Assets</div>
           </div>
-          <div style="background:var(--ink);padding:28px;text-align:center;">
+          <div class="daf-stat-card" style="padding:28px;text-align:center;">
             <div style="font-family:var(--font-display);font-weight:900;font-size:36px;color:var(--accent);line-height:1;">$4,600</div>
             <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(200,184,154,0.4);margin-top:6px;">Average DAF Gift</div>
           </div>
-          <div style="background:var(--ink);padding:28px;text-align:center;">
+          <div class="daf-stat-card" style="padding:28px;text-align:center;">
             <div style="font-family:var(--font-display);font-weight:900;font-size:36px;color:var(--accent);line-height:1;">10×</div>
             <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(200,184,154,0.4);margin-top:6px;">More Than Card Donors</div>
           </div>
-          <div style="background:var(--ink);padding:28px;text-align:center;">
+          <div class="daf-stat-card" style="padding:28px;text-align:center;">
             <div style="font-family:var(--font-display);font-weight:900;font-size:36px;color:var(--accent);line-height:1;">80%</div>
             <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(200,184,154,0.4);margin-top:6px;">Grant Repeat Rate</div>
           </div>
@@ -4477,7 +4598,57 @@
       }, { threshold: 0.1 });
       els.forEach(el => io.observe(el));
     }
-    document.addEventListener('DOMContentLoaded', observeFadeIns);
+    document.addEventListener('DOMContentLoaded', () => {
+      observeFadeIns();
+      initImpactCountUp();
+    });
+
+    // ─── IMPACT STAT COUNT-UP ────────────────────
+    function animateCountUp(el, target, { prefix = '', suffix = '', decimals = 0, duration = 1600 } = {}) {
+      const start = performance.now();
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress); // easeOutExpo
+        const value = target * eased;
+        el.textContent = prefix + value.toFixed(decimals) + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = prefix + target.toFixed(decimals) + suffix;
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function initImpactCountUp() {
+      const band = document.getElementById('impact-band');
+      if (!band) return;
+
+      // Set numeric counters to 0 initially so the count-up is visible on trigger
+      const counters = band.querySelectorAll('.impact-num[data-count-target]');
+      counters.forEach(el => {
+        const decimals = parseInt(el.getAttribute('data-count-decimals') || '0', 10);
+        const prefix = el.getAttribute('data-count-prefix') || '';
+        const suffix = el.getAttribute('data-count-suffix') || '';
+        el.textContent = prefix + (0).toFixed(decimals) + suffix;
+      });
+
+      let triggered = false;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !triggered) {
+            triggered = true;
+            band.classList.add('in-view');
+            counters.forEach(el => {
+              const target = parseFloat(el.getAttribute('data-count-target'));
+              const decimals = parseInt(el.getAttribute('data-count-decimals') || '0', 10);
+              const prefix = el.getAttribute('data-count-prefix') || '';
+              const suffix = el.getAttribute('data-count-suffix') || '';
+              animateCountUp(el, target, { prefix, suffix, decimals });
+            });
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.35 });
+      io.observe(band);
+    }
 
     // ─── PAYMENT TAB SWITCHING ───────────────────
     function switchPayTab(tab, btn) {
