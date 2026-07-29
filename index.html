@@ -81,6 +81,11 @@
       align-items: center;
       gap: 12px;
     }
+    .nav-logo-img {
+      height: 34px;
+      width: auto;
+      display: block;
+    }
     .nav-logo-text {
       display: flex;
       flex-direction: column;
@@ -2581,24 +2586,14 @@
   <!-- NAV -->
   <nav id="main-nav">
     <div class="nav-logo" onclick="navigate('home')" style="cursor:pointer">
-      <!-- Exact TCF "4" logo mark traced from pitch deck -->
-      <svg width="28" height="33" viewBox="-1 -1 44 51" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
-        <polygon points="0,30 26,0 26,30" fill="#1E1D1A"/>
-        <rect x="28" y="0" width="14" height="30" fill="#1E1D1A"/>
-        <rect x="0" y="34" width="26" height="14" fill="#1E1D1A"/>
-        <rect x="28" y="34" width="14" height="14" fill="#1E1D1A"/>
-      </svg>
-      <div class="nav-logo-text">
-        <span class="name">Tessera</span>
-        <span class="sub">Compassion Foundation</span>
-      </div>
+      <img src="assets/tcf-logo.png" alt="Tessera Compassion Foundation" class="nav-logo-img" />
     </div>
     <ul class="nav-links">
-      <li><a href="#" onclick="navigate('home')" data-page="home" class="active">Home</a></li>
-      <li><a href="#" onclick="navigate('about')" data-page="about">About</a></li>
-      <li><a href="#" onclick="navigate('adopt')" data-page="adopt">Adopt</a></li>
-      <li><a href="#" onclick="navigate('donate')" data-page="donate">Donate</a></li>
-      <li><a href="#" onclick="navigate('contact')" data-page="contact">Contact</a></li>
+      <li><a href="#" onclick="navigate('home')" data-page="home" class="active" data-i18n="nav.home">Home</a></li>
+      <li><a href="#" onclick="navigate('about')" data-page="about" data-i18n="nav.about">About</a></li>
+      <li><a href="#" onclick="navigate('adopt')" data-page="adopt" data-i18n="nav.adopt">Adopt</a></li>
+      <li><a href="#" onclick="navigate('donate')" data-page="donate" data-i18n="nav.donate">Donate</a></li>
+      <li><a href="#" onclick="navigate('contact')" data-page="contact" data-i18n="nav.contact">Contact</a></li>
       <li><a href="#" onclick="navigate('donate')" class="nav-cta" data-i18n="nav.give">Give Now</a></li>
     </ul>
     <div class="lang-toggle">
@@ -2612,11 +2607,11 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobile-menu">
-    <a href="#" onclick="navigate('home');toggleMobile()">Home</a>
-    <a href="#" onclick="navigate('about');toggleMobile()">About</a>
-    <a href="#" onclick="navigate('adopt');toggleMobile()">Adopt</a>
-    <a href="#" onclick="navigate('donate');toggleMobile()">Donate</a>
-    <a href="#" onclick="navigate('contact');toggleMobile()">Contact</a>
+    <a href="#" onclick="navigate('home');toggleMobile()" data-i18n="nav.home">Home</a>
+    <a href="#" onclick="navigate('about');toggleMobile()" data-i18n="nav.about">About</a>
+    <a href="#" onclick="navigate('adopt');toggleMobile()" data-i18n="nav.adopt">Adopt</a>
+    <a href="#" onclick="navigate('donate');toggleMobile()" data-i18n="nav.donate">Donate</a>
+    <a href="#" onclick="navigate('contact');toggleMobile()" data-i18n="nav.contact">Contact</a>
   </div>
 
   <!-- ═══════════════════════════════════════════ -->
@@ -2627,7 +2622,7 @@
     <!-- HERO -->
     <section class="hero">
       <div class="hero-left">
-        <div class="hero-eyebrow">Est. 2025 · 501(c)(3) Nonprofit</div>
+        <div class="hero-eyebrow" data-i18n="hero.eyebrow">Est. 2025 · 501(c)(3) Nonprofit</div>
         <h1 class="hero-headline" data-i18n="hero.headline">
           Every<br>Person<br>Deserves<br><em>Dignity.</em>
         </h1>
@@ -2668,18 +2663,18 @@
       <div class="container">
         <div class="shorts-header">
           <div>
-            <div class="section-label">YouTube · @aidenkim16</div>
-            <h2 class="shorts-title">Compassion<br><em>in Action.</em></h2>
+            <div class="section-label" data-i18n="shorts.label">YouTube · @aidenkim16</div>
+            <h2 class="shorts-title" data-i18n="shorts.title">Compassion<br><em>in Action.</em></h2>
           </div>
           <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
             <!-- Video tabs -->
             <div style="display:flex;gap:0;border:1px solid rgba(200,184,154,0.15);">
-              <button id="tab-shorts" onclick="switchVideoTab('shorts')" style="font-family:var(--font-display);font-weight:700;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:8px 18px;background:var(--accent);color:var(--ink);border:none;cursor:pointer;transition:all 0.2s;">Shorts</button>
-              <button id="tab-videos" onclick="switchVideoTab('videos')" style="font-family:var(--font-display);font-weight:700;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:8px 18px;background:transparent;color:rgba(200,184,154,0.5);border:none;cursor:pointer;transition:all 0.2s;">Videos</button>
+              <button id="tab-shorts" onclick="switchVideoTab('shorts')" data-i18n="shorts.tabShorts" style="font-family:var(--font-display);font-weight:700;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:8px 18px;background:var(--accent);color:var(--ink);border:none;cursor:pointer;transition:all 0.2s;">Shorts</button>
+              <button id="tab-videos" onclick="switchVideoTab('videos')" data-i18n="shorts.tabVideos" style="font-family:var(--font-display);font-weight:700;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:8px 18px;background:transparent;color:rgba(200,184,154,0.5);border:none;cursor:pointer;transition:all 0.2s;">Videos</button>
             </div>
             <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="shorts-yt-link" id="yt-link-shorts">
               <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M15.5 2.5S15.3 1.2 14.7.6C13.9-.2 13-.2 12.6-.2 10.5-.3 7.5-.3 7.5-.3s-3 0-5.1.1C2 -.2 1-.2.3.6-.3 1.2-.5 2.5-.5 2.5S-.7 4-.7 5.5v1.4C-.7 8.4-.5 9.7-.5 9.7S-.3 11 .3 11.6c.8.8 1.8.8 2.3.8C4.2 12.5 7.5 12.5 7.5 12.5s3 0 5.1-.2c.4 0 1.3 0 2.1-.8.6-.6.8-1.9.8-1.9S16 8.4 16 6.9V5.5C16 4 15.5 2.5 15.5 2.5zM6 8.5v-5l5 2.5L6 8.5z" fill="currentColor"/></svg>
-              Watch All Shorts
+              <span id="yt-link-shorts-text" data-i18n="shorts.watchAll">Watch All Shorts</span>
             </a>
           </div>
         </div>
@@ -2708,21 +2703,21 @@
           <a href="https://www.youtube.com/watch?v=wf_EtROpY30" target="_blank" style="display:block;text-decoration:none;background:rgba(255,255,255,0.04);border:1px solid rgba(200,184,154,0.08);transition:background 0.2s;" onmouseover="this.style.background='rgba(200,184,154,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
             <img src="https://i.ytimg.com/vi/wf_EtROpY30/mqdefault.jpg" alt="Video" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
             <div style="padding:14px 16px;">
-              <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.8);line-height:1.4;">Her First Paycheck — Full Story</div>
+              <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.8);line-height:1.4;" data-i18n="video.title1">Her First Paycheck — Full Story</div>
               <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.12em;color:rgba(200,184,154,0.4);margin-top:4px;">@aidenkim16</div>
             </div>
           </a>
           <a href="https://www.youtube.com/watch?v=lw_kjMyrVN4" target="_blank" style="display:block;text-decoration:none;background:rgba(255,255,255,0.04);border:1px solid rgba(200,184,154,0.08);transition:background 0.2s;" onmouseover="this.style.background='rgba(200,184,154,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
             <img src="https://i.ytimg.com/vi/lw_kjMyrVN4/mqdefault.jpg" alt="Video" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
             <div style="padding:14px 16px;">
-              <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.8);line-height:1.4;">How This Guy Single Handedly Helps The Elderly</div>
+              <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.8);line-height:1.4;" data-i18n="video.title2">How This Guy Single Handedly Helps The Elderly</div>
               <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.12em;color:rgba(200,184,154,0.4);margin-top:4px;">@aidenkim16</div>
             </div>
           </a>
           <a href="https://www.youtube.com/watch?v=Vz39pHOBnBQ" target="_blank" style="display:block;text-decoration:none;background:rgba(255,255,255,0.04);border:1px solid rgba(200,184,154,0.08);transition:background 0.2s;" onmouseover="this.style.background='rgba(200,184,154,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
             <img src="https://i.ytimg.com/vi/Vz39pHOBnBQ/mqdefault.jpg" alt="Video" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
             <div style="padding:14px 16px;">
-              <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.8);line-height:1.4;">How BM Helped Fight Elderly Poverty — Full</div>
+              <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.8);line-height:1.4;" data-i18n="video.title3">How BM Helped Fight Elderly Poverty — Full</div>
               <div style="font-family:var(--font-display);font-size:10px;letter-spacing:0.12em;color:rgba(200,184,154,0.4);margin-top:4px;">@aidenkim16</div>
             </div>
           </a>
@@ -2734,28 +2729,28 @@
     <!-- QUARTET -->
     <section class="section">
       <div class="container">
-        <div class="section-label">Who We Serve</div>
-        <h2 class="section-title">Quartet of the<br>Vulnerable</h2>
+        <div class="section-label" data-i18n="quartet.label">Who We Serve</div>
+        <h2 class="section-title" data-i18n="quartet.title">Quartet of the<br>Vulnerable</h2>
         <div class="quartet-grid">
           <div class="quartet-card fade-in">
             <div class="quartet-num">01</div>
-            <div class="quartet-title">Low-Income Families</div>
-            <div class="quartet-body">Over 39.8% of Korean elderly live in poverty—#1 in the OECD. We provide essential resources, dignity-centered care, and pathways toward self-sufficiency.</div>
+            <div class="quartet-title" data-i18n="quartet.title1">Low-Income Families</div>
+            <div class="quartet-body" data-i18n="quartet.body1">Over 39.8% of Korean elderly live in poverty—#1 in the OECD. We provide essential resources, dignity-centered care, and pathways toward self-sufficiency.</div>
           </div>
           <div class="quartet-card fade-in" style="transition-delay:0.1s">
             <div class="quartet-num">02</div>
-            <div class="quartet-title">Children Without Parents</div>
-            <div class="quartet-body">~329,000 children in US foster care. 78% experience basic needs insecurity. We provide mentorship, education, and sustained care so no child feels forgotten.</div>
+            <div class="quartet-title" data-i18n="quartet.title2">Children Without Parents</div>
+            <div class="quartet-body" data-i18n="quartet.body2">~329,000 children in US foster care. 78% experience basic needs insecurity. We provide mentorship, education, and sustained care so no child feels forgotten.</div>
           </div>
           <div class="quartet-card fade-in" style="transition-delay:0.2s">
             <div class="quartet-num">03</div>
-            <div class="quartet-title">Widows</div>
-            <div class="quartet-body">Widows lose up to 75% of their support systems overnight. ~700,000 women are widowed each year. We restore community belonging and build financial independence.</div>
+            <div class="quartet-title" data-i18n="quartet.title3">Widows</div>
+            <div class="quartet-body" data-i18n="quartet.body3">Widows lose up to 75% of their support systems overnight. ~700,000 women are widowed each year. We restore community belonging and build financial independence.</div>
           </div>
           <div class="quartet-card fade-in" style="transition-delay:0.3s">
             <div class="quartet-num">04</div>
-            <div class="quartet-title">Immigrant Refugees</div>
-            <div class="quartet-body">Immigrants face a 20.9% poverty rate vs 9.9% for non-immigrants. We ease transitions, create networks of opportunity, and champion the dignity of every newcomer.</div>
+            <div class="quartet-title" data-i18n="quartet.title4">Immigrant Refugees</div>
+            <div class="quartet-body" data-i18n="quartet.body4">Immigrants face a 20.9% poverty rate vs 9.9% for non-immigrants. We ease transitions, create networks of opportunity, and champion the dignity of every newcomer.</div>
           </div>
         </div>
       </div>
@@ -2764,25 +2759,25 @@
     <!-- THEORY OF CHANGE -->
     <div class="theory-section" id="theory-section">
       <div class="container">
-        <div class="section-label">How We Work</div>
-        <h2 class="section-title" style="color:var(--bg)">Theory of<br>Change</h2>
+        <div class="section-label" data-i18n="theory.label">How We Work</div>
+        <h2 class="section-title" style="color:var(--bg)" data-i18n="theory.title">Theory of<br>Change</h2>
         <div class="theory-steps">
           <div>
             <div class="theory-step-num">1</div>
-            <div class="theory-step-title">Raise Awareness</div>
-            <div class="theory-step-body">Through Aiden Kim's 650,000+ social media following, we tell authentic stories that restore visibility and dignity to overlooked communities—moving audiences from compassion to action without pity or savior narratives.</div>
+            <div class="theory-step-title" data-i18n="theory.title1">Raise Awareness</div>
+            <div class="theory-step-body" data-i18n="theory.body1">Through Aiden Kim's 650,000+ social media following, we tell authentic stories that restore visibility and dignity to overlooked communities—moving audiences from compassion to action without pity or savior narratives.</div>
           </div>
           <div class="theory-arrow">→</div>
           <div>
             <div class="theory-step-num">2</div>
-            <div class="theory-step-title">Provide Support</div>
-            <div class="theory-step-body">We mobilize donor contributions into immediate impact—hearing aids, housing, food vouchers, medical aid, and life experiences for those who've never had them.</div>
+            <div class="theory-step-title" data-i18n="theory.title2">Provide Support</div>
+            <div class="theory-step-body" data-i18n="theory.body2">We mobilize donor contributions into immediate impact—hearing aids, housing, food vouchers, medical aid, and life experiences for those who've never had them.</div>
           </div>
           <div class="theory-arrow">→</div>
           <div>
             <div class="theory-step-num">3</div>
-            <div class="theory-step-title">Build Self-Sufficiency</div>
-            <div class="theory-step-body">Through mentorship, job training, education, and financial literacy programs, we create lasting systems of opportunity that empower communities for generations.</div>
+            <div class="theory-step-title" data-i18n="theory.title3">Build Self-Sufficiency</div>
+            <div class="theory-step-body" data-i18n="theory.body3">Through mentorship, job training, education, and financial literacy programs, we create lasting systems of opportunity that empower communities for generations.</div>
           </div>
         </div>
       </div>
@@ -2794,19 +2789,19 @@
         <div class="impact-nums">
           <div class="impact-item">
             <div class="impact-num" data-count-target="650" data-count-suffix="K+">650K+</div>
-            <div class="impact-label">Online Followers</div>
+            <div class="impact-label" data-i18n="impact.label1">Online Followers</div>
           </div>
           <div class="impact-item">
             <div class="impact-num" data-count-prefix="$" data-count-target="300" data-count-suffix="K+">$300K+</div>
-            <div class="impact-label">Raised for Impact</div>
+            <div class="impact-label" data-i18n="impact.label2">Raised for Impact</div>
           </div>
           <div class="impact-item">
             <div class="impact-num" data-count-target="2.1" data-count-decimals="1" data-count-suffix="M">2.1M</div>
-            <div class="impact-label">First Viral Video Views</div>
+            <div class="impact-label" data-i18n="impact.label3">First Viral Video Views</div>
           </div>
           <div class="impact-item">
-            <div class="impact-num">Thousands</div>
-            <div class="impact-label">Lives Impacted</div>
+            <div class="impact-num" data-i18n="impact.thousands">Thousands</div>
+            <div class="impact-label" data-i18n="impact.label4">Lives Impacted</div>
           </div>
         </div>
       </div>
@@ -2815,8 +2810,8 @@
     <!-- PARTNERS -->
     <section class="partners-section">
       <div class="container">
-        <div class="section-label">Our Partners</div>
-        <h2 class="section-title" style="font-size:clamp(30px,3vw,44px)">A Network of Compassion</h2>
+        <div class="section-label" data-i18n="partners.label">Our Partners</div>
+        <h2 class="section-title" style="font-size:clamp(30px,3vw,44px)" data-i18n="partners.title">A Network of Compassion</h2>
 
         <div class="partners-carousel-wrap">
           <div class="partners-track-outer">
@@ -2825,113 +2820,113 @@
               <div class="partner-card">
                 <div class="partner-avatar">JP</div>
                 <div class="partner-name">Jay Park</div>
-                <div class="partner-role">Rapper</div>
+                <div class="partner-role" data-i18n="partner.p1.role">Rapper</div>
                 <a href="https://www.instagram.com/moresojuplease/" target="_blank" class="partner-handle">@moresojuplease</a>
-                <span class="partner-tag">Music</span>
+                <span class="partner-tag" data-i18n="partner.p1.tag">Music</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">CP</div>
                 <div class="partner-name">Coupang</div>
-                <div class="partner-role">E-Commerce Platform</div>
+                <div class="partner-role" data-i18n="partner.p2.role">E-Commerce Platform</div>
                 <a href="https://www.instagram.com/coupang/" target="_blank" class="partner-handle">@coupang</a>
-                <span class="partner-tag">Brand</span>
+                <span class="partner-tag" data-i18n="partner.p2.tag">Brand</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">BM</div>
                 <div class="partner-name">BM</div>
-                <div class="partner-role">Rapper · Actor</div>
+                <div class="partner-role" data-i18n="partner.p3.role">Rapper · Actor</div>
                 <a href="https://www.instagram.com/bigmatthewww/" target="_blank" class="partner-handle">@bigmatthewww</a>
-                <span class="partner-tag">Music · Film</span>
+                <span class="partner-tag" data-i18n="partner.p3.tag">Music · Film</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">DA</div>
                 <div class="partner-name">Dan_am_i</div>
-                <div class="partner-role">Hypercar Collector</div>
+                <div class="partner-role" data-i18n="partner.p4.role">Hypercar Collector</div>
                 <a href="https://www.instagram.com/dan_am_i/" target="_blank" class="partner-handle">@dan_am_i</a>
-                <span class="partner-tag">Creator</span>
+                <span class="partner-tag" data-i18n="partner.p4.tag">Creator</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">BF</div>
                 <div class="partner-name">Berify.io</div>
-                <div class="partner-role">Verification Tech</div>
+                <div class="partner-role" data-i18n="partner.p5.role">Verification Tech</div>
                 <a href="https://www.instagram.com/berifyio/" target="_blank" class="partner-handle">@berifyio</a>
-                <span class="partner-tag">Technology</span>
+                <span class="partner-tag" data-i18n="partner.p5.tag">Technology</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">FC</div>
                 <div class="partner-name">LAFC</div>
-                <div class="partner-role">LA Football Club</div>
+                <div class="partner-role" data-i18n="partner.p6.role">LA Football Club</div>
                 <a href="https://www.instagram.com/lafc/" target="_blank" class="partner-handle">@lafc</a>
-                <span class="partner-tag">Sports</span>
+                <span class="partner-tag" data-i18n="partner.p6.tag">Sports</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">CK</div>
                 <div class="partner-name">CKA</div>
-                <div class="partner-role">Korean American Organization</div>
+                <div class="partner-role" data-i18n="partner.p7.role">Korean American Organization</div>
                 <a href="https://www.instagram.com/cka_us/" target="_blank" class="partner-handle">@cka_us</a>
-                <span class="partner-tag">Community</span>
+                <span class="partner-tag" data-i18n="partner.p7.tag">Community</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">NK</div>
                 <div class="partner-name">NetKAL</div>
-                <div class="partner-role">Korean American Network</div>
+                <div class="partner-role" data-i18n="partner.p8.role">Korean American Network</div>
                 <a href="https://www.instagram.com/netkal/" target="_blank" class="partner-handle">@netkal</a>
-                <span class="partner-tag">Community</span>
+                <span class="partner-tag" data-i18n="partner.p8.tag">Community</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">LW</div>
                 <div class="partner-name">Latham &amp; Watkins</div>
-                <div class="partner-role">Global Law Firm</div>
+                <div class="partner-role" data-i18n="partner.p9.role">Global Law Firm</div>
                 <a href="https://www.instagram.com/lathamwatkins/" target="_blank" class="partner-handle">@lathamwatkins</a>
-                <span class="partner-tag">Legal</span>
+                <span class="partner-tag" data-i18n="partner.p9.tag">Legal</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">YC</div>
                 <div class="partner-name">Yulchon</div>
-                <div class="partner-role">Korean Law Firm</div>
+                <div class="partner-role" data-i18n="partner.p10.role">Korean Law Firm</div>
                 <a href="https://www.instagram.com/yulchon_llc/" target="_blank" class="partner-handle">@yulchon_llc</a>
-                <span class="partner-tag">Legal</span>
+                <span class="partner-tag" data-i18n="partner.p10.tag">Legal</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">T3</div>
                 <div class="partner-name">T3Micro</div>
-                <div class="partner-role">Beauty Tech Brand</div>
+                <div class="partner-role" data-i18n="partner.p11.role">Beauty Tech Brand</div>
                 <a href="https://www.instagram.com/t3micro/" target="_blank" class="partner-handle">@t3micro</a>
-                <span class="partner-tag">Brand</span>
+                <span class="partner-tag" data-i18n="partner.p11.tag">Brand</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">IF</div>
                 <div class="partner-name">Iamfromkorea</div>
-                <div class="partner-role">YouTuber</div>
+                <div class="partner-role" data-i18n="partner.p12.role">YouTuber</div>
                 <a href="https://www.instagram.com/iamfromkorea/" target="_blank" class="partner-handle">@iamfromkorea</a>
-                <span class="partner-tag">Creator</span>
+                <span class="partner-tag" data-i18n="partner.p12.tag">Creator</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">DP</div>
                 <div class="partner-name">Dumbfoundead</div>
-                <div class="partner-role">Rapper · Actor</div>
+                <div class="partner-role" data-i18n="partner.p13.role">Rapper · Actor</div>
                 <a href="https://www.instagram.com/dumbfoundead/" target="_blank" class="partner-handle">@dumbfoundead</a>
-                <span class="partner-tag">Music · Film</span>
+                <span class="partner-tag" data-i18n="partner.p13.tag">Music · Film</span>
               </div>
 
               <div class="partner-card">
                 <div class="partner-avatar">SS</div>
                 <div class="partner-name">Sean Solo</div>
-                <div class="partner-role">Influencer</div>
+                <div class="partner-role" data-i18n="partner.p14.role">Influencer</div>
                 <a href="https://www.instagram.com/seansolo_/" target="_blank" class="partner-handle">@seansolo_</a>
-                <span class="partner-tag">Creator</span>
+                <span class="partner-tag" data-i18n="partner.p14.tag">Creator</span>
               </div>
 
             </div><!-- /partners-track -->
@@ -2953,11 +2948,11 @@
     <!-- CTA BAND -->
     <section style="padding:80px 0; background:var(--accent-2);">
       <div class="container" style="text-align:center;">
-        <div style="font-family:var(--font-display);font-weight:300;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,243,238,0.6);margin-bottom:20px;">Join The Movement</div>
-        <h2 style="font-family:var(--font-display);font-weight:900;font-size:clamp(40px,5vw,70px);text-transform:uppercase;color:var(--white);line-height:1;margin-bottom:32px;">Be a Tessera.</h2>
-        <p style="font-family:var(--font-serif);font-size:20px;font-style:italic;color:rgba(245,243,238,0.85);max-width:560px;margin:0 auto 44px;">"Compassion becomes powerful when people move together."</p>
+        <div style="font-family:var(--font-display);font-weight:300;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,243,238,0.6);margin-bottom:20px;" data-i18n="cta.eyebrow">Join The Movement</div>
+        <h2 style="font-family:var(--font-display);font-weight:900;font-size:clamp(40px,5vw,70px);text-transform:uppercase;color:var(--white);line-height:1;margin-bottom:32px;" data-i18n="cta.title">Be a Tessera.</h2>
+        <p style="font-family:var(--font-serif);font-size:20px;font-style:italic;color:rgba(245,243,238,0.85);max-width:560px;margin:0 auto 44px;" data-i18n="cta.quote">"Compassion becomes powerful when people move together."</p>
         <button class="btn-primary" onclick="navigate('donate')" style="background:var(--white);color:var(--accent-2);border-color:var(--white);margin:0 auto;">
-          Make a Donation
+          <span data-i18n="cta.button">Make a Donation</span>
           <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </button>
       </div>
@@ -2972,15 +2967,15 @@
 
     <section class="about-hero">
       <div class="container">
-        <div class="section-label">Our Story</div>
+        <div class="section-label" data-i18n="about.label">Our Story</div>
         <div class="about-hero-grid">
           <div>
-            <h1 class="section-title" style="margin-bottom:0">About<br>Tessera</h1>
+            <h1 class="section-title" style="margin-bottom:0" data-i18n="about.title">About<br>Tessera</h1>
           </div>
           <div class="about-story-text">
-            <p>Tessera Compassion Foundation began not with a plan, but with a person. In high school, founder Aiden Kim met an unhoused elderly woman who declined his monetary donation and instead explained her need for medication for herself and her son.</p>
-            <p>That encounter profoundly shaped his understanding of compassion—and ultimately led him to pursue pharmacy and community outreach work in underserved cities like Stockton and Compton. Believing in the power of storytelling, he used $10,000 of his personal savings to travel to Korea, where simple videos providing rest and appreciation for elderly living in poverty gradually evolved into a global movement.</p>
-            <p>Today, Tessera Compassion Foundation is a 501(c)(3) nonprofit dedicated to restoring dignity, promoting self-sustainability, and serving vulnerable communities through compassionate action—one story, one person, one tessera at a time.</p>
+            <p data-i18n="about.p1">Tessera Compassion Foundation began not with a plan, but with a person. In high school, founder Aiden Kim met an unhoused elderly woman who declined his monetary donation and instead explained her need for medication for herself and her son.</p>
+            <p data-i18n="about.p2">That encounter profoundly shaped his understanding of compassion—and ultimately led him to pursue pharmacy and community outreach work in underserved cities like Stockton and Compton. Believing in the power of storytelling, he used $10,000 of his personal savings to travel to Korea, where simple videos providing rest and appreciation for elderly living in poverty gradually evolved into a global movement.</p>
+            <p data-i18n="about.p3">Today, Tessera Compassion Foundation is a 501(c)(3) nonprofit dedicated to restoring dignity, promoting self-sustainability, and serving vulnerable communities through compassionate action—one story, one person, one tessera at a time.</p>
           </div>
         </div>
       </div>
@@ -2989,22 +2984,22 @@
     <!-- MISSION / VISION / PURPOSE -->
     <section class="about-mvv">
       <div class="container">
-        <div class="section-label">Our Foundation</div>
+        <div class="section-label" data-i18n="mvv.label">Our Foundation</div>
         <div class="mvv-grid">
           <div class="mvv-card fade-in">
-            <div class="mvv-label">Mission</div>
-            <div class="mvv-title">Serve the Quartet of the Vulnerable</div>
-            <div class="mvv-body">Tessera Compassion Foundation exists to serve low-income families, orphaned children, widows, and immigrant refugees through compassionate action, storytelling, and sustainable support systems.</div>
+            <div class="mvv-label" data-i18n="mvv.mission.label">Mission</div>
+            <div class="mvv-title" data-i18n="mvv.mission.title">Serve the Quartet of the Vulnerable</div>
+            <div class="mvv-body" data-i18n="mvv.mission.body">Tessera Compassion Foundation exists to serve low-income families, orphaned children, widows, and immigrant refugees through compassionate action, storytelling, and sustainable support systems.</div>
           </div>
           <div class="mvv-card fade-in" style="transition-delay:0.1s">
-            <div class="mvv-label">Purpose</div>
-            <div class="mvv-title">Restore Dignity. Create Sustainable Hope.</div>
-            <div class="mvv-body">To restore dignity and create sustainable hope for vulnerable communities through compassion, storytelling, and action—providing the tessera every person needs to thrive.</div>
+            <div class="mvv-label" data-i18n="mvv.purpose.label">Purpose</div>
+            <div class="mvv-title" data-i18n="mvv.purpose.title">Restore Dignity. Create Sustainable Hope.</div>
+            <div class="mvv-body" data-i18n="mvv.purpose.body">To restore dignity and create sustainable hope for vulnerable communities through compassion, storytelling, and action—providing the tessera every person needs to thrive.</div>
           </div>
           <div class="mvv-card fade-in" style="transition-delay:0.2s">
-            <div class="mvv-label">Vision</div>
-            <div class="mvv-title">Seen, Supported, and Empowered.</div>
-            <div class="mvv-body">We envision a world where every marginalized person is seen, supported, and empowered to thrive with dignity—regardless of circumstance, background, or the weight of their story.</div>
+            <div class="mvv-label" data-i18n="mvv.vision.label">Vision</div>
+            <div class="mvv-title" data-i18n="mvv.vision.title">Seen, Supported, and Empowered.</div>
+            <div class="mvv-body" data-i18n="mvv.vision.body">We envision a world where every marginalized person is seen, supported, and empowered to thrive with dignity—regardless of circumstance, background, or the weight of their story.</div>
           </div>
         </div>
       </div>
@@ -3013,33 +3008,33 @@
     <!-- CORE VALUES -->
     <section style="padding:80px 0; border-top:1px solid var(--rule);">
       <div class="container">
-        <div class="section-label">What Guides Us</div>
-        <h2 class="section-title" style="font-size:clamp(36px,4vw,56px);margin-bottom:48px;">Core Values</h2>
+        <div class="section-label" data-i18n="values.label">What Guides Us</div>
+        <h2 class="section-title" style="font-size:clamp(36px,4vw,56px);margin-bottom:48px;" data-i18n="values.title">Core Values</h2>
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;">
           <div class="quartet-card">
             <div style="font-family:var(--font-display);font-weight:900;font-size:28px;color:var(--blue);line-height:1;margin-bottom:10px;">I</div>
-            <div class="quartet-title">Dignity</div>
-            <div class="quartet-body">Every person deserves to be treated with humanity, respect, and worth.</div>
+            <div class="quartet-title" data-i18n="values.dignity.title">Dignity</div>
+            <div class="quartet-body" data-i18n="values.dignity.body">Every person deserves to be treated with humanity, respect, and worth.</div>
           </div>
           <div class="quartet-card">
             <div style="font-family:var(--font-display);font-weight:900;font-size:28px;color:var(--blue);line-height:1;margin-bottom:10px;">II</div>
-            <div class="quartet-title">Compassion</div>
-            <div class="quartet-body">Meaningful change begins with genuine human connection.</div>
+            <div class="quartet-title" data-i18n="values.compassion.title">Compassion</div>
+            <div class="quartet-body" data-i18n="values.compassion.body">Meaningful change begins with genuine human connection.</div>
           </div>
           <div class="quartet-card">
             <div style="font-family:var(--font-display);font-weight:900;font-size:28px;color:var(--blue);line-height:1;margin-bottom:10px;">III</div>
-            <div class="quartet-title">Storytelling</div>
-            <div class="quartet-body">We restore visibility, empathy, and action for overlooked communities through authentic stories.</div>
+            <div class="quartet-title" data-i18n="values.storytelling.title">Storytelling</div>
+            <div class="quartet-body" data-i18n="values.storytelling.body">We restore visibility, empathy, and action for overlooked communities through authentic stories.</div>
           </div>
           <div class="quartet-card">
             <div style="font-family:var(--font-display);font-weight:900;font-size:28px;color:var(--blue);line-height:1;margin-bottom:10px;">IV</div>
-            <div class="quartet-title">Sustainability</div>
-            <div class="quartet-body">We create long-term support systems that lead toward self-sufficiency and stability.</div>
+            <div class="quartet-title" data-i18n="values.sustainability.title">Sustainability</div>
+            <div class="quartet-body" data-i18n="values.sustainability.body">We create long-term support systems that lead toward self-sufficiency and stability.</div>
           </div>
           <div class="quartet-card">
             <div style="font-family:var(--font-display);font-weight:900;font-size:28px;color:var(--blue);line-height:1;margin-bottom:10px;">V</div>
-            <div class="quartet-title">Integrity</div>
-            <div class="quartet-body">We value transparency, accountability, and responsible stewardship in everything we do.</div>
+            <div class="quartet-title" data-i18n="values.integrity.title">Integrity</div>
+            <div class="quartet-body" data-i18n="values.integrity.body">We value transparency, accountability, and responsible stewardship in everything we do.</div>
           </div>
         </div>
       </div>
@@ -3057,17 +3052,17 @@
                   <span>Aiden Kim</span>
                 </div>
               </div>
-              <div class="founder-tag">Founder + President</div>
+              <div class="founder-tag" data-i18n="founder.tag">Founder + President</div>
             </div>
           </div>
           <div class="founder-content fade-in" style="transition-delay:0.15s">
-            <div class="section-label" style="color:rgba(200,184,154,0.5)">About the Founder</div>
+            <div class="section-label" style="color:rgba(200,184,154,0.5)" data-i18n="founder.label">About the Founder</div>
             <div class="founder-name">Aiden Kim</div>
-            <div class="founder-title">Licensed Pharmacist · Founder & President, TCF</div>
+            <div class="founder-title" data-i18n="founder.subtitle">Licensed Pharmacist · Founder & President, TCF</div>
             <div class="founder-bio">
-              <p>In high school, Aiden Kim met an unhoused elderly woman who declined his monetary donation—and instead explained her need for medication. That single encounter reshaped his understanding of compassion and set him on a path toward pharmacy and community service.</p>
-              <p>After years of medical outreach in underserved communities in Stockton and Compton, he used $10,000 of his personal savings to travel to Korea. What began as simple videos—providing rest, appreciation, and visibility to elderly individuals living in poverty—gradually evolved into a viral movement reaching millions.</p>
-              <p>Guided by the belief that social media could be a force for genuine human connection rather than spectacle, Aiden founded Tessera Compassion Foundation in 2025. Under his leadership, TCF operates with a clear voice: warm, honest, and never exploitative—restoring dignity one story at a time.</p>
+              <p data-i18n="founder.p1">In high school, Aiden Kim met an unhoused elderly woman who declined his monetary donation—and instead explained her need for medication. That single encounter reshaped his understanding of compassion and set him on a path toward pharmacy and community service.</p>
+              <p data-i18n="founder.p2">After years of medical outreach in underserved communities in Stockton and Compton, he used $10,000 of his personal savings to travel to Korea. What began as simple videos—providing rest, appreciation, and visibility to elderly individuals living in poverty—gradually evolved into a viral movement reaching millions.</p>
+              <p data-i18n="founder.p3">Guided by the belief that social media could be a force for genuine human connection rather than spectacle, Aiden founded Tessera Compassion Foundation in 2025. Under his leadership, TCF operates with a clear voice: warm, honest, and never exploitative—restoring dignity one story at a time.</p>
             </div>
             <div class="founder-handles">
               <a class="handle-pill" href="https://instagram.com/aidenkim16" target="_blank">@aidenkim16</a>
@@ -3081,8 +3076,8 @@
     <!-- TEAM -->
     <section class="team-section">
       <div class="container">
-        <div class="section-label">The Team</div>
-        <h2 class="section-title">Our People</h2>
+        <div class="section-label" data-i18n="team.label">The Team</div>
+        <h2 class="section-title" data-i18n="team.title">Our People</h2>
         <div class="team-grid">
           <div class="team-card fade-in">
             <div class="team-photo">
@@ -3091,7 +3086,7 @@
               </div>
             </div>
             <div class="team-name">Aiden Kim</div>
-            <div class="team-role">Founder + President</div>
+            <div class="team-role" data-i18n="team.role1">Founder + President</div>
           </div>
           <div class="team-card fade-in" style="transition-delay:0.1s">
             <div class="team-photo">
@@ -3100,7 +3095,7 @@
               </div>
             </div>
             <div class="team-name">Dan Kang</div>
-            <div class="team-role">Board Member</div>
+            <div class="team-role" data-i18n="team.role2">Board Member</div>
           </div>
           <div class="team-card fade-in" style="transition-delay:0.2s">
             <div class="team-photo">
@@ -3109,7 +3104,7 @@
               </div>
             </div>
             <div class="team-name">Charles Choi</div>
-            <div class="team-role">Board Member · Lead Pastor, Tapestry LA Church</div>
+            <div class="team-role" data-i18n="team.role3">Board Member · Lead Pastor, Tapestry LA Church</div>
           </div>
         </div>
       </div>
@@ -3118,83 +3113,83 @@
     <!-- INITIATIVES -->
     <section style="padding:100px 0; background:var(--warm-dark); color:var(--bg);">
       <div class="container">
-        <div class="section-label" style="color:rgba(200,184,154,0.5)">What We've Done & Where We're Going</div>
-        <h2 class="section-title" style="color:var(--bg); margin-bottom:60px;">Initiatives</h2>
+        <div class="section-label" style="color:rgba(200,184,154,0.5)" data-i18n="init.label">What We've Done & Where We're Going</div>
+        <h2 class="section-title" style="color:var(--bg); margin-bottom:60px;" data-i18n="init.title">Initiatives</h2>
         <!-- 4 pillars from pitch deck -->
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:60px;">
           <div class="pillar-card" style="padding:32px 28px;">
-            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Emergency Relief</div>
-            <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;">Providing emergency support through food, housing, and medical aid to those in immediate need.</div>
+            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;" data-i18n="init.pillar1.title">Emergency Relief</div>
+            <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;" data-i18n="init.pillar1.body">Providing emergency support through food, housing, and medical aid to those in immediate need.</div>
           </div>
           <div class="pillar-card" style="padding:32px 28px;">
-            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Storytelling & Awareness</div>
-            <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;">Using digital storytelling to inspire awareness and action—making the unseen visible.</div>
+            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;" data-i18n="init.pillar2.title">Storytelling & Awareness</div>
+            <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;" data-i18n="init.pillar2.body">Using digital storytelling to inspire awareness and action—making the unseen visible.</div>
           </div>
           <div class="pillar-card" style="padding:32px 28px;">
-            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Community Partnerships</div>
-            <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;">Partnering with communities, celebrities, global leaders, influencers, brands, and volunteers.</div>
+            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;" data-i18n="init.pillar3.title">Community Partnerships</div>
+            <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;" data-i18n="init.pillar3.body">Partnering with communities, celebrities, global leaders, influencers, brands, and volunteers.</div>
           </div>
           <div class="pillar-card" style="padding:32px 28px;">
-            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Long-Term Sustainability</div>
-            <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;">Creating pathways through education, jobs, mentorship, and social enterprise.</div>
+            <div style="font-family:var(--font-display);font-weight:900;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;" data-i18n="init.pillar4.title">Long-Term Sustainability</div>
+            <div style="font-family:var(--font-display);font-size:13px;color:rgba(232,230,223,0.55);line-height:1.65;" data-i18n="init.pillar4.body">Creating pathways through education, jobs, mentorship, and social enterprise.</div>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;">
           <div>
-            <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:28px;">Projects Completed</div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:28px;" data-i18n="init.completed.label">Projects Completed</div>
             <ul style="list-style:none;display:flex;flex-direction:column;gap:14px;">
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Hearing aids & dentures for elderly in poverty</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Walkers, strollers & mobility assistance</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Cash assistance & bill payment support</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Heater replacement for vulnerable households</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Funeral costs relief for grieving elderly parents</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Rent & shelter assistance</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> Food vouchers & seasonal donations for elderly</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> <span data-i18n="init.completed.item1">Hearing aids & dentures for elderly in poverty</span></li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> <span data-i18n="init.completed.item2">Walkers, strollers & mobility assistance</span></li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> <span data-i18n="init.completed.item3">Cash assistance & bill payment support</span></li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> <span data-i18n="init.completed.item4">Heater replacement for vulnerable households</span></li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> <span data-i18n="init.completed.item5">Funeral costs relief for grieving elderly parents</span></li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> <span data-i18n="init.completed.item6">Rent & shelter assistance</span></li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);flex-shrink:0;">—</span> <span data-i18n="init.completed.item7">Food vouchers & seasonal donations for elderly</span></li>
             </ul>
           </div>
           <div>
-            <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:28px;">2026–2027 Vision</div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:28px;" data-i18n="init.vision.label">2026–2027 Vision</div>
             <ul style="list-style:none;display:flex;flex-direction:column;gap:14px;">
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Korea expansion & Tessera Korea incorporation</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Coupang item donations and marketplace</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Community restaurant initiative</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Pre-funeral celebration program with Somang Society</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Refugee assistance program</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Mentorship & scholarship for orphans</li>
-              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> Mental health counseling programs</li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> <span data-i18n="init.vision.item1">Korea expansion & Tessera Korea incorporation</span></li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> <span data-i18n="init.vision.item2">Coupang item donations and marketplace</span></li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> <span data-i18n="init.vision.item3">Community restaurant initiative</span></li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> <span data-i18n="init.vision.item4">Pre-funeral celebration program with Somang Society</span></li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> <span data-i18n="init.vision.item5">Refugee assistance program</span></li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> <span data-i18n="init.vision.item6">Mentorship & scholarship for orphans</span></li>
+              <li style="font-family:var(--font-display);font-size:15px;color:rgba(232,230,223,0.75);display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent-2);flex-shrink:0;">+</span> <span data-i18n="init.vision.item7">Mental health counseling programs</span></li>
             </ul>
           </div>
         </div>
-        <div style="margin-top:60px;padding-top:40px;border-top:1px solid rgba(200,184,154,0.1);font-family:var(--font-serif);font-size:18px;font-style:italic;color:rgba(200,184,154,0.6);text-align:center;">"Compassion should not only provide temporary relief, but also should create lasting change."</div>
+        <div style="margin-top:60px;padding-top:40px;border-top:1px solid rgba(200,184,154,0.1);font-family:var(--font-serif);font-size:18px;font-style:italic;color:rgba(200,184,154,0.6);text-align:center;" data-i18n="init.quote">"Compassion should not only provide temporary relief, but also should create lasting change."</div>
       </div>
     </section>
 
     <!-- IMPACT STORIES -->
     <section style="padding:100px 0;">
       <div class="container">
-        <div class="section-label">Stories Behind the Mission</div>
-        <h2 class="section-title" style="font-size:clamp(36px,4vw,60px);margin-bottom:48px;">Impact</h2>
+        <div class="section-label" data-i18n="stories.label">Stories Behind the Mission</div>
+        <h2 class="section-title" style="font-size:clamp(36px,4vw,60px);margin-bottom:48px;" data-i18n="stories.title">Impact</h2>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
           <div class="quartet-card">
-            <div class="quartet-title">Hearing Aid Support</div>
-            <div class="quartet-body" style="font-size:15px;line-height:1.7;">A 70-year-old grandmother raising her disabled daughter while collecting cardboard for a living received support to purchase a hearing aid her daughter could never afford.</div>
+            <div class="quartet-title" data-i18n="stories.s1.title">Hearing Aid Support</div>
+            <div class="quartet-body" style="font-size:15px;line-height:1.7;" data-i18n="stories.s1.body">A 70-year-old grandmother raising her disabled daughter while collecting cardboard for a living received support to purchase a hearing aid her daughter could never afford.</div>
           </div>
           <div class="quartet-card">
-            <div class="quartet-title">Recovery Assistance</div>
-            <div class="quartet-body" style="font-size:15px;line-height:1.7;">An elderly street vendor facing physical abuse and financial hardship received support to leave her unsafe work environment and access proper medical care.</div>
+            <div class="quartet-title" data-i18n="stories.s2.title">Recovery Assistance</div>
+            <div class="quartet-body" style="font-size:15px;line-height:1.7;" data-i18n="stories.s2.body">An elderly street vendor facing physical abuse and financial hardship received support to leave her unsafe work environment and access proper medical care.</div>
           </div>
           <div class="quartet-card">
-            <div class="quartet-title">Funeral Relief</div>
-            <div class="quartet-body" style="font-size:15px;line-height:1.7;">After losing their son to suicide, elderly parents who spent their life savings on funeral costs received emergency financial restoration and ongoing emotional support.</div>
+            <div class="quartet-title" data-i18n="stories.s3.title">Funeral Relief</div>
+            <div class="quartet-body" style="font-size:15px;line-height:1.7;" data-i18n="stories.s3.body">After losing their son to suicide, elderly parents who spent their life savings on funeral costs received emergency financial restoration and ongoing emotional support.</div>
           </div>
           <div class="quartet-card">
-            <div class="quartet-title">Dental & Literacy Support</div>
-            <div class="quartet-body" style="font-size:15px;line-height:1.7;">A widowed grandmother caring for her incapable son received dentures, literacy education, and additional support for food and living expenses.</div>
+            <div class="quartet-title" data-i18n="stories.s4.title">Dental & Literacy Support</div>
+            <div class="quartet-body" style="font-size:15px;line-height:1.7;" data-i18n="stories.s4.body">A widowed grandmother caring for her incapable son received dentures, literacy education, and additional support for food and living expenses.</div>
           </div>
         </div>
         <div style="margin-top:32px;text-align:center;">
-          <p style="font-family:var(--font-display);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-light);margin-bottom:20px;">Behind every statistic is a human story.</p>
-          <button class="btn-primary" onclick="navigate('donate')" style="margin:0 auto;">Support the Mission <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+          <p style="font-family:var(--font-display);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-light);margin-bottom:20px;" data-i18n="stories.footer">Behind every statistic is a human story.</p>
+          <button class="btn-primary" onclick="navigate('donate')" style="margin:0 auto;"><span data-i18n="stories.button">Support the Mission</span> <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
         </div>
       </div>
     </section>
@@ -3202,40 +3197,40 @@
     <!-- TIMELINE -->
     <section style="padding:100px 0;background:var(--warm-dark);color:var(--bg);">
       <div class="container">
-        <div class="section-label" style="color:rgba(200,184,154,0.5);">How We Got Here</div>
-        <h2 class="section-title" style="color:var(--bg);margin-bottom:64px;">Timeline</h2>
+        <div class="section-label" style="color:rgba(200,184,154,0.5);" data-i18n="timeline.label">How We Got Here</div>
+        <h2 class="section-title" style="color:var(--bg);margin-bottom:64px;" data-i18n="timeline.title">Timeline</h2>
         <div style="position:relative;">
           <div style="position:absolute;top:20px;left:0;right:0;height:1px;background:rgba(200,184,154,0.15);"></div>
           <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;">
             <div style="padding:0 20px 0 0;padding-top:0;">
               <div style="width:10px;height:10px;background:var(--accent);border-radius:50%;margin-bottom:24px;margin-top:16px;position:relative;z-index:1;"></div>
               <div style="font-family:var(--font-display);font-weight:900;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Jan 2024</div>
-              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--bg);margin-bottom:8px;">First Trip to Korea</div>
-              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.45);line-height:1.6;">Took $10,000 of personal savings to uplift elderly street vendors and cardboard collectors.</div>
+              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--bg);margin-bottom:8px;" data-i18n="timeline.t1.title">First Trip to Korea</div>
+              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.45);line-height:1.6;" data-i18n="timeline.t1.body">Took $10,000 of personal savings to uplift elderly street vendors and cardboard collectors.</div>
             </div>
             <div style="padding:0 20px;padding-top:0;">
               <div style="width:10px;height:10px;background:var(--accent);border-radius:50%;margin-bottom:24px;margin-top:16px;position:relative;z-index:1;"></div>
               <div style="font-family:var(--font-display);font-weight:900;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Apr 2024</div>
-              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--bg);margin-bottom:8px;">First Viral Video</div>
-              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.45);line-height:1.6;">2.1M views — first Korean American creating kindness content on the streets.</div>
+              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--bg);margin-bottom:8px;" data-i18n="timeline.t2.title">First Viral Video</div>
+              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.45);line-height:1.6;" data-i18n="timeline.t2.body">2.1M views — first Korean American creating kindness content on the streets.</div>
             </div>
             <div style="padding:0 20px;padding-top:0;">
               <div style="width:10px;height:10px;background:var(--accent);border-radius:50%;margin-bottom:24px;margin-top:16px;position:relative;z-index:1;"></div>
               <div style="font-family:var(--font-display);font-weight:900;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Aug 2024</div>
-              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--bg);margin-bottom:8px;">100K on Instagram</div>
-              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.45);line-height:1.6;">Exponential growth driven by genuineness and community connection.</div>
+              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--bg);margin-bottom:8px;" data-i18n="timeline.t3.title">100K on Instagram</div>
+              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.45);line-height:1.6;" data-i18n="timeline.t3.body">Exponential growth driven by genuineness and community connection.</div>
             </div>
             <div style="padding:0 20px;padding-top:0;">
               <div style="width:10px;height:10px;background:var(--accent);border-radius:50%;margin-bottom:24px;margin-top:16px;position:relative;z-index:1;"></div>
               <div style="font-family:var(--font-display);font-weight:900;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Feb 2025</div>
-              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--bg);margin-bottom:8px;">TCF Incorporated</div>
-              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.45);line-height:1.6;">Turned a simple online awareness project into a scalable 501(c)(3) nonprofit.</div>
+              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--bg);margin-bottom:8px;" data-i18n="timeline.t4.title">TCF Incorporated</div>
+              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.45);line-height:1.6;" data-i18n="timeline.t4.body">Turned a simple online awareness project into a scalable 501(c)(3) nonprofit.</div>
             </div>
             <div style="padding:0 0 0 20px;padding-top:0;">
               <div style="width:10px;height:10px;background:rgba(200,184,154,0.3);border-radius:50%;margin-bottom:24px;margin-top:16px;position:relative;z-index:1;border:1px solid rgba(200,184,154,0.4);"></div>
               <div style="font-family:var(--font-display);font-weight:900;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(200,184,154,0.4);margin-bottom:8px;">Jun 2026</div>
-              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:rgba(232,230,223,0.5);margin-bottom:8px;">Tessera Korea</div>
-              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.3);line-height:1.6;">Korea incorporation in progress — expanding operations on the ground.</div>
+              <div style="font-family:var(--font-display);font-weight:800;font-size:15px;color:rgba(232,230,223,0.5);margin-bottom:8px;" data-i18n="timeline.t5.title">Tessera Korea</div>
+              <div style="font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.3);line-height:1.6;" data-i18n="timeline.t5.body">Korea incorporation in progress — expanding operations on the ground.</div>
             </div>
           </div>
         </div>
@@ -3822,11 +3817,11 @@
     <section style="padding:60px 0 0;border-bottom:1px solid var(--rule);">
       <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding-bottom:60px;">
         <div>
-          <div class="section-label">No One Should Be Forgotten</div>
-          <h1 class="section-title" style="font-size:clamp(36px,4vw,60px);margin-bottom:0;">Every Person<br>Deserves<br>Dignity.</h1>
+          <div class="section-label" data-i18n="adopt.label">No One Should Be Forgotten</div>
+          <h1 class="section-title" style="font-size:clamp(36px,4vw,60px);margin-bottom:0;" data-i18n="adopt.title">Every Person<br>Deserves<br>Dignity.</h1>
         </div>
         <div>
-          <p style="font-family:var(--font-serif);font-size:18px;color:var(--ink-mid);line-height:1.75;">For less than a dinner out, you can ensure that one person—one real, named, living person—has food, medicine, and the knowledge that they are not forgotten. That is the tessera.</p>
+          <p style="font-family:var(--font-serif);font-size:18px;color:var(--ink-mid);line-height:1.75;" data-i18n="adopt.body">For less than a dinner out, you can ensure that one person—one real, named, living person—has food, medicine, and the knowledge that they are not forgotten. That is the tessera.</p>
         </div>
       </div>
     </section>
@@ -3835,9 +3830,9 @@
     <section class="adopt-grid-section" style="padding-top:60px;">
       <div class="container">
         <div class="adopt-filter-bar">
-          <button class="adopt-filter-btn active" onclick="filterAdopt('all', this)">All</button>
-          <button class="adopt-filter-btn" onclick="filterAdopt('available', this)">Available</button>
-          <button class="adopt-filter-btn" onclick="filterAdopt('sponsored', this)">Sponsored</button>
+          <button class="adopt-filter-btn active" onclick="filterAdopt('all', this)" data-i18n="adopt.filterAll">All</button>
+          <button class="adopt-filter-btn" onclick="filterAdopt('available', this)" data-i18n="adopt.filterAvailable">Available</button>
+          <button class="adopt-filter-btn" onclick="filterAdopt('sponsored', this)" data-i18n="adopt.filterSponsored">Sponsored</button>
         </div>
 
         <div class="adopt-grid" id="adopt-grid">
@@ -3847,7 +3842,7 @@
             <div class="flip-card-inner">
               <div class="flip-front">
                 <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
-                <div class="flip-front-hint">Hover to meet</div>
+                <div class="flip-front-hint" data-i18n="card.hover">Hover to meet</div>
                 <div class="flip-front-overlay">
                   <div class="flip-front-name">Grandmother Yun</div>
                   <div class="flip-front-age">Age 81 · Seoul, Korea</div>
@@ -3855,13 +3850,13 @@
               </div>
               <div class="flip-back">
                 <div class="flip-back-name">Grandmother Yun</div>
-                <div class="flip-back-meta">Age 81 · Seoul · Available</div>
-                <div class="flip-back-story">Collects cardboard 12 hours a day. Has not seen a doctor in 6 years.</div>
-                <div class="flip-episodes-label">Her Story</div>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">Finding Grandmother Yun</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">Her first doctor visit in years</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">3 months later — an update</span><span class="flip-ep-arrow">→</span></a>
-                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandmother Yun', 45)">Sponsor Her →</button>
+                <div class="flip-back-meta" data-i18n="card.c1.meta">Age 81 · Seoul · Available</div>
+                <div class="flip-back-story" data-i18n="card.c1.story">Collects cardboard 12 hours a day. Has not seen a doctor in 6 years.</div>
+                <div class="flip-episodes-label" data-i18n="card.herStory">Her Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title" data-i18n="card.c1.ep1">Finding Grandmother Yun</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title" data-i18n="card.c1.ep2">Her first doctor visit in years</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title" data-i18n="card.c1.ep3">3 months later — an update</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandmother Yun', 45)" data-i18n="card.sponsorHer">Sponsor Her →</button>
               </div>
             </div>
           </div>
@@ -3871,7 +3866,7 @@
             <div class="flip-card-inner">
               <div class="flip-front">
                 <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
-                <div class="flip-front-hint">Hover to meet</div>
+                <div class="flip-front-hint" data-i18n="card.hover">Hover to meet</div>
                 <div class="flip-front-overlay">
                   <div class="flip-front-name">Grandfather Park</div>
                   <div class="flip-front-age">Age 77 · Busan, Korea</div>
@@ -3879,13 +3874,13 @@
               </div>
               <div class="flip-back">
                 <div class="flip-back-name">Grandfather Park</div>
-                <div class="flip-back-meta">Age 77 · Busan · Available</div>
-                <div class="flip-back-story">Rolls kimbap at 5am every morning, summer and winter, to earn $3 a day.</div>
-                <div class="flip-episodes-label">His Story</div>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">Meeting him at the street corner</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">His first real meal in years</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">Following up — is he okay?</span><span class="flip-ep-arrow">→</span></a>
-                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Park', 35)">Sponsor Him →</button>
+                <div class="flip-back-meta" data-i18n="card.c2.meta">Age 77 · Busan · Available</div>
+                <div class="flip-back-story" data-i18n="card.c2.story">Rolls kimbap at 5am every morning, summer and winter, to earn $3 a day.</div>
+                <div class="flip-episodes-label" data-i18n="card.hisStory">His Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title" data-i18n="card.c2.ep1">Meeting him at the street corner</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title" data-i18n="card.c2.ep2">His first real meal in years</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title" data-i18n="card.c2.ep3">Following up — is he okay?</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Park', 35)" data-i18n="card.sponsorHim">Sponsor Him →</button>
               </div>
             </div>
           </div>
@@ -3895,8 +3890,8 @@
             <div class="flip-card-inner">
               <div class="flip-front">
                 <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
-                <div class="flip-front-hint">Hover to meet</div>
-                <div style="position:absolute;top:12px;left:12px;background:var(--accent-2);color:var(--white);font-family:var(--font-display);font-weight:700;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 10px;">Sponsored</div>
+                <div class="flip-front-hint" data-i18n="card.hover">Hover to meet</div>
+                <div style="position:absolute;top:12px;left:12px;background:var(--accent-2);color:var(--white);font-family:var(--font-display);font-weight:700;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 10px;" data-i18n="card.sponsoredBadge">Sponsored</div>
                 <div class="flip-front-overlay">
                   <div class="flip-front-name">Grandmother Kim</div>
                   <div class="flip-front-age">Age 82 · Seoul, Korea</div>
@@ -3904,13 +3899,13 @@
               </div>
               <div class="flip-back">
                 <div class="flip-back-name">Grandmother Kim</div>
-                <div class="flip-back-meta">Age 82 · Seoul · Sponsored ✓</div>
-                <div class="flip-back-story">Knits scarves near a fish market. Fully sponsored since March 2025.</div>
-                <div class="flip-episodes-label">Her Story</div>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">Meeting Grandma Kim</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">Getting her hearing aid</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">6 months later — her new life</span><span class="flip-ep-arrow">→</span></a>
-                <button class="flip-sponsor-btn" style="background:rgba(61,92,74,0.4);color:#9fcfb0;cursor:default;">✓ Currently Sponsored</button>
+                <div class="flip-back-meta" data-i18n="card.c3.meta">Age 82 · Seoul · Sponsored ✓</div>
+                <div class="flip-back-story" data-i18n="card.c3.story">Knits scarves near a fish market. Fully sponsored since March 2025.</div>
+                <div class="flip-episodes-label" data-i18n="card.herStory">Her Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title" data-i18n="card.c3.ep1">Meeting Grandma Kim</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title" data-i18n="card.c3.ep2">Getting her hearing aid</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title" data-i18n="card.c3.ep3">6 months later — her new life</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" style="background:rgba(61,92,74,0.4);color:#9fcfb0;cursor:default;" data-i18n="card.currentlySponsored">✓ Currently Sponsored</button>
               </div>
             </div>
           </div>
@@ -3920,7 +3915,7 @@
             <div class="flip-card-inner">
               <div class="flip-front">
                 <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
-                <div class="flip-front-hint">Hover to meet</div>
+                <div class="flip-front-hint" data-i18n="card.hover">Hover to meet</div>
                 <div class="flip-front-overlay">
                   <div class="flip-front-name">Grandfather Choi</div>
                   <div class="flip-front-age">Age 79 · Daegu, Korea</div>
@@ -3928,13 +3923,13 @@
               </div>
               <div class="flip-back">
                 <div class="flip-back-name">Grandfather Choi</div>
-                <div class="flip-back-meta">Age 79 · Daegu · Available</div>
-                <div class="flip-back-story">Retired factory worker collecting cans. Walks 8km daily in all weather.</div>
-                <div class="flip-episodes-label">His Story</div>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">Walking 8km to survive</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">A full day of rest — finally</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">What changed for him</span><span class="flip-ep-arrow">→</span></a>
-                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Choi', 30)">Sponsor Him →</button>
+                <div class="flip-back-meta" data-i18n="card.c4.meta">Age 79 · Daegu · Available</div>
+                <div class="flip-back-story" data-i18n="card.c4.story">Retired factory worker collecting cans. Walks 8km daily in all weather.</div>
+                <div class="flip-episodes-label" data-i18n="card.hisStory">His Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title" data-i18n="card.c4.ep1">Walking 8km to survive</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title" data-i18n="card.c4.ep2">A full day of rest — finally</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title" data-i18n="card.c4.ep3">What changed for him</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Choi', 30)" data-i18n="card.sponsorHim">Sponsor Him →</button>
               </div>
             </div>
           </div>
@@ -3944,7 +3939,7 @@
             <div class="flip-card-inner">
               <div class="flip-front">
                 <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
-                <div class="flip-front-hint">Hover to meet</div>
+                <div class="flip-front-hint" data-i18n="card.hover">Hover to meet</div>
                 <div class="flip-front-overlay">
                   <div class="flip-front-name">Grandmother Lee</div>
                   <div class="flip-front-age">Age 88 · Seoul, Korea</div>
@@ -3952,13 +3947,13 @@
               </div>
               <div class="flip-back">
                 <div class="flip-back-name">Grandmother Lee</div>
-                <div class="flip-back-meta">Age 88 · Seoul · Available</div>
-                <div class="flip-back-story">Sells rice cakes from a small cart. Arthritic hands — but she never stops.</div>
-                <div class="flip-episodes-label">Her Story</div>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">The rice cake grandmother</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">Her hands — and her story</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">Visiting her 4 months later</span><span class="flip-ep-arrow">→</span></a>
-                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandmother Lee', 50)">Sponsor Her →</button>
+                <div class="flip-back-meta" data-i18n="card.c5.meta">Age 88 · Seoul · Available</div>
+                <div class="flip-back-story" data-i18n="card.c5.story">Sells rice cakes from a small cart. Arthritic hands — but she never stops.</div>
+                <div class="flip-episodes-label" data-i18n="card.herStory">Her Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title" data-i18n="card.c5.ep1">The rice cake grandmother</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title" data-i18n="card.c5.ep2">Her hands — and her story</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title" data-i18n="card.c5.ep3">Visiting her 4 months later</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandmother Lee', 50)" data-i18n="card.sponsorHer">Sponsor Her →</button>
               </div>
             </div>
           </div>
@@ -3968,7 +3963,7 @@
             <div class="flip-card-inner">
               <div class="flip-front">
                 <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
-                <div class="flip-front-hint">Hover to meet</div>
+                <div class="flip-front-hint" data-i18n="card.hover">Hover to meet</div>
                 <div class="flip-front-overlay">
                   <div class="flip-front-name">Grandfather Oh</div>
                   <div class="flip-front-age">Age 73 · Incheon, Korea</div>
@@ -3976,13 +3971,13 @@
               </div>
               <div class="flip-back">
                 <div class="flip-back-name">Grandfather Oh</div>
-                <div class="flip-back-meta">Age 73 · Incheon · Available</div>
-                <div class="flip-back-story">A veteran working as a parking attendant, sending most of his income to a sick relative.</div>
-                <div class="flip-episodes-label">His Story</div>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">The veteran who keeps giving</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">Why he works so hard</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">His relative gets the help they need</span><span class="flip-ep-arrow">→</span></a>
-                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Oh', 40)">Sponsor Him →</button>
+                <div class="flip-back-meta" data-i18n="card.c6.meta">Age 73 · Incheon · Available</div>
+                <div class="flip-back-story" data-i18n="card.c6.story">A veteran working as a parking attendant, sending most of his income to a sick relative.</div>
+                <div class="flip-episodes-label" data-i18n="card.hisStory">His Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title" data-i18n="card.c6.ep1">The veteran who keeps giving</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title" data-i18n="card.c6.ep2">Why he works so hard</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title" data-i18n="card.c6.ep3">His relative gets the help they need</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" onclick="sponsorElder('Grandfather Oh', 40)" data-i18n="card.sponsorHim">Sponsor Him →</button>
               </div>
             </div>
           </div>
@@ -3992,8 +3987,8 @@
             <div class="flip-card-inner">
               <div class="flip-front">
                 <div class="flip-front-placeholder" style="background:linear-gradient(160deg,#2a2926,#1e1d1a);width:100%;height:100%;"></div>
-                <div class="flip-front-hint">Hover to meet</div>
-                <div style="position:absolute;top:12px;left:12px;background:var(--accent-2);color:var(--white);font-family:var(--font-display);font-weight:700;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 10px;">Sponsored</div>
+                <div class="flip-front-hint" data-i18n="card.hover">Hover to meet</div>
+                <div style="position:absolute;top:12px;left:12px;background:var(--accent-2);color:var(--white);font-family:var(--font-display);font-weight:700;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 10px;" data-i18n="card.sponsoredBadge">Sponsored</div>
                 <div class="flip-front-overlay">
                   <div class="flip-front-name">Grandmother Shin</div>
                   <div class="flip-front-age">Age 82 · Suwon, Korea</div>
@@ -4001,13 +3996,13 @@
               </div>
               <div class="flip-back">
                 <div class="flip-back-name">Grandmother Shin</div>
-                <div class="flip-back-meta">Age 82 · Suwon · Sponsored ✓</div>
-                <div class="flip-back-story">Known for her laugh and her persimmon kimchi. Sponsored since January 2025.</div>
-                <div class="flip-episodes-label">Her Story</div>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title">The grandmother who laughs</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title">Making kimchi together</span><span class="flip-ep-arrow">→</span></a>
-                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title">One year later — still smiling</span><span class="flip-ep-arrow">→</span></a>
-                <button class="flip-sponsor-btn" style="background:rgba(61,92,74,0.4);color:#9fcfb0;cursor:default;">✓ Currently Sponsored</button>
+                <div class="flip-back-meta" data-i18n="card.c7.meta">Age 82 · Suwon · Sponsored ✓</div>
+                <div class="flip-back-story" data-i18n="card.c7.story">Known for her laugh and her persimmon kimchi. Sponsored since January 2025.</div>
+                <div class="flip-episodes-label" data-i18n="card.herStory">Her Story</div>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 1</span><span class="flip-ep-title" data-i18n="card.c7.ep1">The grandmother who laughs</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 2</span><span class="flip-ep-title" data-i18n="card.c7.ep2">Making kimchi together</span><span class="flip-ep-arrow">→</span></a>
+                <a href="https://www.youtube.com/@aidenkim16/shorts" target="_blank" class="flip-episode-link"><span class="flip-ep-num">Ep. 3</span><span class="flip-ep-title" data-i18n="card.c7.ep3">One year later — still smiling</span><span class="flip-ep-arrow">→</span></a>
+                <button class="flip-sponsor-btn" style="background:rgba(61,92,74,0.4);color:#9fcfb0;cursor:default;" data-i18n="card.currentlySponsored">✓ Currently Sponsored</button>
               </div>
             </div>
           </div>
@@ -4017,8 +4012,8 @@
             <div class="flip-card-inner" style="transform:none!important;">
               <div class="flip-front" style="background:var(--accent-2);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;">
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="margin-bottom:20px;opacity:0.6;"><rect x="2" y="2" width="44" height="44" stroke="rgba(245,243,238,0.5)" stroke-width="1.5"/><path d="M24 16v16M16 24h16" stroke="rgba(245,243,238,0.7)" stroke-width="2" stroke-linecap="round"/></svg>
-                <div style="font-family:var(--font-display);font-weight:900;font-size:18px;letter-spacing:0.06em;text-transform:uppercase;color:var(--white);margin-bottom:12px;">Nominate an Elder</div>
-                <div style="font-family:var(--font-serif);font-size:14px;color:rgba(245,243,238,0.7);line-height:1.6;">Know someone who needs support? Tell us their story.</div>
+                <div style="font-family:var(--font-display);font-weight:900;font-size:18px;letter-spacing:0.06em;text-transform:uppercase;color:var(--white);margin-bottom:12px;" data-i18n="adopt.nominate.title">Nominate an Elder</div>
+                <div style="font-family:var(--font-serif);font-size:14px;color:rgba(245,243,238,0.7);line-height:1.6;" data-i18n="adopt.nominate.body">Know someone who needs support? Tell us their story.</div>
               </div>
             </div>
           </div>
@@ -4030,28 +4025,28 @@
     <!-- HOW IT WORKS -->
     <section class="adopt-how">
       <div class="container">
-        <div class="section-label" style="color:rgba(200,184,154,0.5);">How Sponsorship Works</div>
-        <h2 class="section-title" style="color:var(--bg);">Simple.<br>Transparent.<br>Direct.</h2>
+        <div class="section-label" style="color:rgba(200,184,154,0.5);" data-i18n="how.label">How Sponsorship Works</div>
+        <h2 class="section-title" style="color:var(--bg);" data-i18n="how.title">Simple.<br>Transparent.<br>Direct.</h2>
         <div class="adopt-how-grid">
           <div class="adopt-how-card">
             <div class="adopt-how-num">01</div>
-            <div class="adopt-how-title">Choose Your Elder</div>
-            <div class="adopt-how-body">Browse the grid above, hover to hear their story, and choose who you'd like to support. Every person has a specific monthly amount that covers their full needs.</div>
+            <div class="adopt-how-title" data-i18n="how.s1.title">Choose Your Elder</div>
+            <div class="adopt-how-body" data-i18n="how.s1.body">Browse the grid above, hover to hear their story, and choose who you'd like to support. Every person has a specific monthly amount that covers their full needs.</div>
           </div>
           <div class="adopt-how-card">
             <div class="adopt-how-num">02</div>
-            <div class="adopt-how-title">Set Up Monthly Giving</div>
-            <div class="adopt-how-body">Complete your monthly sponsorship via card or ACH bank transfer. Recurring ACH gifts have no expiry and cost just $5 max in processing fees—maximizing your impact.</div>
+            <div class="adopt-how-title" data-i18n="how.s2.title">Set Up Monthly Giving</div>
+            <div class="adopt-how-body" data-i18n="how.s2.body">Complete your monthly sponsorship via card or ACH bank transfer. Recurring ACH gifts have no expiry and cost just $5 max in processing fees—maximizing your impact.</div>
           </div>
           <div class="adopt-how-card">
             <div class="adopt-how-num">03</div>
-            <div class="adopt-how-title">Receive Monthly Updates</div>
-            <div class="adopt-how-body">Every month, you'll receive a personal update—a photo, a short video, or a message from the elder or their community. You'll see exactly where your gift goes.</div>
+            <div class="adopt-how-title" data-i18n="how.s3.title">Receive Monthly Updates</div>
+            <div class="adopt-how-body" data-i18n="how.s3.body">Every month, you'll receive a personal update—a photo, a short video, or a message from the elder or their community. You'll see exactly where your gift goes.</div>
           </div>
           <div class="adopt-how-card">
             <div class="adopt-how-num">04</div>
-            <div class="adopt-how-title">Be Part of Their Story</div>
-            <div class="adopt-how-body">Your name (or anonymous contribution) becomes part of their tessera—the mosaic of people who refused to look away. Sponsorships are tax-deductible for US donors.</div>
+            <div class="adopt-how-title" data-i18n="how.s4.title">Be Part of Their Story</div>
+            <div class="adopt-how-body" data-i18n="how.s4.body">Your name (or anonymous contribution) becomes part of their tessera—the mosaic of people who refused to look away. Sponsorships are tax-deductible for US donors.</div>
           </div>
         </div>
       </div>
@@ -4061,15 +4056,15 @@
     <div id="sponsor-modal" style="display:none;position:fixed;inset:0;background:rgba(30,29,26,0.85);z-index:200;align-items:center;justify-content:center;">
       <div style="background:var(--ink);max-width:420px;width:90%;padding:48px;position:relative;">
         <button onclick="closeSponsorModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(232,230,223,0.4);font-size:20px;cursor:pointer;line-height:1;">✕</button>
-        <div style="font-family:var(--font-display);font-weight:300;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(200,184,154,0.5);margin-bottom:8px;">Monthly Sponsorship</div>
+        <div style="font-family:var(--font-display);font-weight:300;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(200,184,154,0.5);margin-bottom:8px;" data-i18n="modal.label">Monthly Sponsorship</div>
         <div style="font-family:var(--font-display);font-weight:900;font-size:28px;text-transform:uppercase;color:var(--bg);margin-bottom:4px;" id="modal-name"></div>
         <div style="font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--accent);margin-bottom:28px;" id="modal-price"></div>
-        <div style="font-family:var(--font-display);font-size:12px;letter-spacing:0.07em;color:rgba(232,230,223,0.5);line-height:1.6;margin-bottom:28px;">You'll be charged monthly. Cancel anytime. 100% of your sponsorship reaches this elder directly — Tessera covers all processing fees for recurring ACH gifts.</div>
+        <div style="font-family:var(--font-display);font-size:12px;letter-spacing:0.07em;color:rgba(232,230,223,0.5);line-height:1.6;margin-bottom:28px;" data-i18n="modal.terms">You'll be charged monthly. Cancel anytime. 100% of your sponsorship reaches this elder directly — Tessera covers all processing fees for recurring ACH gifts.</div>
         <div style="display:flex;flex-direction:column;gap:12px;">
-          <input type="text" placeholder="Your full name" style="background:rgba(255,255,255,0.05);border:1px solid rgba(200,184,154,0.2);color:var(--bg);font-family:var(--font-body);font-size:14px;padding:12px 14px;outline:none;width:100%;" id="modal-sponsor-name" />
+          <input type="text" placeholder="Your full name" data-i18n-placeholder="modal.namePlaceholder" style="background:rgba(255,255,255,0.05);border:1px solid rgba(200,184,154,0.2);color:var(--bg);font-family:var(--font-body);font-size:14px;padding:12px 14px;outline:none;width:100%;" id="modal-sponsor-name" />
           <input type="email" placeholder="your@email.com" style="background:rgba(255,255,255,0.05);border:1px solid rgba(200,184,154,0.2);color:var(--bg);font-family:var(--font-body);font-size:14px;padding:12px 14px;outline:none;width:100%;" id="modal-sponsor-email" />
         </div>
-        <button onclick="confirmSponsorship()" style="width:100%;background:var(--accent);color:var(--ink);font-family:var(--font-display);font-weight:800;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;padding:16px;border:none;cursor:pointer;margin-top:20px;transition:background 0.2s;" onmouseover="this.style.background='#3D5C4A';this.style.color='#F5F3EE'" onmouseout="this.style.background='#C8B89A';this.style.color='#1E1D1A'">
+        <button onclick="confirmSponsorship()" style="width:100%;background:var(--accent);color:var(--ink);font-family:var(--font-display);font-weight:800;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;padding:16px;border:none;cursor:pointer;margin-top:20px;transition:background 0.2s;" onmouseover="this.style.background='#3D5C4A';this.style.color='#F5F3EE'" onmouseout="this.style.background='#C8B89A';this.style.color='#1E1D1A'" data-i18n="modal.button">
           Begin Sponsorship →
         </button>
         <div id="modal-confirm" style="display:none;margin-top:16px;padding:12px 14px;background:rgba(61,92,74,0.3);color:#9fcfb0;font-family:var(--font-display);font-size:12px;letter-spacing:0.07em;line-height:1.6;"></div>
@@ -4087,81 +4082,81 @@
       <!-- LEFT PANEL -->
       <div class="contact-left">
         <div>
-          <div class="section-label">Get In Touch</div>
-          <h1 class="contact-big-title">Let's<br><em>Build</em><br>Together.</h1>
-          <p class="contact-subtitle">Whether you're interested in partnering, donating, volunteering, or just learning more—we'd love to hear from you.</p>
+          <div class="section-label" data-i18n="contact.label">Get In Touch</div>
+          <h1 class="contact-big-title" data-i18n="contact.title">Let's<br><em>Build</em><br>Together.</h1>
+          <p class="contact-subtitle" data-i18n="contact.subtitle">Whether you're interested in partnering, donating, volunteering, or just learning more—we'd love to hear from you.</p>
         </div>
         <div>
           <div class="contact-details">
             <div class="contact-detail-item">
-              <span class="contact-detail-label">Email</span>
+              <span class="contact-detail-label" data-i18n="contact.emailLabel">Email</span>
               <a href="mailto:aiden@tesseracompassion.com" class="contact-detail-value">aiden@tesseracompassion.com</a>
             </div>
             <div class="contact-detail-item">
-              <span class="contact-detail-label">Phone</span>
+              <span class="contact-detail-label" data-i18n="contact.phoneLabel">Phone</span>
               <a href="tel:+12136764606" class="contact-detail-value">+1 (213) 676-4606</a>
             </div>
             <div class="contact-detail-item">
-              <span class="contact-detail-label">Address</span>
+              <span class="contact-detail-label" data-i18n="contact.addressLabel">Address</span>
               <span class="contact-detail-value" style="font-size:14px;line-height:1.5;">727 W 7th St #623<br>Los Angeles, CA 90017</span>
             </div>
             <div class="contact-detail-item">
-              <span class="contact-detail-label">Instagram</span>
+              <span class="contact-detail-label" data-i18n="contact.instagramLabel">Instagram</span>
               <a href="https://www.instagram.com/aidenkim16/" target="_blank" class="contact-detail-value">@aidenkim16</a>
             </div>
             <div class="contact-detail-item">
-              <span class="contact-detail-label">Foundation</span>
+              <span class="contact-detail-label" data-i18n="contact.foundationLabel">Foundation</span>
               <a href="https://www.instagram.com/tesseracompassion/" target="_blank" class="contact-detail-value">@tesseracompassion</a>
             </div>
           </div>
           <div class="contact-social">
-            <a class="social-tag" href="https://www.instagram.com/aidenkim16/" target="_blank">Instagram</a>
-            <a class="social-tag" href="https://www.tiktok.com/@aidenkim16" target="_blank">TikTok</a>
-            <a class="social-tag" href="https://www.facebook.com/AJKinGeneral/" target="_blank">Facebook</a>
-            <a class="social-tag" href="https://www.youtube.com/@aidenkim16/videos" target="_blank">YouTube</a>
+            <a class="social-tag" href="https://www.instagram.com/aidenkim16/" target="_blank" data-i18n="social.instagram">Instagram</a>
+            <a class="social-tag" href="https://www.tiktok.com/@aidenkim16" target="_blank" data-i18n="social.tiktok">TikTok</a>
+            <a class="social-tag" href="https://www.facebook.com/AJKinGeneral/" target="_blank" data-i18n="social.facebook">Facebook</a>
+            <a class="social-tag" href="https://www.youtube.com/@aidenkim16/videos" target="_blank" data-i18n="social.youtube">YouTube</a>
           </div>
         </div>
       </div>
 
       <!-- RIGHT FORM -->
       <div class="contact-right">
-        <div class="contact-form-title">Send a Message</div>
-        <div class="contact-form-sub">We'll get back to you within 1–2 business days.</div>
+        <div class="contact-form-title" data-i18n="form.title">Send a Message</div>
+        <div class="contact-form-sub" data-i18n="form.subtitle">We'll get back to you within 1–2 business days.</div>
 
         <!-- Using Formspree for email delivery — replace YOUR_FORM_ID -->
         <form class="contact-form" id="contact-form" onsubmit="handleContact(event)" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
           <div class="field-row">
             <div class="contact-field">
-              <label for="cf-name">First Name *</label>
+              <label for="cf-name" data-i18n="form.firstName">First Name *</label>
               <input type="text" id="cf-name" name="first_name" required placeholder="Jane" />
             </div>
             <div class="contact-field">
-              <label for="cf-last">Last Name *</label>
+              <label for="cf-last" data-i18n="form.lastName">Last Name *</label>
               <input type="text" id="cf-last" name="last_name" required placeholder="Kim" />
             </div>
           </div>
           <div class="contact-field">
-            <label for="cf-email">Email Address *</label>
+            <label for="cf-email" data-i18n="form.email">Email Address *</label>
             <input type="email" id="cf-email" name="email" required placeholder="jane@example.com" />
           </div>
           <div class="contact-field">
-            <label for="cf-org">Organization (optional)</label>
-            <input type="text" id="cf-org" name="organization" placeholder="Company / Organization" />
+            <label for="cf-org" data-i18n="form.org">Organization (optional)</label>
+            <input type="text" id="cf-org" name="organization" data-i18n-placeholder="form.orgPlaceholder" placeholder="Company / Organization" />
           </div>
           <div class="contact-field">
-            <label for="cf-type">How can we help?</label>
+            <label for="cf-type" data-i18n="form.help">How can we help?</label>
             <select id="cf-type" name="inquiry_type">
-              <option value="">Select a topic...</option>
-              <option>Partnership Opportunity</option>
-              <option>Donation / Sponsorship</option>
-              <option>Volunteer</option>
-              <option>Media / Press</option>
-              <option>General Inquiry</option>
+              <option value="" data-i18n="form.selectTopic">Select a topic...</option>
+              <option data-i18n="form.topic1">Partnership Opportunity</option>
+              <option data-i18n="form.topic2">Donation / Sponsorship</option>
+              <option data-i18n="form.topic3">Volunteer</option>
+              <option data-i18n="form.topic4">Media / Press</option>
+              <option data-i18n="form.topic5">General Inquiry</option>
             </select>
           </div>
           <div class="contact-field">
-            <label for="cf-message">Message *</label>
-            <textarea id="cf-message" name="message" required placeholder="Tell us about your interest in TCF..."></textarea>
+            <label for="cf-message" data-i18n="form.message">Message *</label>
+            <textarea id="cf-message" name="message" required data-i18n-placeholder="form.messagePlaceholder" placeholder="Tell us about your interest in TCF..."></textarea>
           </div>
 
           <!-- Formspree honeypot -->
@@ -4169,12 +4164,12 @@
           <input type="hidden" name="_subject" value="New TCF Website Inquiry" />
           <input type="hidden" name="_replyto" value="" id="reply-to-hidden" />
 
-          <div id="contact-success">
+          <div id="contact-success" data-i18n="form.success">
             ✓ Thank you! Your message has been sent. We'll be in touch soon.
           </div>
 
           <button type="submit" class="submit-contact" id="contact-submit-btn">
-            Send Message
+            <span data-i18n="form.submit">Send Message</span>
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </form>
@@ -4188,26 +4183,18 @@
     <div class="container">
       <div class="footer-top">
         <div>
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
-            <svg width="26" height="30" viewBox="0 0 42 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="0,30 26,0 26,30" fill="rgba(255,255,255,0.55)"/>
-              <rect x="28" y="0" width="14" height="30" fill="rgba(255,255,255,0.55)"/>
-              <rect x="0" y="34" width="26" height="14" fill="rgba(255,255,255,0.55)"/>
-              <rect x="28" y="34" width="14" height="14" fill="rgba(255,255,255,0.55)"/>
-            </svg>
-            <div class="footer-brand-name">Tessera</div>
-          </div>
-          <div class="footer-brand-sub">Compassion Foundation · 501(c)(3)</div>
-          <div class="footer-tagline">Restoring dignity and creating sustainable hope for vulnerable communities through compassion, storytelling, and action.</div>
+          <img src="assets/tcf-logo-white.png" alt="Tessera Compassion Foundation" style="height:36px;width:auto;opacity:0.9;margin-bottom:14px;display:block;" />
+          <div class="footer-brand-sub" data-i18n="footer.brandSub">Compassion Foundation · 501(c)(3)</div>
+          <div class="footer-tagline" data-i18n="footer.tagline">Restoring dignity and creating sustainable hope for vulnerable communities through compassion, storytelling, and action.</div>
           <div style="margin-top:20px;font-family:var(--font-display);font-size:12px;color:rgba(232,230,223,0.25);line-height:1.7;">
             727 W 7th St #623<br>Los Angeles, CA 90017<br>+1 (213) 676-4606
           </div>
           <!-- Mobile-only quick links -->
           <div class="footer-mobile-links">
-            <a href="#" onclick="navigate('about')">About</a>
-            <a href="#" onclick="navigate('adopt')">Adopt</a>
-            <a href="#" onclick="navigate('donate')">Donate</a>
-            <a href="#" onclick="navigate('contact')">Contact</a>
+            <a href="#" onclick="navigate('about')" data-i18n="nav.about">About</a>
+            <a href="#" onclick="navigate('adopt')" data-i18n="nav.adopt">Adopt</a>
+            <a href="#" onclick="navigate('donate')" data-i18n="nav.donate">Donate</a>
+            <a href="#" onclick="navigate('contact')" data-i18n="nav.contact">Contact</a>
           </div>
           <!-- Mobile-only social icons (mirrors desktop Connect column) -->
           <div class="footer-social-icons footer-mobile-social">
@@ -4229,26 +4216,26 @@
           </div>
         </div>
         <div>
-          <div class="footer-col-title">Navigate</div>
+          <div class="footer-col-title" data-i18n="footer.navigate">Navigate</div>
           <ul class="footer-links">
-            <li><a href="#" onclick="navigate('home')">Home</a></li>
-            <li><a href="#" onclick="navigate('about')">About Us</a></li>
-            <li><a href="#" onclick="navigate('adopt')">Adopt an Elder</a></li>
-            <li><a href="#" onclick="navigate('donate')">Donate</a></li>
-            <li><a href="#" onclick="navigate('contact')">Contact</a></li>
+            <li><a href="#" onclick="navigate('home')" data-i18n="nav.home">Home</a></li>
+            <li><a href="#" onclick="navigate('about')" data-i18n="footer.aboutUs">About Us</a></li>
+            <li><a href="#" onclick="navigate('adopt')" data-i18n="footer.adoptElder">Adopt an Elder</a></li>
+            <li><a href="#" onclick="navigate('donate')" data-i18n="nav.donate">Donate</a></li>
+            <li><a href="#" onclick="navigate('contact')" data-i18n="nav.contact">Contact</a></li>
           </ul>
         </div>
         <div>
-          <div class="footer-col-title">Who We Serve</div>
+          <div class="footer-col-title" data-i18n="footer.whoWeServe">Who We Serve</div>
           <ul class="footer-links">
-            <li><a href="#">Low-Income Families</a></li>
-            <li><a href="#">Children Without Parents</a></li>
-            <li><a href="#">Widows</a></li>
-            <li><a href="#">Immigrant Refugees</a></li>
+            <li><a href="#" data-i18n="quartet.title1">Low-Income Families</a></li>
+            <li><a href="#" data-i18n="quartet.title2">Children Without Parents</a></li>
+            <li><a href="#" data-i18n="quartet.title3">Widows</a></li>
+            <li><a href="#" data-i18n="quartet.title4">Immigrant Refugees</a></li>
           </ul>
         </div>
         <div>
-          <div class="footer-col-title">Connect</div>
+          <div class="footer-col-title" data-i18n="footer.connect">Connect</div>
           <div class="footer-social-icons">
             <a class="footer-social-icon" href="https://www.instagram.com/aidenkim16/" target="_blank" aria-label="Instagram">
               <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg>
@@ -4269,12 +4256,12 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© 2026 Tessera Compassion Foundation · 501(c)(3) · EIN: [Your EIN]</span>
+        <span data-i18n="footer.copyright">© 2026 Tessera Compassion Foundation · 501(c)(3) · EIN: [Your EIN]</span>
         <div class="footer-bottom-right">
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
-          <a href="#" onclick="navigate('donate')">Donate</a>
-          <span style="color:rgba(232,230,223,0.18);font-size:10px;letter-spacing:0.04em;">Site by <a href="https://foxsignal.co/local.html" target="_blank" rel="noopener" style="color:rgba(232,230,223,0.28);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(200,184,154,0.7)'" onmouseout="this.style.color='rgba(232,230,223,0.28)'">Fox Signal Local</a> →</span>
+          <a href="#" data-i18n="footer.privacy">Privacy</a>
+          <a href="#" data-i18n="footer.terms">Terms</a>
+          <a href="#" onclick="navigate('donate')" data-i18n="nav.donate">Donate</a>
+          <span style="color:rgba(232,230,223,0.18);font-size:10px;letter-spacing:0.04em;"><span data-i18n="footer.siteBy">Site by</span> <a href="https://foxsignal.co/local.html" target="_blank" rel="noopener" style="color:rgba(232,230,223,0.28);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(200,184,154,0.7)'" onmouseout="this.style.color='rgba(232,230,223,0.28)'">Fox Signal Local</a> →</span>
         </div>
       </div>
     </div>
@@ -4481,26 +4468,550 @@
     // ─── LANGUAGE / i18n ────────────────────────
     const TRANSLATIONS = {
       en: {
+        'nav.home': 'Home',
+        'nav.about': 'About',
+        'nav.adopt': 'Adopt',
+        'nav.donate': 'Donate',
+        'nav.contact': 'Contact',
+        'nav.give': 'Give Now',
+        'hero.eyebrow': 'Est. 2025 · 501(c)(3) Nonprofit',
         'hero.headline': 'Every<br>Person<br>Deserves<br><em>Dignity.</em>',
         'hero.body': 'Tessera Compassion Foundation restores dignity and creates sustainable hope for vulnerable communities—low-income families, children without parents, widows, and immigrant refugees—through compassion, storytelling, and action.',
         'hero.donate': 'Donate Now',
         'hero.adopt': 'Adopt an Elder',
-        'nav.give': 'Give Now',
-        'donate.title': 'Make a<br>Difference',
-        'donate.body': 'Your donation directly funds programs that provide hearing aids, food, shelter, mentorship, and life-changing experiences to those who need it most.',
-        'adopt.filter.all': 'All', 'adopt.filter.available': 'Available', 'adopt.filter.sponsored': 'Sponsored',
-        'contact.title': "Let's<br><em>Build</em><br>Together.",
+        'shorts.label': 'YouTube · @aidenkim16',
+        'shorts.title': 'Compassion<br><em>in Action.</em>',
+        'shorts.tabShorts': 'Shorts',
+        'shorts.tabVideos': 'Videos',
+        'shorts.watchAll': 'Watch All Shorts',
+        'shorts.watchAllVideos': 'Watch All Videos',
+        'video.title1': 'Her First Paycheck — Full Story',
+        'video.title2': 'How This Guy Single Handedly Helps The Elderly',
+        'video.title3': 'How BM Helped Fight Elderly Poverty — Full',
+        'quartet.label': 'Who We Serve',
+        'quartet.title': 'Quartet of the<br>Vulnerable',
+        'quartet.title1': 'Low-Income Families',
+        'quartet.body1': 'Over 39.8% of Korean elderly live in poverty—#1 in the OECD. We provide essential resources, dignity-centered care, and pathways toward self-sufficiency.',
+        'quartet.title2': 'Children Without Parents',
+        'quartet.body2': '~329,000 children in US foster care. 78% experience basic needs insecurity. We provide mentorship, education, and sustained care so no child feels forgotten.',
+        'quartet.title3': 'Widows',
+        'quartet.body3': 'Widows lose up to 75% of their support systems overnight. ~700,000 women are widowed each year. We restore community belonging and build financial independence.',
+        'quartet.title4': 'Immigrant Refugees',
+        'quartet.body4': 'Immigrants face a 20.9% poverty rate vs 9.9% for non-immigrants. We ease transitions, create networks of opportunity, and champion the dignity of every newcomer.',
+        'theory.label': 'How We Work',
+        'theory.title': 'Theory of<br>Change',
+        'theory.title1': 'Raise Awareness',
+        'theory.body1': 'Through Aiden Kim\'s 650,000+ social media following, we tell authentic stories that restore visibility and dignity to overlooked communities—moving audiences from compassion to action without pity or savior narratives.',
+        'theory.title2': 'Provide Support',
+        'theory.body2': 'We mobilize donor contributions into immediate impact—hearing aids, housing, food vouchers, medical aid, and life experiences for those who\'ve never had them.',
+        'theory.title3': 'Build Self-Sufficiency',
+        'theory.body3': 'Through mentorship, job training, education, and financial literacy programs, we create lasting systems of opportunity that empower communities for generations.',
+        'impact.label1': 'Online Followers',
+        'impact.label2': 'Raised for Impact',
+        'impact.label3': 'First Viral Video Views',
+        'impact.label4': 'Lives Impacted',
+        'impact.thousands': 'Thousands',
+        'partners.label': 'Our Partners',
+        'partners.title': 'A Network of Compassion',
+        'partner.p1.role': 'Rapper',
+        'partner.p1.tag': 'Music',
+        'partner.p2.role': 'E-Commerce Platform',
+        'partner.p2.tag': 'Brand',
+        'partner.p3.role': 'Rapper · Actor',
+        'partner.p3.tag': 'Music · Film',
+        'partner.p4.role': 'Hypercar Collector',
+        'partner.p4.tag': 'Creator',
+        'partner.p5.role': 'Verification Tech',
+        'partner.p5.tag': 'Technology',
+        'partner.p6.role': 'LA Football Club',
+        'partner.p6.tag': 'Sports',
+        'partner.p7.role': 'Korean American Organization',
+        'partner.p7.tag': 'Community',
+        'partner.p8.role': 'Korean American Network',
+        'partner.p8.tag': 'Community',
+        'partner.p9.role': 'Global Law Firm',
+        'partner.p9.tag': 'Legal',
+        'partner.p10.role': 'Korean Law Firm',
+        'partner.p10.tag': 'Legal',
+        'partner.p11.role': 'Beauty Tech Brand',
+        'partner.p11.tag': 'Brand',
+        'partner.p12.role': 'YouTuber',
+        'partner.p12.tag': 'Creator',
+        'partner.p13.role': 'Rapper · Actor',
+        'partner.p13.tag': 'Music · Film',
+        'partner.p14.role': 'Influencer',
+        'partner.p14.tag': 'Creator',
+        'cta.eyebrow': 'Join The Movement',
+        'cta.title': 'Be a Tessera.',
+        'cta.quote': '"Compassion becomes powerful when people move together."',
+        'cta.button': 'Make a Donation',
+        'about.label': 'Our Story',
+        'about.title': 'About<br>Tessera',
+        'about.p1': 'Tessera Compassion Foundation began not with a plan, but with a person. In high school, founder Aiden Kim met an unhoused elderly woman who declined his monetary donation and instead explained her need for medication for herself and her son.',
+        'about.p2': 'That encounter profoundly shaped his understanding of compassion—and ultimately led him to pursue pharmacy and community outreach work in underserved cities like Stockton and Compton. Believing in the power of storytelling, he used $10,000 of his personal savings to travel to Korea, where simple videos providing rest and appreciation for elderly living in poverty gradually evolved into a global movement.',
+        'about.p3': 'Today, Tessera Compassion Foundation is a 501(c)(3) nonprofit dedicated to restoring dignity, promoting self-sustainability, and serving vulnerable communities through compassionate action—one story, one person, one tessera at a time.',
+        'mvv.label': 'Our Foundation',
+        'mvv.mission.label': 'Mission',
+        'mvv.mission.title': 'Serve the Quartet of the Vulnerable',
+        'mvv.mission.body': 'Tessera Compassion Foundation exists to serve low-income families, orphaned children, widows, and immigrant refugees through compassionate action, storytelling, and sustainable support systems.',
+        'mvv.purpose.label': 'Purpose',
+        'mvv.purpose.title': 'Restore Dignity. Create Sustainable Hope.',
+        'mvv.purpose.body': 'To restore dignity and create sustainable hope for vulnerable communities through compassion, storytelling, and action—providing the tessera every person needs to thrive.',
+        'mvv.vision.label': 'Vision',
+        'mvv.vision.title': 'Seen, Supported, and Empowered.',
+        'mvv.vision.body': 'We envision a world where every marginalized person is seen, supported, and empowered to thrive with dignity—regardless of circumstance, background, or the weight of their story.',
+        'values.label': 'What Guides Us',
+        'values.title': 'Core Values',
+        'values.dignity.title': 'Dignity',
+        'values.dignity.body': 'Every person deserves to be treated with humanity, respect, and worth.',
+        'values.compassion.title': 'Compassion',
+        'values.compassion.body': 'Meaningful change begins with genuine human connection.',
+        'values.storytelling.title': 'Storytelling',
+        'values.storytelling.body': 'We restore visibility, empathy, and action for overlooked communities through authentic stories.',
+        'values.sustainability.title': 'Sustainability',
+        'values.sustainability.body': 'We create long-term support systems that lead toward self-sufficiency and stability.',
+        'values.integrity.title': 'Integrity',
+        'values.integrity.body': 'We value transparency, accountability, and responsible stewardship in everything we do.',
+        'founder.tag': 'Founder + President',
+        'founder.label': 'About the Founder',
+        'founder.subtitle': 'Licensed Pharmacist · Founder & President, TCF',
+        'founder.p1': 'In high school, Aiden Kim met an unhoused elderly woman who declined his monetary donation—and instead explained her need for medication. That single encounter reshaped his understanding of compassion and set him on a path toward pharmacy and community service.',
+        'founder.p2': 'After years of medical outreach in underserved communities in Stockton and Compton, he used $10,000 of his personal savings to travel to Korea. What began as simple videos—providing rest, appreciation, and visibility to elderly individuals living in poverty—gradually evolved into a viral movement reaching millions.',
+        'founder.p3': 'Guided by the belief that social media could be a force for genuine human connection rather than spectacle, Aiden founded Tessera Compassion Foundation in 2025. Under his leadership, TCF operates with a clear voice: warm, honest, and never exploitative—restoring dignity one story at a time.',
+        'team.label': 'The Team',
+        'team.title': 'Our People',
+        'team.role1': 'Founder + President',
+        'team.role2': 'Board Member',
+        'team.role3': 'Board Member · Lead Pastor, Tapestry LA Church',
+        'init.label': 'What We\'ve Done & Where We\'re Going',
+        'init.title': 'Initiatives',
+        'init.pillar1.title': 'Emergency Relief',
+        'init.pillar1.body': 'Providing emergency support through food, housing, and medical aid to those in immediate need.',
+        'init.pillar2.title': 'Storytelling & Awareness',
+        'init.pillar2.body': 'Using digital storytelling to inspire awareness and action—making the unseen visible.',
+        'init.pillar3.title': 'Community Partnerships',
+        'init.pillar3.body': 'Partnering with communities, celebrities, global leaders, influencers, brands, and volunteers.',
+        'init.pillar4.title': 'Long-Term Sustainability',
+        'init.pillar4.body': 'Creating pathways through education, jobs, mentorship, and social enterprise.',
+        'init.completed.label': 'Projects Completed',
+        'init.completed.item1': 'Hearing aids & dentures for elderly in poverty',
+        'init.completed.item2': 'Walkers, strollers & mobility assistance',
+        'init.completed.item3': 'Cash assistance & bill payment support',
+        'init.completed.item4': 'Heater replacement for vulnerable households',
+        'init.completed.item5': 'Funeral costs relief for grieving elderly parents',
+        'init.completed.item6': 'Rent & shelter assistance',
+        'init.completed.item7': 'Food vouchers & seasonal donations for elderly',
+        'init.vision.label': '2026–2027 Vision',
+        'init.vision.item1': 'Korea expansion & Tessera Korea incorporation',
+        'init.vision.item2': 'Coupang item donations and marketplace',
+        'init.vision.item3': 'Community restaurant initiative',
+        'init.vision.item4': 'Pre-funeral celebration program with Somang Society',
+        'init.vision.item5': 'Refugee assistance program',
+        'init.vision.item6': 'Mentorship & scholarship for orphans',
+        'init.vision.item7': 'Mental health counseling programs',
+        'init.quote': '"Compassion should not only provide temporary relief, but also should create lasting change."',
+        'stories.label': 'Stories Behind the Mission',
+        'stories.title': 'Impact',
+        'stories.s1.title': 'Hearing Aid Support',
+        'stories.s1.body': 'A 70-year-old grandmother raising her disabled daughter while collecting cardboard for a living received support to purchase a hearing aid her daughter could never afford.',
+        'stories.s2.title': 'Recovery Assistance',
+        'stories.s2.body': 'An elderly street vendor facing physical abuse and financial hardship received support to leave her unsafe work environment and access proper medical care.',
+        'stories.s3.title': 'Funeral Relief',
+        'stories.s3.body': 'After losing their son to suicide, elderly parents who spent their life savings on funeral costs received emergency financial restoration and ongoing emotional support.',
+        'stories.s4.title': 'Dental & Literacy Support',
+        'stories.s4.body': 'A widowed grandmother caring for her incapable son received dentures, literacy education, and additional support for food and living expenses.',
+        'stories.footer': 'Behind every statistic is a human story.',
+        'stories.button': 'Support the Mission',
+        'timeline.label': 'How We Got Here',
+        'timeline.title': 'Timeline',
+        'timeline.t1.title': 'First Trip to Korea',
+        'timeline.t1.body': 'Took $10,000 of personal savings to uplift elderly street vendors and cardboard collectors.',
+        'timeline.t2.title': 'First Viral Video',
+        'timeline.t2.body': '2.1M views — first Korean American creating kindness content on the streets.',
+        'timeline.t3.title': '100K on Instagram',
+        'timeline.t3.body': 'Exponential growth driven by genuineness and community connection.',
+        'timeline.t4.title': 'TCF Incorporated',
+        'timeline.t4.body': 'Turned a simple online awareness project into a scalable 501(c)(3) nonprofit.',
+        'timeline.t5.title': 'Tessera Korea',
+        'timeline.t5.body': 'Korea incorporation in progress — expanding operations on the ground.',
+        'adopt.label': 'No One Should Be Forgotten',
+        'adopt.title': 'Every Person<br>Deserves<br>Dignity.',
+        'adopt.body': 'For less than a dinner out, you can ensure that one person—one real, named, living person—has food, medicine, and the knowledge that they are not forgotten. That is the tessera.',
+        'adopt.filterAll': 'All',
+        'adopt.filterAvailable': 'Available',
+        'adopt.filterSponsored': 'Sponsored',
+        'how.label': 'How Sponsorship Works',
+        'how.title': 'Simple.<br>Transparent.<br>Direct.',
+        'how.s1.title': 'Choose Your Elder',
+        'how.s1.body': 'Browse the grid above, hover to hear their story, and choose who you\'d like to support. Every person has a specific monthly amount that covers their full needs.',
+        'how.s2.title': 'Set Up Monthly Giving',
+        'how.s2.body': 'Complete your monthly sponsorship via card or ACH bank transfer. Recurring ACH gifts have no expiry and cost just $5 max in processing fees—maximizing your impact.',
+        'how.s3.title': 'Receive Monthly Updates',
+        'how.s3.body': 'Every month, you\'ll receive a personal update—a photo, a short video, or a message from the elder or their community. You\'ll see exactly where your gift goes.',
+        'how.s4.title': 'Be Part of Their Story',
+        'how.s4.body': 'Your name (or anonymous contribution) becomes part of their tessera—the mosaic of people who refused to look away. Sponsorships are tax-deductible for US donors.',
+        'modal.label': 'Monthly Sponsorship',
+        'modal.terms': 'You\'ll be charged monthly. Cancel anytime. 100% of your sponsorship reaches this elder directly — Tessera covers all processing fees for recurring ACH gifts.',
+        'modal.namePlaceholder': 'Your full name',
+        'modal.button': 'Begin Sponsorship →',
+        'adopt.nominate.title': 'Nominate an Elder',
+        'adopt.nominate.body': 'Know someone who needs support? Tell us their story.',
+        'card.hover': 'Hover to meet',
+        'card.sponsoredBadge': 'Sponsored',
+        'card.herStory': 'Her Story',
+        'card.hisStory': 'His Story',
+        'card.currentlySponsored': '✓ Currently Sponsored',
+        'card.sponsorHer': 'Sponsor Her →',
+        'card.sponsorHim': 'Sponsor Him →',
+        'card.c1.meta': 'Age 81 · Seoul · Available',
+        'card.c1.story': 'Collects cardboard 12 hours a day. Has not seen a doctor in 6 years.',
+        'card.c1.ep1': 'Finding Grandmother Yun',
+        'card.c1.ep2': 'Her first doctor visit in years',
+        'card.c1.ep3': '3 months later — an update',
+        'card.c2.meta': 'Age 77 · Busan · Available',
+        'card.c2.story': 'Rolls kimbap at 5am every morning, summer and winter, to earn $3 a day.',
+        'card.c2.ep1': 'Meeting him at the street corner',
+        'card.c2.ep2': 'His first real meal in years',
+        'card.c2.ep3': 'Following up — is he okay?',
+        'card.c3.meta': 'Age 82 · Seoul · Sponsored ✓',
+        'card.c3.story': 'Knits scarves near a fish market. Fully sponsored since March 2025.',
+        'card.c3.ep1': 'Meeting Grandma Kim',
+        'card.c3.ep2': 'Getting her hearing aid',
+        'card.c3.ep3': '6 months later — her new life',
+        'card.c4.meta': 'Age 79 · Daegu · Available',
+        'card.c4.story': 'Retired factory worker collecting cans. Walks 8km daily in all weather.',
+        'card.c4.ep1': 'Walking 8km to survive',
+        'card.c4.ep2': 'A full day of rest — finally',
+        'card.c4.ep3': 'What changed for him',
+        'card.c5.meta': 'Age 88 · Seoul · Available',
+        'card.c5.story': 'Sells rice cakes from a small cart. Arthritic hands — but she never stops.',
+        'card.c5.ep1': 'The rice cake grandmother',
+        'card.c5.ep2': 'Her hands — and her story',
+        'card.c5.ep3': 'Visiting her 4 months later',
+        'card.c6.meta': 'Age 73 · Incheon · Available',
+        'card.c6.story': 'A veteran working as a parking attendant, sending most of his income to a sick relative.',
+        'card.c6.ep1': 'The veteran who keeps giving',
+        'card.c6.ep2': 'Why he works so hard',
+        'card.c6.ep3': 'His relative gets the help they need',
+        'card.c7.meta': 'Age 82 · Suwon · Sponsored ✓',
+        'card.c7.story': 'Known for her laugh and her persimmon kimchi. Sponsored since January 2025.',
+        'card.c7.ep1': 'The grandmother who laughs',
+        'card.c7.ep2': 'Making kimchi together',
+        'card.c7.ep3': 'One year later — still smiling',
+        'contact.label': 'Get In Touch',
+        'contact.title': 'Let\'s<br><em>Build</em><br>Together.',
+        'contact.subtitle': 'Whether you\'re interested in partnering, donating, volunteering, or just learning more—we\'d love to hear from you.',
+        'contact.emailLabel': 'Email',
+        'contact.phoneLabel': 'Phone',
+        'contact.addressLabel': 'Address',
+        'contact.instagramLabel': 'Instagram',
+        'contact.foundationLabel': 'Foundation',
+        'social.instagram': 'Instagram',
+        'social.tiktok': 'TikTok',
+        'social.facebook': 'Facebook',
+        'social.youtube': 'YouTube',
+        'form.title': 'Send a Message',
+        'form.subtitle': 'We\'ll get back to you within 1–2 business days.',
+        'form.firstName': 'First Name *',
+        'form.lastName': 'Last Name *',
+        'form.email': 'Email Address *',
+        'form.org': 'Organization (optional)',
+        'form.orgPlaceholder': 'Company / Organization',
+        'form.help': 'How can we help?',
+        'form.selectTopic': 'Select a topic...',
+        'form.topic1': 'Partnership Opportunity',
+        'form.topic2': 'Donation / Sponsorship',
+        'form.topic3': 'Volunteer',
+        'form.topic4': 'Media / Press',
+        'form.topic5': 'General Inquiry',
+        'form.message': 'Message *',
+        'form.messagePlaceholder': 'Tell us about your interest in TCF...',
+        'form.success': '✓ Thank you! Your message has been sent. We\'ll be in touch soon.',
+        'form.submit': 'Send Message',
+        'footer.brandSub': 'Compassion Foundation · 501(c)(3)',
+        'footer.tagline': 'Restoring dignity and creating sustainable hope for vulnerable communities through compassion, storytelling, and action.',
+        'footer.navigate': 'Navigate',
+        'footer.aboutUs': 'About Us',
+        'footer.adoptElder': 'Adopt an Elder',
+        'footer.whoWeServe': 'Who We Serve',
+        'footer.connect': 'Connect',
+        'footer.copyright': '© 2026 Tessera Compassion Foundation · 501(c)(3) · EIN: [Your EIN]',
+        'footer.privacy': 'Privacy',
+        'footer.terms': 'Terms',
+        'footer.siteBy': 'Site by',
       },
       ko: {
+        'nav.home': '홈',
+        'nav.about': '소개',
+        'nav.adopt': '어르신 후원',
+        'nav.donate': '기부하기',
+        'nav.contact': '문의하기',
+        'nav.give': '지금 후원',
+        'hero.eyebrow': '2025년 설립 · 501(c)(3) 비영리단체',
         'hero.headline': '모든 사람은<br>존엄하게<br>살 권리가<br><em>있습니다.</em>',
-        'hero.body': '테세라 컴패션 파운데이션은 취약계층—저소득 가정, 부모 없는 아이들, 과부, 이민자 난민—의 존엄성을 회복하고 지속 가능한 희망을 만들어갑니다.',
+        'hero.body': '테세라 컴패션 파운데이션은 저소득 가정, 부모 없는 아이들, 과부, 이민 난민 등 취약계층의 존엄을 회복하고 지속 가능한 희망을 만들어갑니다 — 공감, 스토리텔링, 그리고 실질적인 행동을 통해서요.',
         'hero.donate': '지금 기부하기',
         'hero.adopt': '어르신 후원하기',
-        'nav.give': '지금 후원',
-        'donate.title': '변화를<br>만들어주세요',
-        'donate.body': '여러분의 기부는 보청기, 식품, 주거, 멘토십, 그리고 삶을 변화시키는 경험을 필요한 분들에게 직접 제공합니다.',
-        'adopt.filter.all': '전체', 'adopt.filter.available': '후원 가능', 'adopt.filter.sponsored': '후원 중',
-        'contact.title': "함께<br><em>만들어</em><br>갑시다.",
+        'shorts.label': '유튜브 · @aidenkim16',
+        'shorts.title': '행동하는<br><em>컴패션.</em>',
+        'shorts.tabShorts': '쇼츠',
+        'shorts.tabVideos': '영상',
+        'shorts.watchAll': '모든 쇼츠 보기',
+        'shorts.watchAllVideos': '모든 영상 보기',
+        'video.title1': '그녀의 첫 월급 — 전체 스토리',
+        'video.title2': '이 청년은 어떻게 홀로 어르신들을 돕고 있을까',
+        'video.title3': 'BM이 노인 빈곤 문제와 함께한 이야기 — 전체 영상',
+        'quartet.label': '우리가 돕는 이웃',
+        'quartet.title': '가장 취약한<br>네 이웃',
+        'quartet.title1': '저소득 가정',
+        'quartet.body1': '한국 노인의 39.8%가 빈곤 속에 살고 있습니다 — OECD 국가 중 1위입니다. 우리는 필수 자원과 존엄을 지키는 돌봄, 그리고 자립으로 가는 길을 제공합니다.',
+        'quartet.title2': '부모 없는 아이들',
+        'quartet.body2': '미국에서 약 32만 9천 명의 아이들이 위탁 보호를 받고 있으며, 78%가 기본적인 생활에 어려움을 겪습니다. 우리는 어떤 아이도 잊혀지지 않도록 멘토십과 교육, 지속적인 돌봄을 제공합니다.',
+        'quartet.title3': '과부',
+        'quartet.body3': '과부들은 하룻밤 사이 생계 기반의 최대 75%를 잃습니다. 매년 약 70만 명의 여성이 배우자를 잃습니다. 우리는 공동체 소속감을 회복하고 경제적 자립을 돕습니다.',
+        'quartet.title4': '이민 난민',
+        'quartet.body4': '이민자의 빈곤율은 20.9%로, 비이민자의 9.9%보다 훨씬 높습니다. 우리는 정착을 돕고, 기회의 네트워크를 만들며, 모든 새로운 이웃의 존엄을 지지합니다.',
+        'theory.label': '우리의 방식',
+        'theory.title': '변화의<br>이론',
+        'theory.title1': '인식 확산',
+        'theory.body1': '아이든 킴의 65만 명 이상의 소셜 미디어 팔로워를 통해, 우리는 소외된 이웃들에게 다시 존엄과 가시성을 되찾아주는 진솔한 이야기를 전합니다 — 동정이나 구원자 서사 없이, 공감에서 행동으로 이어지도록 합니다.',
+        'theory.title2': '실질적 지원',
+        'theory.body2': '후원금을 즉각적인 변화로 연결합니다 — 보청기, 주거, 식품 바우처, 의료 지원, 그리고 한 번도 누려보지 못한 삶의 경험까지.',
+        'theory.title3': '자립 기반 구축',
+        'theory.body3': '멘토십, 직업 훈련, 교육, 금융 이해력 프로그램을 통해 세대를 거쳐 지속되는 기회의 시스템을 만듭니다.',
+        'impact.label1': '온라인 팔로워',
+        'impact.label2': '누적 모금액',
+        'impact.label3': '첫 바이럴 영상 조회수',
+        'impact.label4': '도움을 받은 사람들',
+        'impact.thousands': '수천 명',
+        'partners.label': '우리의 파트너',
+        'partners.title': '컴패션의 네트워크',
+        'partner.p1.role': '래퍼',
+        'partner.p1.tag': '음악',
+        'partner.p2.role': '이커머스 플랫폼',
+        'partner.p2.tag': '브랜드',
+        'partner.p3.role': '래퍼 · 배우',
+        'partner.p3.tag': '음악 · 영화',
+        'partner.p4.role': '하이퍼카 컬렉터',
+        'partner.p4.tag': '크리에이터',
+        'partner.p5.role': '인증 기술 기업',
+        'partner.p5.tag': '기술',
+        'partner.p6.role': 'LA 축구 클럽',
+        'partner.p6.tag': '스포츠',
+        'partner.p7.role': '한인 단체',
+        'partner.p7.tag': '커뮤니티',
+        'partner.p8.role': '한인 네트워크',
+        'partner.p8.tag': '커뮤니티',
+        'partner.p9.role': '글로벌 로펌',
+        'partner.p9.tag': '법률',
+        'partner.p10.role': '국내 로펌',
+        'partner.p10.tag': '법률',
+        'partner.p11.role': '뷰티테크 브랜드',
+        'partner.p11.tag': '브랜드',
+        'partner.p12.role': '유튜버',
+        'partner.p12.tag': '크리에이터',
+        'partner.p13.role': '래퍼 · 배우',
+        'partner.p13.tag': '음악 · 영화',
+        'partner.p14.role': '인플루언서',
+        'partner.p14.tag': '크리에이터',
+        'cta.eyebrow': '함께하는 움직임',
+        'cta.title': '테세라가 되어주세요.',
+        'cta.quote': '“공감은 사람들이 함께 움직일 때 비로소 힘을 갖습니다.”',
+        'cta.button': '기부하기',
+        'about.label': '우리의 이야기',
+        'about.title': '테세라<br>소개',
+        'about.p1': '테세라 컴패션 파운데이션은 계획이 아니라 한 사람으로부터 시작되었습니다. 고등학생 시절, 설립자 아이든 킴은 노숙하는 한 할머니를 만났습니다. 그녀는 그의 금전적 도움을 거절하며, 대신 자신과 아들에게 필요한 약이 있다고 말했습니다.',
+        'about.p2': '그 만남은 그의 공감에 대한 이해를 근본적으로 바꿔놓았고, 결국 그는 약학을 공부하며 스탁턴과 콤튼 같은 소외된 지역에서 지역사회 봉사 활동을 이어가게 되었습니다. 스토리텔링의 힘을 믿었던 그는 개인 저축 1만 달러를 들고 한국으로 향했습니다. 빈곤 속에 살아가는 어르신들에게 쉼과 감사를 전하는 소박한 영상들이 점차 전 세계적인 움직임으로 성장했습니다.',
+        'about.p3': '오늘날 테세라 컴패션 파운데이션은 존엄을 회복하고, 자립을 촉진하며, 공감 어린 행동을 통해 취약계층을 섬기는 501(c)(3) 비영리단체입니다 — 한 번에 한 이야기, 한 사람, 하나의 테세라씩.',
+        'mvv.label': '우리의 기반',
+        'mvv.mission.label': '미션',
+        'mvv.mission.title': '가장 취약한 네 이웃을 섬깁니다',
+        'mvv.mission.body': '테세라 컴패션 파운데이션은 저소득 가정, 고아, 과부, 이민 난민을 공감 어린 행동, 스토리텔링, 지속 가능한 지원 체계를 통해 섬기기 위해 존재합니다.',
+        'mvv.purpose.label': '목적',
+        'mvv.purpose.title': '존엄을 회복하고, 지속 가능한 희망을 만듭니다',
+        'mvv.purpose.body': '공감, 스토리텔링, 행동을 통해 취약계층에게 존엄을 회복시키고 지속 가능한 희망을 만듭니다 — 모든 사람이 살아가는 데 필요한 테세라 조각을 제공하며.',
+        'mvv.vision.label': '비전',
+        'mvv.vision.title': '보이고, 지지받고, 힘을 얻습니다',
+        'mvv.vision.body': '우리는 처한 상황이나 배경, 그들이 짊어진 이야기의 무게와 상관없이, 소외된 모든 사람이 보이고, 지지받고, 존엄하게 살아갈 힘을 얻는 세상을 꿈꿉니다.',
+        'values.label': '우리를 이끄는 가치',
+        'values.title': '핵심 가치',
+        'values.dignity.title': '존엄',
+        'values.dignity.body': '모든 사람은 인간다움과 존중, 그리고 가치를 인정받아야 합니다.',
+        'values.compassion.title': '공감',
+        'values.compassion.body': '진정한 변화는 진심 어린 인간적 연결에서 시작됩니다.',
+        'values.storytelling.title': '스토리텔링',
+        'values.storytelling.body': '진솔한 이야기를 통해 소외된 이웃들에게 가시성과 공감, 그리고 행동을 되돌려줍니다.',
+        'values.sustainability.title': '지속 가능성',
+        'values.sustainability.body': '자립과 안정으로 이어지는 장기적인 지원 체계를 만듭니다.',
+        'values.integrity.title': '진실성',
+        'values.integrity.body': '우리가 하는 모든 일에서 투명성, 책임감, 그리고 신중한 관리 정신을 소중히 여깁니다.',
+        'founder.tag': '설립자 겸 대표',
+        'founder.label': '설립자 소개',
+        'founder.subtitle': '약사 · TCF 설립자 겸 대표',
+        'founder.p1': '고등학생 시절, 아이든 킴은 노숙하는 한 할머니를 만났습니다. 그녀는 금전적 도움을 거절하며 대신 약이 필요하다고 말했습니다. 그 하나의 만남이 그의 공감에 대한 이해를 완전히 바꿔놓았고, 그를 약학과 지역사회 봉사의 길로 이끌었습니다.',
+        'founder.p2': '스탁턴과 콤튼의 소외된 지역에서 수년간 의료 봉사를 이어온 그는 개인 저축 1만 달러를 들고 한국으로 향했습니다. 빈곤 속 어르신들에게 쉼과 감사, 그리고 존재감을 전하는 소박한 영상으로 시작된 이 프로젝트는 점차 수백만 명에게 닿는 바이럴 무브먼트로 성장했습니다.',
+        'founder.p3': '소셜 미디어가 스펙터클이 아닌 진정한 인간적 연결의 힘이 될 수 있다는 믿음으로, 아이든은 2025년 테세라 컴패션 파운데이션을 설립했습니다. 그의 리더십 아래 TCF는 따뜻하고 정직하며 결코 이용하지 않는 명확한 목소리로 운영됩니다 — 한 번에 한 이야기씩 존엄을 회복해나갑니다.',
+        'team.label': '팀 소개',
+        'team.title': '우리의 사람들',
+        'team.role1': '설립자 겸 대표',
+        'team.role2': '이사',
+        'team.role3': '이사 · Tapestry LA Church 담임목사',
+        'init.label': '지금까지의 여정과 앞으로의 방향',
+        'init.title': '우리의 활동',
+        'init.pillar1.title': '긴급 구호',
+        'init.pillar1.body': '즉각적인 도움이 필요한 이들에게 식품, 주거, 의료 지원을 제공합니다.',
+        'init.pillar2.title': '스토리텔링과 인식 확산',
+        'init.pillar2.body': '디지털 스토리텔링을 통해 인식과 행동을 이끌어냅니다 — 보이지 않던 것을 보이게 만듭니다.',
+        'init.pillar3.title': '커뮤니티 파트너십',
+        'init.pillar3.body': '지역사회, 셀러브리티, 글로벌 리더, 인플루언서, 브랜드, 자원봉사자와 함께합니다.',
+        'init.pillar4.title': '장기적 자립 지원',
+        'init.pillar4.body': '교육, 일자리, 멘토십, 사회적 기업을 통한 자립의 길을 만듭니다.',
+        'init.completed.label': '완료된 프로젝트',
+        'init.completed.item1': '빈곤 어르신을 위한 보청기 및 틀니 지원',
+        'init.completed.item2': '보행기, 유모차 등 이동 보조 지원',
+        'init.completed.item3': '현금 지원 및 공과금 납부 지원',
+        'init.completed.item4': '취약 가정 난방기 교체 지원',
+        'init.completed.item5': '슬픔에 잠긴 어르신을 위한 장례비 지원',
+        'init.completed.item6': '임대료 및 주거 지원',
+        'init.completed.item7': '어르신을 위한 식품 바우처 및 계절 물품 지원',
+        'init.vision.label': '2026–2027년 비전',
+        'init.vision.item1': '한국 진출 및 테세라 코리아 법인 설립',
+        'init.vision.item2': '쿠팡 물품 기부 및 마켓플레이스 연계',
+        'init.vision.item3': '지역사회 레스토랑 프로젝트',
+        'init.vision.item4': '소망회와 함께하는 사전 장례 축하 프로그램',
+        'init.vision.item5': '난민 지원 프로그램',
+        'init.vision.item6': '고아를 위한 멘토십 및 장학금 지원',
+        'init.vision.item7': '정신 건강 상담 프로그램',
+        'init.quote': '“공감은 일시적인 위로에 그쳐서는 안 되며, 지속적인 변화를 만들어내야 합니다.”',
+        'stories.label': '미션 뒤에 담긴 이야기',
+        'stories.title': '임팩트',
+        'stories.s1.title': '보청기 지원',
+        'stories.s1.body': '장애가 있는 딸을 홀로 키우며 폐지를 주워 생계를 이어가던 70대 할머니가, 딸이 평생 감당할 수 없었던 보청기를 마련할 수 있도록 도움을 받았습니다.',
+        'stories.s2.title': '회복 지원',
+        'stories.s2.body': '신체적 학대와 경제적 어려움을 겪던 노점 상인 할머니가 위험한 근무 환경에서 벗어나 제대로 된 의료 지원을 받을 수 있도록 도왔습니다.',
+        'stories.s3.title': '장례비 지원',
+        'stories.s3.body': '아들을 자살로 잃고 평생 모은 돈을 장례비로 다 써버린 어르신 부부에게 긴급 재정 회복과 지속적인 정서적 지원을 제공했습니다.',
+        'stories.s4.title': '치과 및 문해 교육 지원',
+        'stories.s4.body': '거동이 불편한 아들을 돌보던 과부 할머니에게 틀니와 문해 교육, 그리고 생활비 지원을 추가로 제공했습니다.',
+        'stories.footer': '모든 통계 뒤에는 한 사람의 이야기가 있습니다.',
+        'stories.button': '미션을 지지해주세요',
+        'timeline.label': '지금까지의 여정',
+        'timeline.title': '타임라인',
+        'timeline.t1.title': '첫 한국 방문',
+        'timeline.t1.body': '개인 저축 1만 달러를 들고 거리의 노점 상인과 폐지 수거 어르신들을 도왔습니다.',
+        'timeline.t2.title': '첫 바이럴 영상',
+        'timeline.t2.body': '조회수 210만 회 — 거리에서 선행 콘텐츠를 만든 최초의 한국계 미국인.',
+        'timeline.t3.title': '인스타그램 팔로워 10만 명 달성',
+        'timeline.t3.body': '진정성과 공동체적 연결이 이끌어낸 폭발적인 성장.',
+        'timeline.t4.title': 'TCF 법인 설립',
+        'timeline.t4.body': '작은 온라인 인식 확산 프로젝트를 확장 가능한 501(c)(3) 비영리단체로 전환했습니다.',
+        'timeline.t5.title': '테세라 코리아',
+        'timeline.t5.body': '한국 법인 설립 진행 중 — 현지 운영을 확대하고 있습니다.',
+        'adopt.label': '누구도 잊혀져서는 안 됩니다',
+        'adopt.title': '모든 사람은<br>존엄하게<br>살 권리가 있습니다.',
+        'adopt.body': '외식 한 번 값도 안 되는 금액으로, 한 사람—진짜 이름을 가진, 살아있는 한 사람—에게 식품과 약, 그리고 잊혀지지 않았다는 확신을 전할 수 있습니다. 그것이 바로 테세라입니다.',
+        'adopt.filterAll': '전체',
+        'adopt.filterAvailable': '후원 가능',
+        'adopt.filterSponsored': '후원 중',
+        'how.label': '후원은 이렇게 진행됩니다',
+        'how.title': '간단하고,<br>투명하며,<br>직접적입니다.',
+        'how.s1.title': '후원할 어르신 선택',
+        'how.s1.body': '위 그리드를 둘러보며 마우스를 올려 이야기를 확인하고, 후원하고 싶은 분을 선택하세요. 각 어르신은 필요를 충족하는 정확한 월 후원 금액이 정해져 있습니다.',
+        'how.s2.title': '월 후원 설정',
+        'how.s2.body': '카드 또는 ACH 계좌이체로 월 후원을 완료하세요. ACH 정기 후원은 만료 없이 최대 5달러의 수수료만 발생해 후원 효과를 극대화합니다.',
+        'how.s3.title': '매월 소식 받기',
+        'how.s3.body': '매달 사진, 짧은 영상, 또는 어르신이나 지역 공동체의 메시지 등 개인화된 소식을 받아보실 수 있습니다. 후원금이 어떻게 쓰이는지 직접 확인하세요.',
+        'how.s4.title': '그들의 이야기의 일부가 되어주세요',
+        'how.s4.body': '익명이든 이름을 밝히든, 여러분은 외면하지 않기로 한 사람들의 모자이크, 즉 테세라의 일부가 됩니다. 미국 후원자의 경우 세금 공제 혜택을 받으실 수 있습니다.',
+        'modal.label': '월 정기 후원',
+        'modal.terms': '매월 자동으로 결제됩니다. 언제든 취소 가능합니다. 후원금의 100%가 해당 어르신에게 직접 전달됩니다 — ACH 정기 후원의 모든 처리 수수료는 테세라가 부담합니다.',
+        'modal.namePlaceholder': '성함을 입력해주세요',
+        'modal.button': '후원 시작하기 →',
+        'adopt.nominate.title': '어르신을 추천해주세요',
+        'adopt.nominate.body': '도움이 필요한 분을 알고 계신가요? 그들의 이야기를 들려주세요.',
+        'card.hover': '마우스를 올려보세요',
+        'card.sponsoredBadge': '후원 중',
+        'card.herStory': '그녀의 이야기',
+        'card.hisStory': '그의 이야기',
+        'card.currentlySponsored': '✓ 현재 후원 중',
+        'card.sponsorHer': '그녀를 후원하기 →',
+        'card.sponsorHim': '그를 후원하기 →',
+        'card.c1.meta': '81세 · 서울 · 후원 가능',
+        'card.c1.story': '하루 12시간 폐지를 주우며 생계를 이어갑니다. 6년째 병원에 가지 못했습니다.',
+        'card.c1.ep1': '윤 할머니를 만나다',
+        'card.c1.ep2': '몇 년 만의 첫 병원 진료',
+        'card.c1.ep3': '3개월 후 — 근황 소식',
+        'card.c2.meta': '77세 · 부산 · 후원 가능',
+        'card.c2.story': '여름이나 겨울이나 새벽 5시부터 김밥을 말아 하루 3달러를 법니다.',
+        'card.c2.ep1': '길모퉁이에서 그를 만나다',
+        'card.c2.ep2': '몇 년 만의 제대로 된 첫 식사',
+        'card.c2.ep3': '근황 확인 — 잘 지내고 계실까요?',
+        'card.c3.meta': '82세 · 서울 · 후원 중 ✓',
+        'card.c3.story': '수산시장 근처에서 스카프를 짜서 판매합니다. 2025년 3월부터 정식 후원을 받고 있습니다.',
+        'card.c3.ep1': '김 할머니를 만나다',
+        'card.c3.ep2': '보청기를 마련하다',
+        'card.c3.ep3': '6개월 후 — 새로운 일상',
+        'card.c4.meta': '79세 · 대구 · 후원 가능',
+        'card.c4.story': '은퇴한 공장 노동자로 폐지와 캔을 모읍니다. 날씨와 상관없이 매일 8km를 걷습니다.',
+        'card.c4.ep1': '생계를 위해 걷는 8km',
+        'card.c4.ep2': '드디어 갖게 된 하루의 휴식',
+        'card.c4.ep3': '그에게 달라진 것들',
+        'card.c5.meta': '88세 · 서울 · 후원 가능',
+        'card.c5.story': '작은 수레에서 떡을 팔아 생계를 이어갑니다. 관절염으로 아픈 손이지만 멈추지 않습니다.',
+        'card.c5.ep1': '떡 파는 할머니',
+        'card.c5.ep2': '그녀의 손, 그리고 그녀의 이야기',
+        'card.c5.ep3': '4개월 후 다시 찾아간 이야기',
+        'card.c6.meta': '73세 · 인천 · 후원 가능',
+        'card.c6.story': '참전 용사로, 주차 관리 일을 하며 수입 대부분을 아픈 친척에게 보내고 있습니다.',
+        'card.c6.ep1': '끝없이 베푸는 참전 용사',
+        'card.c6.ep2': '그가 그토록 열심히 일하는 이유',
+        'card.c6.ep3': '친척이 필요한 도움을 받다',
+        'card.c7.meta': '82세 · 수원 · 후원 중 ✓',
+        'card.c7.story': '웃음과 감 김치로 유명한 할머니입니다. 2025년 1월부터 후원을 받고 있습니다.',
+        'card.c7.ep1': '잘 웃는 할머니',
+        'card.c7.ep2': '함께 김치를 담그다',
+        'card.c7.ep3': '1년 후 — 여전히 밝은 미소',
+        'contact.label': '문의하기',
+        'contact.title': '함께<br><em>만들어</em><br>갑시다.',
+        'contact.subtitle': '파트너십, 기부, 자원봉사, 또는 그저 더 알아보고 싶으신 것까지 — 무엇이든 편하게 연락해주세요.',
+        'contact.emailLabel': '이메일',
+        'contact.phoneLabel': '전화',
+        'contact.addressLabel': '주소',
+        'contact.instagramLabel': '인스타그램',
+        'contact.foundationLabel': '재단 계정',
+        'social.instagram': '인스타그램',
+        'social.tiktok': '틱톡',
+        'social.facebook': '페이스북',
+        'social.youtube': '유튜브',
+        'form.title': '메시지 보내기',
+        'form.subtitle': '영업일 기준 1~2일 이내에 답변드리겠습니다.',
+        'form.firstName': '이름 *',
+        'form.lastName': '성 *',
+        'form.email': '이메일 주소 *',
+        'form.org': '소속 기관 (선택)',
+        'form.orgPlaceholder': '회사 / 기관명',
+        'form.help': '어떻게 도와드릴까요?',
+        'form.selectTopic': '주제를 선택해주세요...',
+        'form.topic1': '파트너십 문의',
+        'form.topic2': '기부 / 후원',
+        'form.topic3': '자원봉사',
+        'form.topic4': '미디어 / 보도 문의',
+        'form.topic5': '일반 문의',
+        'form.message': '메시지 *',
+        'form.messagePlaceholder': 'TCF에 관심을 갖게 된 이유를 알려주세요...',
+        'form.success': '✓ 감사합니다! 메시지가 전송되었습니다. 곧 연락드리겠습니다.',
+        'form.submit': '메시지 보내기',
+        'footer.brandSub': '컴패션 파운데이션 · 501(c)(3)',
+        'footer.tagline': '공감, 스토리텔링, 그리고 행동을 통해 취약계층의 존엄을 회복하고 지속 가능한 희망을 만듭니다.',
+        'footer.navigate': '바로가기',
+        'footer.aboutUs': '소개',
+        'footer.adoptElder': '어르신 후원',
+        'footer.whoWeServe': '우리가 돕는 이웃',
+        'footer.connect': '소셜 미디어',
+        'footer.copyright': '© 2026 테세라 컴패션 파운데이션 · 501(c)(3) · EIN: [Your EIN]',
+        'footer.privacy': '개인정보처리방침',
+        'footer.terms': '이용약관',
+        'footer.siteBy': '웹사이트 제작',
       }
     };
 
@@ -4521,6 +5032,12 @@
         if (t[key]) el.innerHTML = t[key];
       });
 
+      // Apply placeholder translations (form inputs/textareas)
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key]) el.setAttribute('placeholder', t[key]);
+      });
+
       // Apply lang-show visibility
       document.querySelectorAll('[data-lang-show]').forEach(el => {
         const show = el.getAttribute('data-lang-show');
@@ -4539,6 +5056,8 @@
       const tabShorts  = document.getElementById('tab-shorts');
       const tabVideos  = document.getElementById('tab-videos');
       const ytLink     = document.getElementById('yt-link-shorts');
+      const ytLinkText = document.getElementById('yt-link-shorts-text');
+      const t = TRANSLATIONS[currentLang];
 
       if (tab === 'shorts') {
         if (shortsWrap) shortsWrap.style.display = 'block';
@@ -4547,7 +5066,8 @@
         tabShorts.style.color = 'var(--ink)';
         tabVideos.style.background = 'transparent';
         tabVideos.style.color = 'rgba(200,184,154,0.5)';
-        if (ytLink) { ytLink.href = 'https://www.youtube.com/@aidenkim16/shorts'; ytLink.textContent = 'Watch All Shorts'; }
+        if (ytLink) ytLink.href = 'https://www.youtube.com/@aidenkim16/shorts';
+        if (ytLinkText) ytLinkText.textContent = t['shorts.watchAll'];
       } else {
         if (shortsWrap) shortsWrap.style.display = 'none';
         if (videosGrid) { videosGrid.style.display = 'grid'; }
@@ -4555,7 +5075,8 @@
         tabVideos.style.color = 'var(--ink)';
         tabShorts.style.background = 'transparent';
         tabShorts.style.color = 'rgba(200,184,154,0.5)';
-        if (ytLink) { ytLink.href = 'https://www.youtube.com/@aidenkim16/videos'; ytLink.textContent = 'Watch All Videos'; }
+        if (ytLink) ytLink.href = 'https://www.youtube.com/@aidenkim16/videos';
+        if (ytLinkText) ytLinkText.textContent = t['shorts.watchAllVideos'];
       }
     }
 
