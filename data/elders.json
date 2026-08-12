@@ -1,0 +1,121 @@
+[
+  {
+    "id": "01",
+    "name": "Grandmother Yun",
+    "gender": "her",
+    "age": 81,
+    "city": "Seoul",
+    "status": "available",
+    "photo": "assets/adopt/01/photo.jpg",
+    "story": "Collects cardboard 12 hours a day. Has not seen a doctor in 6 years.",
+    "story_ko": "하루 12시간 폐지를 주우며 생계를 이어갑니다. 6년째 병원에 가지 못했습니다.",
+    "sponsorAmount": 45,
+    "parts": [
+      { "title": "Finding Grandmother Yun", "title_ko": "윤 할머니를 만나다", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "Her first doctor visit in years", "title_ko": "몇 년 만의 첫 병원 진료", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "3 months later — an update", "title_ko": "3개월 후 — 근황 소식", "url": "https://www.youtube.com/@aidenkim16/shorts" }
+    ]
+  },
+  {
+    "id": "02",
+    "name": "Grandfather Park",
+    "gender": "him",
+    "age": 77,
+    "city": "Busan",
+    "status": "available",
+    "photo": "assets/adopt/02/photo.jpg",
+    "story": "Rolls kimbap at 5am every morning, summer and winter, to earn $3 a day.",
+    "story_ko": "여름이나 겨울이나 새벽 5시부터 김밥을 말아 하루 3달러를 법니다.",
+    "sponsorAmount": 35,
+    "parts": [
+      { "title": "Meeting him at the street corner", "title_ko": "길모퉁이에서 그를 만나다", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "His first real meal in years", "title_ko": "몇 년 만의 제대로 된 첫 식사", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "Following up — is he okay?", "title_ko": "근황 확인 — 잘 지내고 계실까요?", "url": "https://www.youtube.com/@aidenkim16/shorts" }
+    ]
+  },
+  {
+    "id": "03",
+    "name": "Grandmother Kim",
+    "gender": "her",
+    "age": 82,
+    "city": "Seoul",
+    "status": "sponsored",
+    "photo": "assets/adopt/03/photo.jpg",
+    "story": "Knits scarves near a fish market. Fully sponsored since March 2025.",
+    "story_ko": "수산시장 근처에서 스카프를 짜서 판매합니다. 2025년 3월부터 정식 후원을 받고 있습니다.",
+    "sponsorAmount": 45,
+    "parts": [
+      { "title": "Meeting Grandma Kim", "title_ko": "김 할머니를 만나다", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "Getting her hearing aid", "title_ko": "보청기를 마련하다", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "6 months later — her new life", "title_ko": "6개월 후 — 새로운 일상", "url": "https://www.youtube.com/@aidenkim16/shorts" }
+    ]
+  },
+  {
+    "id": "04",
+    "name": "Grandfather Choi",
+    "gender": "him",
+    "age": 79,
+    "city": "Daegu",
+    "status": "available",
+    "photo": "assets/adopt/04/photo.jpg",
+    "story": "Retired factory worker collecting cans. Walks 8km daily in all weather.",
+    "story_ko": "은퇴한 공장 노동자로 폐지와 캔을 모읍니다. 날씨와 상관없이 매일 8km를 걷습니다.",
+    "sponsorAmount": 30,
+    "parts": [
+      { "title": "Walking 8km to survive", "title_ko": "생계를 위해 걷는 8km", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "A full day of rest — finally", "title_ko": "드디어 갖게 된 하루의 휴식", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "What changed for him", "title_ko": "그에게 달라진 것들", "url": "https://www.youtube.com/@aidenkim16/shorts" }
+    ]
+  },
+  {
+    "id": "05",
+    "name": "Grandmother Lee",
+    "gender": "her",
+    "age": 88,
+    "city": "Seoul",
+    "status": "available",
+    "photo": "assets/adopt/05/photo.jpg",
+    "story": "Sells rice cakes from a small cart. Arthritic hands — but she never stops.",
+    "story_ko": "작은 수레에서 떡을 팔아 생계를 이어갑니다. 관절염으로 아픈 손이지만 멈추지 않습니다.",
+    "sponsorAmount": 50,
+    "parts": [
+      { "title": "The rice cake grandmother", "title_ko": "떡 파는 할머니", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "Her hands — and her story", "title_ko": "그녀의 손, 그리고 그녀의 이야기", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "Visiting her 4 months later", "title_ko": "4개월 후 다시 찾아간 이야기", "url": "https://www.youtube.com/@aidenkim16/shorts" }
+    ]
+  },
+  {
+    "id": "06",
+    "name": "Grandfather Oh",
+    "gender": "him",
+    "age": 73,
+    "city": "Incheon",
+    "status": "available",
+    "photo": "assets/adopt/06/photo.jpg",
+    "story": "A veteran working as a parking attendant, sending most of his income to a sick relative.",
+    "story_ko": "참전 용사로, 주차 관리 일을 하며 수입 대부분을 아픈 친척에게 보내고 있습니다.",
+    "sponsorAmount": 40,
+    "parts": [
+      { "title": "The veteran who keeps giving", "title_ko": "끝없이 베푸는 참전 용사", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "Why he works so hard", "title_ko": "그가 그토록 열심히 일하는 이유", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "His relative gets the help they need", "title_ko": "친척이 필요한 도움을 받다", "url": "https://www.youtube.com/@aidenkim16/shorts" }
+    ]
+  },
+  {
+    "id": "07",
+    "name": "Grandmother Shin",
+    "gender": "her",
+    "age": 82,
+    "city": "Suwon",
+    "status": "sponsored",
+    "photo": "assets/adopt/07/photo.jpg",
+    "story": "Known for her laugh and her persimmon kimchi. Sponsored since January 2025.",
+    "story_ko": "웃음과 감 김치로 유명한 할머니입니다. 2025년 1월부터 후원을 받고 있습니다.",
+    "sponsorAmount": 45,
+    "parts": [
+      { "title": "The grandmother who laughs", "title_ko": "잘 웃는 할머니", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "Making kimchi together", "title_ko": "함께 김치를 담그다", "url": "https://www.youtube.com/@aidenkim16/shorts" },
+      { "title": "One year later — still smiling", "title_ko": "1년 후 — 여전히 밝은 미소", "url": "https://www.youtube.com/@aidenkim16/shorts" }
+    ]
+  }
+]
