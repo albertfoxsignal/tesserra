@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>TCF Admin</title>
+<style>
+  :root {
+    --navy: #1E1D1A;
+    --navy-2: #33312C;
+    --blue: #C8B89A;
+    --blue-dark: #A6936E;
+    --bg: #F1EFE9;
+    --white: #FFFFFF;
+    --ink: #1E1D1A;
+    --ink-mid: #5A574E;
+    --rule: #E0DDD4;
+    --green: #3D5C4A;
+    --red: #B3453B;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+  }
+  a { color: inherit; }
+
+  /* ── LOGIN SCREEN ── */
+  #login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--navy);
+  }
+  .login-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 40px 36px;
+    width: 360px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .login-card h1 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color: var(--navy);
+  }
+  .login-card p {
+    font-size: 13px;
+    color: var(--ink-mid);
+    margin-bottom: 24px;
+  }
+  .login-card input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    font-size: 15px;
+    margin-bottom: 12px;
+    outline: none;
+  }
+  .login-card input:focus { border-color: var(--blue-dark); }
+  .login-card button {
+    width: 100%;
+    padding: 12px;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .login-card button:hover { background: var(--navy-2); }
+  .login-error {
+    color: var(--red);
+    font-size: 13px;
+    margin-top: 10px;
+    min-height: 18px;
+  }
+  .login-note {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    font-size: 11px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+
+  /* ── ADMIN SHELL ── */
+  #admin-shell { display: none; min-height: 100vh; }
+  #admin-shell.active { display: flex; }
+
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 56px;
+    background: var(--navy);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 50;
+  }
+  .topbar-brand { font-weight: 800; font-size: 15px; letter-spacing: 0.02em; }
+  .topbar-brand span { color: var(--blue); }
+  .topbar-actions { display: flex; gap: 10px; align-items: center; }
+  .topbar-status { font-size: 12px; color: rgba(255,255,255,0.6); }
+  .btn-logout {
+    background: rgba(255,255,255,0.1);
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .btn-logout:hover { background: rgba(255,255,255,0.18); }
+
+  .sidebar {
+    position: fixed;
+    top: 56px; bottom: 0; left: 0;
+    width: 280px;
+    background: var(--white);
+    border-right: 1px solid var(--rule);
+    overflow-y: auto;
+    padding: 16px 0;
+  }
+  .sidebar-page {
+    padding: 10px 20px 6px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-top: 8px;
+  }
+  .sidebar-section {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 20px 9px 28px;
+    background: none;
+    border: none;
+    font-size: 13.5px;
+    font-family: inherit;
+    color: var(--ink);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+  }
+  .sidebar-section:hover { background: var(--bg); }
+  .sidebar-section.active {
+    background: #F3EDE2;
+    border-left-color: var(--blue-dark);
+    font-weight: 700;
+    color: var(--blue-dark);
+  }
+  .sidebar-new-page {
+    margin: 16px 20px 0;
+    padding: 10px;
+    border: 1.5px dashed var(--rule);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 12.5px;
+    font-weight: 700;
+    font-family: inherit;
+    color: var(--ink-mid);
+    cursor: pointer;
+    background: none;
+    width: calc(100% - 40px);
+  }
+  .sidebar-new-page:hover { border-color: var(--blue-dark); color: var(--blue-dark); }
+
+  .main {
+    margin-left: 280px;
+    margin-top: 56px;
+    padding: 36px 44px;
+    width: calc(100% - 280px);
+    max-width: 860px;
+  }
+  .main-empty {
+    color: var(--ink-mid);
+    font-size: 14px;
+    padding-top: 60px;
+    text-align: center;
+  }
+  .section-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-header h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--navy);
+  }
+  .section-header .breadcrumb {
+    font-size: 12px;
+    color: var(--ink-mid);
+    margin-bottom: 6px;
+  }
+
+  .field-group {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .field-key {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-mid);
+    font-family: 'SF Mono', Consolas, monospace;
+    margin-bottom: 10px;
+  }
+  .field-row { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: start; margin-bottom: 8px; }
+  .field-row:last-child { margin-bottom: 0; }
+  .field-lang-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--ink-mid);
+    padding-top: 9px;
+  }
+  .field-input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    font-size: 13.5px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 36px;
+    outline: none;
+  }
+  .field-input:focus { border-color: var(--blue-dark); }
+
+  .image-group {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .image-preview {
+    width: 72px; height: 72px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    flex-shrink: 0;
+  }
+  .image-info { flex: 1; min-width: 0; }
+  .image-path {
+    font-family: 'SF Mono', Consolas, monospace;
+    font-size: 11.5px;
+    color: var(--ink-mid);
+    margin-bottom: 8px;
+    word-break: break-all;
+  }
+  .image-upload-btn {
+    display: inline-block;
+    padding: 7px 14px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .image-upload-btn:hover { border-color: var(--blue-dark); }
+  .image-upload-btn input { display: none; }
+  .image-upload-status { font-size: 11.5px; margin-top: 6px; color: var(--green); }
+
+  .save-bar {
+    position: sticky;
+    bottom: 0;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .btn-save {
+    background: var(--green);
+    color: var(--white);
+    border: none;
+    padding: 11px 26px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13.5px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .btn-save:hover { opacity: 0.9; }
+  .btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+  .save-msg { font-size: 12.5px; }
+  .save-msg.ok { color: var(--green); }
+  .save-msg.err { color: var(--red); }
+
+  .note-box {
+    background: #FBF6E9;
+    border: 1px solid #EBDCB2;
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #6B5A2A;
+  }
+
+  /* Elder editor */
+  .elder-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .elder-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .elder-card-head strong { font-size: 14px; }
+  .btn-remove { background: none; border: none; color: var(--red); font-size: 12px; cursor: pointer; font-weight: 700; font-family: inherit; }
+  .elder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .btn-add-elder {
+    width: 100%;
+    padding: 12px;
+    border: 1.5px dashed var(--rule);
+    border-radius: 8px;
+    background: none;
+    font-weight: 700;
+    font-family: inherit;
+    color: var(--ink-mid);
+    cursor: pointer;
+  }
+  .btn-add-elder:hover { border-color: var(--blue-dark); color: var(--blue-dark); }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 28px;
+    width: 520px;
+    max-width: 90vw;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+  .modal-box h3 { font-size: 17px; margin-bottom: 16px; color: var(--navy); }
+  .modal-box label { display: block; font-size: 12px; font-weight: 700; color: var(--ink-mid); margin-bottom: 5px; margin-top: 14px; }
+  .modal-box input[type=text], .modal-box textarea {
+    width: 100%; padding: 9px 11px; border: 1px solid var(--rule); border-radius: 6px; font-size: 13.5px; font-family: inherit; outline: none;
+  }
+  .modal-box textarea { min-height: 160px; font-family: 'SF Mono', Consolas, monospace; font-size: 12px; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
+  .btn-cancel { background: var(--bg); border: 1px solid var(--rule); padding: 9px 18px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; font-family: inherit; }
+  .btn-primary { background: var(--navy); color: var(--white); border: none; padding: 9px 18px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; font-family: inherit; }
+</style>
+</head>
+<body>
+
+  <!-- ═══ LOGIN ═══ -->
+  <div id="login-screen">
+    <div class="login-card">
+      <h1>Tessera Compassion Foundation</h1>
+      <p>Admin — content management</p>
+      <input type="password" id="password-input" placeholder="Password" autocomplete="current-password" />
+      <button onclick="login()">Log in</button>
+      <div class="login-error" id="login-error"></div>
+      <div class="login-note">
+        This panel edits the live site directly. Changes are committed to the site's repository and go live after a short redeploy (usually under a minute).
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ADMIN SHELL ═══ -->
+  <div id="admin-shell">
+    <div class="topbar">
+      <div class="topbar-brand">TESSERA <span>ADMIN</span></div>
+      <div class="topbar-actions">
+        <span class="topbar-status" id="topbar-status"></span>
+        <button class="btn-logout" onclick="logout()">Log out</button>
+      </div>
+    </div>
+    <div class="sidebar" id="sidebar"></div>
+    <div class="main" id="main">
+      <div class="main-empty">Select a section on the left to start editing.</div>
+    </div>
+  </div>
+
+  <!-- ═══ NEW PAGE MODAL ═══ -->
+  <div class="modal-overlay" id="new-page-modal">
+    <div class="modal-box">
+      <h3>Create a new page</h3>
+      <label>Page title</label>
+      <input type="text" id="new-page-title" placeholder="e.g. Summer Gala 2026" />
+      <label>URL (auto-filled from title, editable)</label>
+      <input type="text" id="new-page-slug" placeholder="summer-gala-2026" />
+      <label>Page HTML — paste full HTML, or upload a file below</label>
+      <textarea id="new-page-html" placeholder="<html>...full page content...</html>"></textarea>
+      <label>Or upload an .html file</label>
+      <input type="file" id="new-page-file" accept=".html,.htm" />
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeNewPageModal()">Cancel</button>
+        <button class="btn-primary" onclick="submitNewPage()">Create page</button>
+      </div>
+      <div class="login-error" id="new-page-error"></div>
+    </div>
+  </div>
+
+<script>
+  let sessionToken = null;
+  let pagesData = null;
+  let translations = null;
+  let eldersData = null;
+  let customPagesData = null;
+  let currentSection = null; // { pageId, sectionId }
+  let pendingImageUploads = {}; // path -> dataUrl, queued until Save
+
+  // ── AUTH ──
+  function login() {
+    const password = document.getElementById('password-input').value;
+    const errEl = document.getElementById('login-error');
+    errEl.textContent = '';
+    fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password }),
+    })
+      .then(r => r.json().then(body => ({ ok: r.ok, body })))
+      .then(({ ok, body }) => {
+        if (!ok) { errEl.textContent = body.error || 'Login failed.'; return; }
+        sessionToken = body.token;
+        sessionStorage.setItem('tcf-admin-token', body.token);
+        enterAdmin();
+      })
+      .catch(e => { errEl.textContent = 'Could not reach the server: ' + e.message; });
+  }
+
+  function logout() {
+    sessionToken = null;
+    sessionStorage.removeItem('tcf-admin-token');
+    document.getElementById('admin-shell').classList.remove('active');
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('password-input').value = '';
+  }
+
+  async function enterAdmin() {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-shell').classList.add('active');
+    try {
+      await loadAllData();
+    } catch (e) {
+      document.getElementById('main').innerHTML =
+        '<div class="note-box">Could not load site data: ' + e.message + '</div>';
+      return;
+    }
+    renderSidebar();
+  }
+
+  // On load, resume an existing session if we have one (avoids re-login on refresh).
+  window.addEventListener('load', () => {
+    const saved = sessionStorage.getItem('tcf-admin-token');
+    if (saved) { sessionToken = saved; enterAdmin(); }
+    document.getElementById('password-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') login();
+    });
+    document.getElementById('new-page-title').addEventListener('input', function () {
+      document.getElementById('new-page-slug').value = this.value.toLowerCase().trim()
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    });
+  });
+
+  function authHeaders() {
+    return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + sessionToken };
+  }
+
+  // ── DATA LOADING ──
+  async function loadAllData() {
+    const [pagesRes, transRes, eldersRes, customRes] = await Promise.all([
+      fetch('../data/pages.json'),
+      fetch('../data/translations.json'),
+      fetch('../data/elders.json'),
+      fetch('../data/custom-pages.json'),
+    ]);
+    pagesData = await pagesRes.json();
+    translations = await transRes.json();
+    eldersData = await eldersRes.json();
+    customPagesData = await customRes.json().catch(() => []);
+  }
+
+  // ── SIDEBAR ──
+  function renderSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.innerHTML = '';
+
+    pagesData.pages.forEach(page => {
+      const pageEl = document.createElement('div');
+      pageEl.className = 'sidebar-page';
+      pageEl.textContent = page.label;
+      sidebar.appendChild(pageEl);
+
+      page.sections.forEach(section => {
+        const btn = document.createElement('button');
+        btn.className = 'sidebar-section';
+        btn.textContent = section.label;
+        btn.onclick = () => selectSection(page.id, section.id, btn);
+        sidebar.appendChild(btn);
+      });
+
+      if (page.isCustomContainer) {
+        customPagesData.forEach(cp => {
+          const btn = document.createElement('button');
+          btn.className = 'sidebar-section';
+          btn.textContent = cp.title + ' ↗';
+          btn.onclick = () => window.open('../' + cp.path, '_blank');
+          sidebar.appendChild(btn);
+        });
+        const addBtn = document.createElement('button');
+        addBtn.className = 'sidebar-new-page';
+        addBtn.textContent = '+ New Page';
+        addBtn.onclick = openNewPageModal;
+        sidebar.appendChild(addBtn);
+      }
+    });
+  }
+
+  function selectSection(pageId, sectionId, btnEl) {
+    currentSection = { pageId, sectionId };
+    document.querySelectorAll('.sidebar-section').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+
+    const page = pagesData.pages.find(p => p.id === pageId);
+    const section = page.sections.find(s => s.id === sectionId);
+    pendingImageUploads = {};
+
+    if (section.special === 'elders') { renderEldersEditor(page, section); return; }
+    renderSectionEditor(page, section);
+  }
+
+  // ── STANDARD TEXT/IMAGE SECTION EDITOR ──
+  function escAttr(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+
+  function renderSectionEditor(page, section) {
+    const main = document.getElementById('main');
+    let html = `
+      <div class="section-header">
+        <div class="breadcrumb">${page.label}</div>
+        <h2>${section.label}</h2>
+      </div>`;
+
+    if (section.note) {
+      html += `<div class="note-box">${section.note}</div>`;
+      main.innerHTML = html;
+      return;
+    }
+
+    section.textKeys.forEach(key => {
+      html += `
+        <div class="field-group">
+          <div class="field-key">${key}</div>
+          <div class="field-row">
+            <div class="field-lang-label">EN</div>
+            <textarea class="field-input" rows="1" data-key="${key}" data-lang="en" oninput="autoGrow(this)">${escAttr(translations.en[key] || '')}</textarea>
+          </div>
+          <div class="field-row">
+            <div class="field-lang-label">KO</div>
+            <textarea class="field-input" rows="1" data-key="${key}" data-lang="ko" oninput="autoGrow(this)">${escAttr(translations.ko[key] || '')}</textarea>
+          </div>
+        </div>`;
+    });
+
+    section.images.forEach(imgPath => {
+      html += `
+        <div class="image-group">
+          <img class="image-preview" src="../${imgPath}" data-img-path="${imgPath}" onerror="this.style.opacity=0.3" />
+          <div class="image-info">
+            <div class="image-path">${imgPath}</div>
+            <label class="image-upload-btn">
+              Replace image
+              <input type="file" accept="image/*" onchange="queueImageUpload(this, '${imgPath}')" />
+            </label>
+            <div class="image-upload-status" id="img-status-${cssId(imgPath)}"></div>
+          </div>
+        </div>`;
+    });
+
+    html += `
+      <div class="save-bar">
+        <button class="btn-save" id="save-btn" onclick="saveCurrentSection()">Save changes</button>
+        <span class="save-msg" id="save-msg"></span>
+      </div>`;
+
+    main.innerHTML = html;
+    main.querySelectorAll('textarea.field-input').forEach(autoGrow);
+  }
+
+  function autoGrow(el) {
+    el.style.height = 'auto';
+    el.style.height = (el.scrollHeight + 2) + 'px';
+  }
+  function cssId(path) { return path.replace(/[^a-zA-Z0-9]/g, '_'); }
+
+  function queueImageUpload(input, imgPath) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      pendingImageUploads[imgPath] = reader.result;
+      document.getElementById('img-status-' + cssId(imgPath)).textContent = 'Queued — click "Save changes" to publish.';
+      const preview = document.querySelector(`.image-preview[data-img-path="${imgPath}"]`);
+      if (preview) { preview.src = reader.result; preview.style.opacity = 1; }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function saveCurrentSection() {
+    const btn = document.getElementById('save-btn');
+    const msg = document.getElementById('save-msg');
+    btn.disabled = true;
+    msg.textContent = 'Saving…';
+    msg.className = 'save-msg';
+
+    // 1. Apply text field edits into the in-memory translations object.
+    document.querySelectorAll('textarea.field-input').forEach(ta => {
+      const key = ta.dataset.key, lang = ta.dataset.lang;
+      if (key && lang) translations[lang][key] = ta.value;
+    });
+
+    try {
+      // 2. Upload any queued images first.
+      for (const [path, dataUrl] of Object.entries(pendingImageUploads)) {
+        const res = await fetch('/api/upload-image', {
+          method: 'POST', headers: authHeaders(),
+          body: JSON.stringify({ path, dataUrl }),
+        });
+        const body = await res.json();
+        if (!res.ok) throw new Error(`Image ${path}: ${body.error}`);
+      }
+      pendingImageUploads = {};
+
+      // 3. Save the text content.
+      const res = await fetch('/api/save-content', {
+        method: 'POST', headers: authHeaders(),
+        body: JSON.stringify({ file: 'translations', data: translations }),
+      });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error);
+
+      msg.textContent = '✓ Saved — live in about a minute after redeploy.';
+      msg.className = 'save-msg ok';
+    } catch (e) {
+      msg.textContent = '✗ ' + e.message;
+      msg.className = 'save-msg err';
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  // ── ELDER CARDS SPECIAL EDITOR ──
+  function renderEldersEditor(page, section) {
+    const main = document.getElementById('main');
+    let html = `
+      <div class="section-header">
+        <div class="breadcrumb">${page.label}</div>
+        <h2>${section.label}</h2>
+      </div>`;
+
+    eldersData.forEach((elder, i) => {
+      html += `
+        <div class="elder-card" data-elder-index="${i}">
+          <div class="elder-card-head">
+            <strong>${escAttr(elder.name || '(new elder)')}</strong>
+            <button class="btn-remove" onclick="removeElder(${i})">Remove</button>
+          </div>
+          <div class="elder-grid">
+            <input class="field-input" placeholder="Name" data-f="name" value="${escAttr(elder.name || '')}" oninput="updateElderField(${i}, this)" />
+            <select class="field-input" data-f="gender" onchange="updateElderField(${i}, this)">
+              <option value="her" ${elder.gender === 'her' ? 'selected' : ''}>Her</option>
+              <option value="him" ${elder.gender === 'him' ? 'selected' : ''}>Him</option>
+            </select>
+            <input class="field-input" placeholder="Age" type="number" data-f="age" value="${elder.age || ''}" oninput="updateElderField(${i}, this)" />
+            <input class="field-input" placeholder="City" data-f="city" value="${escAttr(elder.city || '')}" oninput="updateElderField(${i}, this)" />
+            <select class="field-input" data-f="status" onchange="updateElderField(${i}, this)">
+              <option value="available" ${elder.status === 'available' ? 'selected' : ''}>Available</option>
+              <option value="sponsored" ${elder.status === 'sponsored' ? 'selected' : ''}>Sponsored</option>
+            </select>
+            <input class="field-input" placeholder="Monthly sponsor amount ($)" type="number" data-f="sponsorAmount" value="${elder.sponsorAmount || ''}" oninput="updateElderField(${i}, this)" />
+          </div>
+          <textarea class="field-input" placeholder="Story (English)" rows="2" data-f="story" oninput="updateElderField(${i}, this); autoGrow(this)">${escAttr(elder.story || '')}</textarea>
+          <div style="height:6px"></div>
+          <textarea class="field-input" placeholder="Story (Korean)" rows="2" data-f="story_ko" oninput="updateElderField(${i}, this); autoGrow(this)">${escAttr(elder.story_ko || '')}</textarea>
+          <div style="height:10px"></div>
+          <div class="image-path">Photo path: ${escAttr(elder.photo || `assets/adopt/${elder.id || '??'}/photo.jpg`)}</div>
+          <label class="image-upload-btn">
+            Upload / replace photo
+            <input type="file" accept="image/*" onchange="queueElderPhoto(this, ${i})" />
+          </label>
+          <div class="image-upload-status" id="elder-img-status-${i}"></div>
+        </div>`;
+    });
+
+    html += `<button class="btn-add-elder" onclick="addElder()">+ Add a new elder</button>`;
+    html += `
+      <div class="save-bar">
+        <button class="btn-save" id="save-btn" onclick="saveElders()">Save changes</button>
+        <span class="save-msg" id="save-msg"></span>
+      </div>`;
+
+    main.innerHTML = html;
+    main.querySelectorAll('textarea.field-input').forEach(autoGrow);
+  }
+
+  function updateElderField(i, el) {
+    const f = el.dataset.f;
+    let v = el.value;
+    if (f === 'age' || f === 'sponsorAmount') v = v === '' ? '' : Number(v);
+    eldersData[i][f] = v;
+    if (f === 'name') {
+      const head = document.querySelector(`.elder-card[data-elder-index="${i}"] .elder-card-head strong`);
+      if (head) head.textContent = v || '(new elder)';
+    }
+  }
+
+  function nextElderId() {
+    const nums = eldersData.map(e => parseInt(e.id, 10)).filter(n => !isNaN(n));
+    const next = (nums.length ? Math.max(...nums) : 0) + 1;
+    return String(next).padStart(2, '0');
+  }
+
+  function addElder() {
+    const id = nextElderId();
+    eldersData.push({
+      id, name: '', gender: 'her', age: '', city: '', status: 'available',
+      photo: `assets/adopt/${id}/photo.jpg`, story: '', story_ko: '',
+      sponsorAmount: 40, parts: [],
+    });
+    rerenderElders();
+  }
+
+  function removeElder(i) {
+    if (!confirm(`Remove ${eldersData[i].name || 'this elder'}? This won't delete their photo file, only the card.`)) return;
+    eldersData.splice(i, 1);
+    rerenderElders();
+  }
+
+  function rerenderElders() {
+    const page = pagesData.pages.find(p => p.id === currentSection.pageId);
+    const section = page.sections.find(s => s.id === currentSection.sectionId);
+    renderEldersEditor(page, section);
+  }
+
+  function queueElderPhoto(input, i) {
+    const file = input.files[0];
+    if (!file) return;
+    const id = eldersData[i].id || nextElderId();
+    eldersData[i].id = id;
+    eldersData[i].photo = `assets/adopt/${id}/photo.jpg`;
+    const reader = new FileReader();
+    reader.onload = () => {
+      pendingImageUploads[eldersData[i].photo] = reader.result;
+      document.getElementById('elder-img-status-' + i).textContent = 'Queued — click "Save changes" to publish.';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function saveElders() {
+    const btn = document.getElementById('save-btn');
+    const msg = document.getElementById('save-msg');
+    btn.disabled = true;
+    msg.textContent = 'Saving…';
+    msg.className = 'save-msg';
+    try {
+      for (const [path, dataUrl] of Object.entries(pendingImageUploads)) {
+        const res = await fetch('/api/upload-image', {
+          method: 'POST', headers: authHeaders(),
+          body: JSON.stringify({ path, dataUrl }),
+        });
+        const body = await res.json();
+        if (!res.ok) throw new Error(`Image ${path}: ${body.error}`);
+      }
+      pendingImageUploads = {};
+
+      const res = await fetch('/api/save-content', {
+        method: 'POST', headers: authHeaders(),
+        body: JSON.stringify({ file: 'elders', data: eldersData }),
+      });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error);
+
+      msg.textContent = '✓ Saved — live in about a minute after redeploy.';
+      msg.className = 'save-msg ok';
+    } catch (e) {
+      msg.textContent = '✗ ' + e.message;
+      msg.className = 'save-msg err';
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  // ── NEW PAGE MODAL ──
+  function openNewPageModal() {
+    document.getElementById('new-page-modal').classList.add('active');
+    document.getElementById('new-page-error').textContent = '';
+  }
+  function closeNewPageModal() {
+    document.getElementById('new-page-modal').classList.remove('active');
+  }
+
+  function readFileAsText(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsText(file);
+    });
+  }
+
+  async function submitNewPage() {
+    const title = document.getElementById('new-page-title').value.trim();
+    const slug = document.getElementById('new-page-slug').value.trim();
+    let html = document.getElementById('new-page-html').value;
+    const fileInput = document.getElementById('new-page-file');
+    const errEl = document.getElementById('new-page-error');
+    errEl.textContent = '';
+
+    if (fileInput.files[0]) {
+      html = await readFileAsText(fileInput.files[0]);
+    }
+    if (!title || !html.trim()) {
+      errEl.textContent = 'Title and page HTML (pasted or uploaded) are both required.';
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/create-page', {
+        method: 'POST', headers: authHeaders(),
+        body: JSON.stringify({ title, slug, html }),
+      });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error);
+
+      customPagesData.push({ slug: body.slug, title, path: body.path });
+      closeNewPageModal();
+      renderSidebar();
+      document.getElementById('new-page-title').value = '';
+      document.getElementById('new-page-slug').value = '';
+      document.getElementById('new-page-html').value = '';
+      fileInput.value = '';
+      alert(`Page created: ${body.url}\nIt will appear in the site's navigation once the redeploy finishes (usually under a minute).`);
+    } catch (e) {
+      errEl.textContent = e.message;
+    }
+  }
+</script>
+</body>
+</html>
