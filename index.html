@@ -4868,11 +4868,22 @@
       }
     };
 
-    let currentLang = localStorage.getItem('tcf-lang') || 'en';
+    // localStorage can throw a SecurityError in sandboxed iframes, some
+    // embedded previews, and certain privacy modes. That's a top-level
+    // statement — if it throws unprotected, EVERY line after it in this
+    // script (including the window.addEventListener('load', ...) block
+    // that wires up navigation) never runs. Wrapped defensively so a
+    // storage restriction can never break the rest of the site.
+    let currentLang = 'en';
+    try {
+      currentLang = localStorage.getItem('tcf-lang') || 'en';
+    } catch (e) {
+      console.warn('localStorage unavailable — defaulting to English.', e);
+    }
 
     function setLang(lang) {
       currentLang = lang;
-      localStorage.setItem('tcf-lang', lang);
+      try { localStorage.setItem('tcf-lang', lang); } catch (e) { /* storage unavailable — language just won't persist across visits */ }
 
       // Toggle button states
       document.getElementById('lang-en').classList.toggle('active', lang === 'en');
