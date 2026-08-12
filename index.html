@@ -833,7 +833,7 @@
     }
     .partner-avatar {
       width: 100%;
-      height: 84px;
+      aspect-ratio: 1 / 1;
       border-radius: 12px;
       background: var(--blue-light);
       display: flex;
@@ -852,7 +852,7 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      padding: 10px;
+      padding: 16px;
     }
     .partner-avatar.is-photo img {
       object-fit: cover;
@@ -4317,7 +4317,7 @@
       adoptCardsRendered = true;
     }
 
-
+    function filterAdopt(status, btn) {
       document.querySelectorAll('.adopt-filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       document.querySelectorAll('.flip-card[data-status]').forEach(card => {
