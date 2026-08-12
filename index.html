@@ -2753,16 +2753,16 @@
 
   <!-- NAV -->
   <nav id="main-nav">
-    <div class="nav-logo" onclick="navigate('home')" style="cursor:pointer">
+    <div class="nav-logo" onclick="return navigate('home')" style="cursor:pointer">
       <img src="assets/logo/logo.png" alt="Tessera Compassion Foundation" class="nav-logo-img" />
     </div>
     <ul class="nav-links">
-      <li><a href="#" onclick="navigate('home')" data-page="home" class="active" data-i18n="nav.home">Home</a></li>
-      <li><a href="#" onclick="navigate('about')" data-page="about" data-i18n="nav.about">About</a></li>
-      <li><a href="#" onclick="navigate('adopt')" data-page="adopt" data-i18n="nav.adopt">Adopt</a></li>
-      <li><a href="#" onclick="navigate('donate')" data-page="donate" data-i18n="nav.donate">Donate</a></li>
-      <li><a href="#" onclick="navigate('contact')" data-page="contact" data-i18n="nav.contact">Contact</a></li>
-      <li><a href="#" onclick="navigate('donate')" class="nav-cta" data-i18n="nav.give">Give Now</a></li>
+      <li><a href="#" onclick="return navigate('home')" data-page="home" class="active" data-i18n="nav.home">Home</a></li>
+      <li><a href="#" onclick="return navigate('about')" data-page="about" data-i18n="nav.about">About</a></li>
+      <li><a href="#" onclick="return navigate('adopt')" data-page="adopt" data-i18n="nav.adopt">Adopt</a></li>
+      <li><a href="#" onclick="return navigate('donate')" data-page="donate" data-i18n="nav.donate">Donate</a></li>
+      <li><a href="#" onclick="return navigate('contact')" data-page="contact" data-i18n="nav.contact">Contact</a></li>
+      <li><a href="#" onclick="return navigate('donate')" class="nav-cta" data-i18n="nav.give">Give Now</a></li>
     </ul>
     <div class="lang-toggle">
       <button class="lang-btn active" id="lang-en" onclick="setLang('en')">EN</button>
@@ -2775,11 +2775,11 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobile-menu">
-    <a href="#" onclick="navigate('home');toggleMobile()" data-i18n="nav.home">Home</a>
-    <a href="#" onclick="navigate('about');toggleMobile()" data-i18n="nav.about">About</a>
-    <a href="#" onclick="navigate('adopt');toggleMobile()" data-i18n="nav.adopt">Adopt</a>
-    <a href="#" onclick="navigate('donate');toggleMobile()" data-i18n="nav.donate">Donate</a>
-    <a href="#" onclick="navigate('contact');toggleMobile()" data-i18n="nav.contact">Contact</a>
+    <a href="#" onclick="navigate('home');toggleMobile();return false;" data-i18n="nav.home">Home</a>
+    <a href="#" onclick="navigate('about');toggleMobile();return false;" data-i18n="nav.about">About</a>
+    <a href="#" onclick="navigate('adopt');toggleMobile();return false;" data-i18n="nav.adopt">Adopt</a>
+    <a href="#" onclick="navigate('donate');toggleMobile();return false;" data-i18n="nav.donate">Donate</a>
+    <a href="#" onclick="navigate('contact');toggleMobile();return false;" data-i18n="nav.contact">Contact</a>
   </div>
 
   <!-- ═══════════════════════════════════════════ -->
@@ -2797,10 +2797,10 @@
           Tessera Compassion Foundation restores dignity and creates sustainable hope for vulnerable communities, including low-income families, children without parents, widows, and immigrants and refugees, through compassion, storytelling, and action.
         </p>
         <div class="hero-actions hero-anim" style="animation-delay:0.55s;">
-          <button class="btn-primary btn-donate-animated" onclick="navigate('donate')" data-i18n="hero.donate">
+          <button class="btn-primary btn-donate-animated" onclick="return navigate('donate')" data-i18n="hero.donate">
             Donate Now
           </button>
-          <button class="btn-adopt" onclick="navigate('adopt')" data-i18n="hero.adopt">
+          <button class="btn-adopt" onclick="return navigate('adopt')" data-i18n="hero.adopt">
             Adopt an Elder
           </button>
         </div>
@@ -3079,7 +3079,7 @@
         <div style="font-family:var(--font-display);font-weight:300;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,243,238,0.6);margin-bottom:20px;" data-i18n="cta.eyebrow">Join The Movement</div>
         <h2 style="font-family:var(--font-display);font-weight:900;font-size:clamp(40px,5vw,70px);text-transform:uppercase;color:var(--white);line-height:1;margin-bottom:32px;" data-i18n="cta.title">Be a Tessera.</h2>
         <p style="font-family:var(--font-serif);font-size:20px;font-style:italic;color:rgba(245,243,238,0.85);max-width:560px;margin:0 auto 44px;" data-i18n="cta.quote">"Compassion becomes powerful when people move together."</p>
-        <button class="btn-primary" onclick="navigate('donate')" style="background:var(--white);color:#22314a;border-color:var(--white);margin:0 auto;">
+        <button class="btn-primary" onclick="return navigate('donate')" style="background:var(--white);color:#22314a;border-color:var(--white);margin:0 auto;">
           <span data-i18n="cta.button">Make a Donation</span>
           <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M8.5 1L13 5L8.5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </button>
@@ -3887,7 +3887,7 @@
                No HTML editing required. -->
 
           <!-- CARD — CTA (static, always last) -->
-          <div class="flip-card" style="cursor:pointer;" onclick="navigate('contact')">
+          <div class="flip-card" style="cursor:pointer;" onclick="return navigate('contact')">
             <div class="flip-card-inner" style="transform:none!important;">
               <div class="flip-front" style="background:var(--accent-2);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;">
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="margin-bottom:20px;opacity:0.6;"><rect x="2" y="2" width="44" height="44" stroke="rgba(245,243,238,0.5)" stroke-width="1.5"/><path d="M24 16v16M16 24h16" stroke="rgba(245,243,238,0.7)" stroke-width="2" stroke-linecap="round"/></svg>
@@ -4015,10 +4015,10 @@
           <div class="footer-tagline" data-i18n="footer.tagline">Restoring dignity and creating sustainable hope for vulnerable communities through compassion, storytelling, and action.</div>
           <!-- Mobile-only quick links -->
           <div class="footer-mobile-links">
-            <a href="#" onclick="navigate('about')" data-i18n="nav.about">About</a>
-            <a href="#" onclick="navigate('adopt')" data-i18n="nav.adopt">Adopt</a>
-            <a href="#" onclick="navigate('donate')" data-i18n="nav.donate">Donate</a>
-            <a href="#" onclick="navigate('contact')" data-i18n="nav.contact">Contact</a>
+            <a href="#" onclick="return navigate('about')" data-i18n="nav.about">About</a>
+            <a href="#" onclick="return navigate('adopt')" data-i18n="nav.adopt">Adopt</a>
+            <a href="#" onclick="return navigate('donate')" data-i18n="nav.donate">Donate</a>
+            <a href="#" onclick="return navigate('contact')" data-i18n="nav.contact">Contact</a>
           </div>
           <!-- Mobile-only social icons (mirrors desktop Connect column) -->
           <div class="footer-social-icons footer-mobile-social">
@@ -4042,11 +4042,11 @@
         <div>
           <div class="footer-col-title" data-i18n="footer.navigate">Navigate</div>
           <ul class="footer-links">
-            <li><a href="#" onclick="navigate('home')" data-i18n="nav.home">Home</a></li>
-            <li><a href="#" onclick="navigate('about')" data-i18n="footer.aboutUs">About Us</a></li>
-            <li><a href="#" onclick="navigate('adopt')" data-i18n="footer.adoptElder">Adopt an Elder</a></li>
-            <li><a href="#" onclick="navigate('donate')" data-i18n="nav.donate">Donate</a></li>
-            <li><a href="#" onclick="navigate('contact')" data-i18n="nav.contact">Contact</a></li>
+            <li><a href="#" onclick="return navigate('home')" data-i18n="nav.home">Home</a></li>
+            <li><a href="#" onclick="return navigate('about')" data-i18n="footer.aboutUs">About Us</a></li>
+            <li><a href="#" onclick="return navigate('adopt')" data-i18n="footer.adoptElder">Adopt an Elder</a></li>
+            <li><a href="#" onclick="return navigate('donate')" data-i18n="nav.donate">Donate</a></li>
+            <li><a href="#" onclick="return navigate('contact')" data-i18n="nav.contact">Contact</a></li>
           </ul>
         </div>
         <div>
@@ -4084,7 +4084,7 @@
         <div class="footer-bottom-right">
           <a href="#" data-i18n="footer.privacy">Privacy</a>
           <a href="#" data-i18n="footer.terms">Terms</a>
-          <a href="#" onclick="navigate('donate')" data-i18n="nav.donate">Donate</a>
+          <a href="#" onclick="return navigate('donate')" data-i18n="nav.donate">Donate</a>
           <span style="color:rgba(232,230,223,0.18);font-size:10px;letter-spacing:0.04em;"><span data-i18n="footer.siteBy">Site by</span> <a href="https://foxsignal.co/local.html" target="_blank" rel="noopener" style="color:rgba(232,230,223,0.28);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(200,184,154,0.7)'" onmouseout="this.style.color='rgba(232,230,223,0.28)'">Fox Signal Local</a> →</span>
         </div>
       </div>
