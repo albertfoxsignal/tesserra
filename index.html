@@ -761,7 +761,7 @@
       box-shadow: 0 2px 16px rgba(90,139,176,0.08);
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: flex-start;
       gap: 6px;
       transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
     }
@@ -3011,7 +3011,7 @@
               </div>
 
               <div class="partner-card">
-                <div class="partner-avatar"><img src="assets/partners/berify.jpg" alt="Berify" /></div>
+                <div class="partner-avatar"><img src="assets/partners/berify.png" alt="Berify" /></div>
                 <div class="partner-name">Berify</div>
                 <div class="partner-role">Tech Platform</div>
                 <a href="https://www.instagram.com/berifyio/" target="_blank" class="partner-handle">@berifyio</a>
@@ -3019,7 +3019,7 @@
               </div>
 
               <div class="partner-card">
-                <div class="partner-avatar"><img src="assets/partners/lafc.jpg" alt="LAFC" /></div>
+                <div class="partner-avatar"><img src="assets/partners/lafc.png" alt="LAFC" /></div>
                 <div class="partner-name">LAFC</div>
                 <div class="partner-role">Major League Soccer</div>
                 <a href="https://www.instagram.com/lafc/" target="_blank" class="partner-handle">@lafc</a>
@@ -3027,7 +3027,7 @@
               </div>
 
               <div class="partner-card">
-                <div class="partner-avatar"><img src="assets/partners/cka.jpg" alt="CKA" /></div>
+                <div class="partner-avatar"><img src="assets/partners/cka.png" alt="CKA" /></div>
                 <div class="partner-name">CKA</div>
                 <div class="partner-role">Council of Korean Americans</div>
                 <a href="https://www.instagram.com/cka_us/" target="_blank" class="partner-handle">@cka_us</a>
@@ -3035,7 +3035,7 @@
               </div>
 
               <div class="partner-card">
-                <div class="partner-avatar"><img src="assets/partners/netkal.jpg" alt="NetKAL" /></div>
+                <div class="partner-avatar"><img src="assets/partners/netkal.png" alt="NetKAL" /></div>
                 <div class="partner-name">NetKAL</div>
                 <div class="partner-role">Network of Korean American Leaders</div>
                 <a href="https://www.instagram.com/netkal/" target="_blank" class="partner-handle">@netkal</a>
@@ -3043,7 +3043,7 @@
               </div>
 
               <div class="partner-card">
-                <div class="partner-avatar"><img src="assets/partners/yulchon.jpg" alt="Yulchon" /></div>
+                <div class="partner-avatar"><img src="assets/partners/yulchon.png" alt="Yulchon" /></div>
                 <div class="partner-name">Yulchon</div>
                 <div class="partner-role">Korean Law Firm</div>
                 <a href="https://www.instagram.com/yulchon_llc/" target="_blank" class="partner-handle">@yulchon_llc</a>
@@ -3051,7 +3051,7 @@
               </div>
 
               <div class="partner-card">
-                <div class="partner-avatar"><img src="assets/partners/latham-watkins.jpg" alt="Latham & Watkins" /></div>
+                <div class="partner-avatar"><img src="assets/partners/latham-watkins.png" alt="Latham & Watkins" /></div>
                 <div class="partner-name">Latham & Watkins</div>
                 <div class="partner-role">Global Law Firm</div>
                 <a href="https://www.instagram.com/lathamwatkins/" target="_blank" class="partner-handle">@lathamwatkins</a>
@@ -5065,9 +5065,16 @@
       // Update the URL hash so every page has its own shareable, bookmarkable,
       // crawlable address (e.g. tesseracompassion.org/#adopt) without needing
       // separate HTML files or server-side routing.
+      // Wrapped in try/catch: some browsers throw a SecurityError for
+      // pushState when a page is opened directly via file:// instead of
+      // being served over http(s) — that should never block navigation.
       if (!skipHistory) {
-        const hash = page === 'home' ? '' : '#' + page;
-        history.pushState({ page }, '', window.location.pathname + hash);
+        try {
+          const hash = page === 'home' ? '' : '#' + page;
+          history.pushState({ page }, '', window.location.pathname + hash);
+        } catch (e) {
+          window.location.hash = page === 'home' ? '' : page;
+        }
       }
 
       // Update <title> and meta description to match the active page.
