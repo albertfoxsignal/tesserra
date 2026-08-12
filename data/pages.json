@@ -4,64 +4,408 @@
       "id": "home",
       "label": "Home",
       "sections": [
-        { "id": "hero", "label": "Hero", "textKeys": ["hero.eyebrow", "hero.headline", "hero.body", "hero.donate", "hero.adopt"], "images": [] },
-        { "id": "shorts", "label": "Shorts / Videos Strip", "textKeys": ["shorts.label", "shorts.title", "shorts.tabShorts", "shorts.tabVideos", "shorts.watchAll", "shorts.watchAllVideos", "video.title1", "video.title2", "video.title3"], "images": [] },
-        { "id": "quartet", "label": "Quartet of the Vulnerable", "textKeys": ["quartet.label", "quartet.title", "quartet.title1", "quartet.body1", "quartet.title2", "quartet.body2", "quartet.title3", "quartet.body3", "quartet.title4", "quartet.body4"], "images": [] },
-        { "id": "theory", "label": "Theory of Change", "textKeys": ["theory.label", "theory.title", "theory.title1", "theory.body1", "theory.title2", "theory.body2", "theory.title3", "theory.body3"], "images": [] },
-        { "id": "stories", "label": "Stories", "textKeys": ["stories.label", "stories.title", "stories.s1.title", "stories.s1.body", "stories.s2.title", "stories.s2.body", "stories.s3.title", "stories.s3.body", "stories.s4.title", "stories.s4.body", "stories.button", "stories.footer"], "images": [] },
-        { "id": "impact", "label": "Impact Stats", "textKeys": ["impact.label1", "impact.label2", "impact.label3", "impact.label4"], "images": [] },
-        { "id": "partners", "label": "Partner Network", "textKeys": ["partners.label", "partners.title", "partners.andMore", "partner.p1.role", "partner.p1.tag", "partner.p2.role", "partner.p2.tag", "partner.p3.role", "partner.p3.tag", "partner.p4.role", "partner.p4.tag", "partner.p5.role", "partner.p5.tag", "partner.p6.role", "partner.p6.tag", "partner.p7.role", "partner.p7.tag", "partner.p8.role", "partner.p8.tag", "partner.p9.role", "partner.p9.tag", "partner.p10.role", "partner.p10.tag", "partner.p11.role", "partner.p11.tag", "partner.p12.role", "partner.p12.tag", "partner.p13.role", "partner.p13.tag", "partner.p14.role", "partner.p14.tag"], "images": [
-          "assets/partners/jay-park.jpg", "assets/partners/bm.jpg", "assets/partners/dan-am-i.jpg",
-          "assets/partners/berify.png", "assets/partners/lafc.png", "assets/partners/cka.png",
-          "assets/partners/netkal.png", "assets/partners/yulchon.png", "assets/partners/latham-watkins.png"
-        ] },
-        { "id": "cta", "label": "Be a Tessera (CTA band)", "textKeys": ["cta.eyebrow", "cta.title", "cta.quote", "cta.button"], "images": [] }
+        {
+          "id": "hero",
+          "label": "Hero",
+          "textKeys": [
+            "hero.headline",
+            "hero.body",
+            "hero.donate",
+            "hero.adopt"
+          ],
+          "images": [],
+          "domId": "home-hero"
+        },
+        {
+          "id": "shorts",
+          "label": "Shorts / Videos Strip",
+          "textKeys": [
+            "shorts.label",
+            "shorts.title",
+            "shorts.tabShorts",
+            "shorts.tabVideos",
+            "shorts.watchAll",
+            "shorts.watchAllVideos",
+            "video.title1",
+            "video.title2",
+            "video.title3"
+          ],
+          "images": [],
+          "domId": "home-shorts"
+        },
+        {
+          "id": "quartet",
+          "label": "Quartet of the Vulnerable",
+          "textKeys": [
+            "quartet.label",
+            "quartet.title",
+            "quartet.title1",
+            "quartet.body1",
+            "quartet.title2",
+            "quartet.body2",
+            "quartet.title3",
+            "quartet.body3",
+            "quartet.title4",
+            "quartet.body4"
+          ],
+          "images": [],
+          "domId": "home-quartet"
+        },
+        {
+          "id": "theory",
+          "label": "Theory of Change",
+          "textKeys": [
+            "theory.label",
+            "theory.title",
+            "theory.title1",
+            "theory.body1",
+            "theory.title2",
+            "theory.body2",
+            "theory.title3",
+            "theory.body3"
+          ],
+          "images": [],
+          "domId": "home-theory"
+        },
+        {
+          "id": "impact",
+          "label": "Impact Stats",
+          "textKeys": [
+            "impact.label1",
+            "impact.label2",
+            "impact.label3",
+            "impact.label4"
+          ],
+          "images": [],
+          "domId": "home-impact"
+        },
+        {
+          "id": "partners",
+          "label": "Partner Network",
+          "textKeys": [
+            "partners.label",
+            "partners.title",
+            "partners.andMore"
+          ],
+          "images": [
+            "assets/partners/jay-park.jpg",
+            "assets/partners/bm.jpg",
+            "assets/partners/dan-am-i.jpg",
+            "assets/partners/berify.png",
+            "assets/partners/lafc.png",
+            "assets/partners/cka.png",
+            "assets/partners/netkal.png",
+            "assets/partners/yulchon.png",
+            "assets/partners/latham-watkins.png"
+          ],
+          "domId": "home-partners"
+        },
+        {
+          "id": "cta",
+          "label": "Be a Tessera (CTA band)",
+          "textKeys": [
+            "cta.eyebrow",
+            "cta.title",
+            "cta.quote",
+            "cta.button"
+          ],
+          "images": [],
+          "domId": "home-cta"
+        }
       ]
     },
     {
       "id": "about",
       "label": "About",
       "sections": [
-        { "id": "story", "label": "Our Story", "textKeys": ["about.label", "about.title", "about.p1", "about.p1b", "about.p2", "about.p2b", "about.p3", "about.p3b"], "images": ["assets/team/aiden-kim.jpg"] },
-        { "id": "meaning", "label": "What is a Tessera", "textKeys": ["meaning.label", "meaning.title", "meaning.p1", "meaning.p2", "meaning.p3"], "images": ["assets/about/tessera-meaning.jpg"] },
-        { "id": "mvv", "label": "Mission & Vision", "textKeys": ["mvv.label", "mvv.mission.label", "mvv.mission.title", "mvv.mission.body", "mvv.vision.label", "mvv.vision.title", "mvv.vision.body"], "images": [] },
-        { "id": "values", "label": "Core Values", "textKeys": ["values.label", "values.title", "values.dignity.title", "values.dignity.body", "values.compassion.title", "values.compassion.body", "values.integrity.title", "values.integrity.body", "values.storytelling.title", "values.storytelling.body", "values.sustainability.title", "values.sustainability.body"], "images": [] },
-        { "id": "team", "label": "Our Team", "textKeys": ["team.label", "team.title", "team.role1", "team.role2", "team.role3"], "images": ["assets/team/aiden-kim.jpg", "assets/team/dan-kang.jpg", "assets/team/charles-choe.jpg"] },
-        { "id": "initiatives", "label": "Initiatives", "textKeys": ["init.label", "init.title", "init.pillar1.title", "init.pillar1.body", "init.pillar2.title", "init.pillar2.body", "init.pillar4.title", "init.pillar4.body", "init.completed.label", "init.completed.item1", "init.completed.item2", "init.completed.item3", "init.completed.item4", "init.completed.item5", "init.completed.item6", "init.completed.item7", "init.completed.item8", "init.vision.label", "init.vision.item1", "init.vision.item2", "init.vision.item3", "init.vision.item4", "init.vision.item5", "init.vision.item6", "init.vision.item7", "init.vision.item8", "init.quote"], "images": [] },
-        { "id": "timeline", "label": "Timeline", "textKeys": ["timeline.label", "timeline.title", "timeline.t1.title", "timeline.t1.body", "timeline.t2.title", "timeline.t2.body", "timeline.t3.title", "timeline.t3.body", "timeline.t4.title", "timeline.t4.body", "timeline.t5.title", "timeline.t5.body"], "images": [] }
+        {
+          "id": "story",
+          "label": "Our Story",
+          "textKeys": [
+            "about.label",
+            "about.title",
+            "about.p1",
+            "about.p1b",
+            "about.p2",
+            "about.p2b",
+            "about.p3",
+            "about.p3b"
+          ],
+          "images": [
+            "assets/team/aiden-kim.jpg"
+          ],
+          "domId": "about-story"
+        },
+        {
+          "id": "meaning",
+          "label": "What is a Tessera",
+          "textKeys": [
+            "meaning.label",
+            "meaning.title",
+            "meaning.p1",
+            "meaning.p2",
+            "meaning.p3"
+          ],
+          "images": [
+            "assets/about/tessera-meaning.jpg"
+          ],
+          "domId": "about-meaning"
+        },
+        {
+          "id": "mvv",
+          "label": "Mission & Vision",
+          "textKeys": [
+            "mvv.label",
+            "mvv.mission.label",
+            "mvv.mission.title",
+            "mvv.mission.body",
+            "mvv.vision.label",
+            "mvv.vision.title",
+            "mvv.vision.body"
+          ],
+          "images": [],
+          "domId": "about-mvv"
+        },
+        {
+          "id": "values",
+          "label": "Core Values",
+          "textKeys": [
+            "values.label",
+            "values.title",
+            "values.dignity.title",
+            "values.dignity.body",
+            "values.compassion.title",
+            "values.compassion.body",
+            "values.integrity.title",
+            "values.integrity.body",
+            "values.storytelling.title",
+            "values.storytelling.body",
+            "values.sustainability.title",
+            "values.sustainability.body"
+          ],
+          "images": [],
+          "domId": "about-values"
+        },
+        {
+          "id": "team",
+          "label": "Our Team",
+          "textKeys": [
+            "team.label",
+            "team.title",
+            "team.role1",
+            "team.role2",
+            "team.role3"
+          ],
+          "images": [
+            "assets/team/aiden-kim.jpg",
+            "assets/team/dan-kang.jpg",
+            "assets/team/charles-choe.jpg"
+          ],
+          "domId": "about-team"
+        },
+        {
+          "id": "initiatives",
+          "label": "Initiatives",
+          "textKeys": [
+            "init.label",
+            "init.title",
+            "init.pillar1.title",
+            "init.pillar1.body",
+            "init.pillar2.title",
+            "init.pillar2.body",
+            "init.pillar4.title",
+            "init.pillar4.body",
+            "init.completed.label",
+            "init.completed.item1",
+            "init.completed.item2",
+            "init.completed.item3",
+            "init.completed.item4",
+            "init.completed.item5",
+            "init.completed.item6",
+            "init.completed.item7",
+            "init.completed.item8",
+            "init.vision.label",
+            "init.vision.item1",
+            "init.vision.item2",
+            "init.vision.item3",
+            "init.vision.item4",
+            "init.vision.item5",
+            "init.vision.item6",
+            "init.vision.item7",
+            "init.vision.item8",
+            "init.quote"
+          ],
+          "images": [],
+          "domId": "about-initiatives"
+        },
+        {
+          "id": "timeline",
+          "label": "Timeline",
+          "textKeys": [
+            "timeline.label",
+            "timeline.title",
+            "timeline.t1.title",
+            "timeline.t1.body",
+            "timeline.t2.title",
+            "timeline.t2.body",
+            "timeline.t3.title",
+            "timeline.t3.body",
+            "timeline.t4.title",
+            "timeline.t4.body",
+            "timeline.t5.title",
+            "timeline.t5.body"
+          ],
+          "images": [],
+          "domId": "about-timeline"
+        }
       ]
     },
     {
       "id": "adopt",
       "label": "Adopt",
       "sections": [
-        { "id": "adopt-labels", "label": "Filters & Labels", "textKeys": ["adopt.filterAll", "adopt.filterAvailable", "adopt.filterSponsored", "adopt.nominate.title", "adopt.nominate.body", "card.hover", "card.herStory", "card.hisStory", "card.sponsorHer", "card.sponsorHim", "card.sponsoredBadge", "card.currentlySponsored"], "images": [] },
-        { "id": "sponsor-modal", "label": "Sponsor Modal", "textKeys": ["modal.label", "modal.terms", "modal.namePlaceholder", "modal.button"], "images": [] },
-        { "id": "elders", "label": "Elder Cards (special editor)", "textKeys": [], "images": [], "special": "elders" }
+        {
+          "id": "adopt-labels",
+          "label": "Filters & Labels",
+          "textKeys": [
+            "adopt.filterAll",
+            "adopt.filterAvailable",
+            "adopt.filterSponsored",
+            "adopt.nominate.title",
+            "adopt.nominate.body",
+            "card.hover",
+            "card.herStory",
+            "card.hisStory",
+            "card.sponsorHer",
+            "card.sponsorHim",
+            "card.sponsoredBadge",
+            "card.currentlySponsored"
+          ],
+          "images": []
+        },
+        {
+          "id": "sponsor-modal",
+          "label": "Sponsor Modal",
+          "textKeys": [
+            "modal.label",
+            "modal.terms",
+            "modal.namePlaceholder",
+            "modal.button"
+          ],
+          "images": []
+        },
+        {
+          "id": "elders",
+          "label": "Elder Cards (special editor)",
+          "textKeys": [],
+          "images": [],
+          "special": "elders"
+        }
       ]
     },
     {
       "id": "contact",
       "label": "Contact",
       "sections": [
-        { "id": "contact-header", "label": "Header", "textKeys": ["contact.label", "contact.title", "contact.subtitle"], "images": [] },
-        { "id": "contact-form", "label": "Form", "textKeys": ["form.title", "form.subtitle", "form.firstName", "form.lastName", "form.email", "form.org", "form.orgPlaceholder", "form.help", "form.selectTopic", "form.topic1", "form.topic2", "form.topic3", "form.topic4", "form.topic5", "form.message", "form.messagePlaceholder", "form.submit", "form.success"], "images": [] },
-        { "id": "contact-social", "label": "Social Links", "textKeys": ["social.instagram", "social.tiktok", "social.facebook", "social.youtube"], "images": [] }
+        {
+          "id": "contact-header",
+          "label": "Header",
+          "textKeys": [
+            "contact.label",
+            "contact.title",
+            "contact.subtitle"
+          ],
+          "images": []
+        },
+        {
+          "id": "contact-form",
+          "label": "Form",
+          "textKeys": [
+            "form.title",
+            "form.subtitle",
+            "form.firstName",
+            "form.lastName",
+            "form.email",
+            "form.org",
+            "form.orgPlaceholder",
+            "form.help",
+            "form.selectTopic",
+            "form.topic1",
+            "form.topic2",
+            "form.topic3",
+            "form.topic4",
+            "form.topic5",
+            "form.message",
+            "form.messagePlaceholder",
+            "form.submit",
+            "form.success"
+          ],
+          "images": []
+        },
+        {
+          "id": "contact-social",
+          "label": "Social Links",
+          "textKeys": [
+            "social.instagram",
+            "social.tiktok",
+            "social.facebook",
+            "social.youtube"
+          ],
+          "images": []
+        }
       ]
     },
     {
       "id": "sitewide",
       "label": "Site-Wide",
       "sections": [
-        { "id": "nav", "label": "Navigation", "textKeys": ["nav.home", "nav.about", "nav.adopt", "nav.donate", "nav.contact", "nav.give"], "images": ["assets/logo/logo.png", "assets/logo/logo-white.png"] },
-        { "id": "footer", "label": "Footer", "textKeys": ["footer.brandSub", "footer.tagline", "footer.navigate", "footer.aboutUs", "footer.adoptElder", "footer.whoWeServe", "footer.connect", "footer.copyright", "footer.privacy", "footer.terms", "footer.siteBy"], "images": [] }
+        {
+          "id": "nav",
+          "label": "Navigation",
+          "textKeys": [
+            "nav.home",
+            "nav.about",
+            "nav.adopt",
+            "nav.donate",
+            "nav.contact",
+            "nav.give"
+          ],
+          "images": [
+            "assets/logo/logo.png",
+            "assets/logo/logo-white.png"
+          ]
+        },
+        {
+          "id": "footer",
+          "label": "Footer",
+          "textKeys": [
+            "footer.brandSub",
+            "footer.tagline",
+            "footer.navigate",
+            "footer.aboutUs",
+            "footer.adoptElder",
+            "footer.whoWeServe",
+            "footer.connect",
+            "footer.copyright",
+            "footer.privacy",
+            "footer.terms",
+            "footer.siteBy"
+          ],
+          "images": []
+        }
       ]
     },
     {
       "id": "donate",
       "label": "Donate (limited editing)",
       "sections": [
-        { "id": "donate-note", "label": "About this page", "textKeys": [], "images": [], "note": "The Donate page's text is written directly into the page HTML (English and Korean side by side) rather than through the translation system, so it isn't editable from this panel yet. Ask your developer to extend the CMS to cover it, or edit index.html directly for now." }
+        {
+          "id": "donate-note",
+          "label": "About this page",
+          "textKeys": [],
+          "images": [],
+          "note": "The Donate page's text is written directly into the page HTML (English and Korean side by side) rather than through the translation system, so it isn't editable from this panel yet. Ask your developer to extend the CMS to cover it, or edit index.html directly for now."
+        }
       ]
     },
     {

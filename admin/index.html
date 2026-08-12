@@ -310,6 +310,31 @@
   .save-msg.ok { color: var(--green); }
   .save-msg.err { color: var(--red); }
 
+  /* Visibility toggle */
+  .vis-toggle { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+  .vis-toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .vis-slider {
+    width: 40px; height: 22px;
+    background: #C9C5B8;
+    border-radius: 22px;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .vis-slider::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 16px; height: 16px;
+    background: var(--white);
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+  .vis-toggle input:checked + .vis-slider { background: var(--green); }
+  .vis-toggle input:checked + .vis-slider::after { transform: translateX(18px); }
+  .vis-label { font-size: 12px; font-weight: 700; color: var(--ink-mid); }
+
   .note-box {
     background: #FBF6E9;
     border: 1px solid #EBDCB2;
@@ -434,6 +459,8 @@
   let customPagesData = null;
   let currentSection = null; // { pageId, sectionId }
   let pendingImageUploads = {}; // path -> dataUrl, queued until Save
+  let visibilityData = {}; // domId -> true/false (missing = visible)
+  let visibilityDirty = false; // only save the visibility file when the toggle changed
 
   // ── AUTH ──
   function login() {
@@ -495,16 +522,19 @@
 
   // ── DATA LOADING ──
   async function loadAllData() {
-    const [pagesRes, transRes, eldersRes, customRes] = await Promise.all([
+    const [pagesRes, transRes, eldersRes, customRes, visRes] = await Promise.all([
       fetch('../data/pages.json'),
       fetch('../data/translations.json'),
       fetch('../data/elders.json'),
       fetch('../data/custom-pages.json'),
+      fetch('../data/section-visibility.json'),
     ]);
     pagesData = await pagesRes.json();
     translations = await transRes.json();
     eldersData = await eldersRes.json();
     customPagesData = await customRes.json().catch(() => []);
+    try { visibilityData = await visRes.json(); } catch (e) { visibilityData = {}; }
+    if (!visibilityData || typeof visibilityData !== 'object') visibilityData = {};
   }
 
   // ── SIDEBAR ──
@@ -561,10 +591,24 @@
 
   function renderSectionEditor(page, section) {
     const main = document.getElementById('main');
+    visibilityDirty = false;
+    let toggleHtml = '';
+    if (section.domId) {
+      const visible = visibilityData[section.domId] !== false;
+      toggleHtml = `
+        <label class="vis-toggle">
+          <input type="checkbox" id="vis-checkbox" ${visible ? 'checked' : ''} onchange="toggleSectionVisibility('${section.domId}', this.checked)" />
+          <span class="vis-slider"></span>
+          <span class="vis-label" id="vis-label">${visible ? 'Visible on site' : 'Hidden from site'}</span>
+        </label>`;
+    }
     let html = `
       <div class="section-header">
         <div class="breadcrumb">${page.label}</div>
-        <h2>${section.label}</h2>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+          <h2>${section.label}</h2>
+          ${toggleHtml}
+        </div>
       </div>`;
 
     if (section.note) {
@@ -632,6 +676,15 @@
     reader.readAsDataURL(file);
   }
 
+  function toggleSectionVisibility(domId, visible) {
+    visibilityData[domId] = visible;
+    visibilityDirty = true;
+    const label = document.getElementById('vis-label');
+    if (label) label.textContent = visible ? 'Visible on site' : 'Hidden from site';
+    const msg = document.getElementById('save-msg');
+    if (msg) { msg.textContent = 'Visibility changed — click "Save changes" to publish.'; msg.className = 'save-msg'; }
+  }
+
   async function saveCurrentSection() {
     const btn = document.getElementById('save-btn');
     const msg = document.getElementById('save-msg');
@@ -657,7 +710,18 @@
       }
       pendingImageUploads = {};
 
-      // 3. Save the text content.
+      // 3. Save the visibility file if the toggle was changed.
+      if (visibilityDirty) {
+        const vres = await fetch('/api/save-content', {
+          method: 'POST', headers: authHeaders(),
+          body: JSON.stringify({ file: 'visibility', data: visibilityData }),
+        });
+        const vbody = await vres.json();
+        if (!vres.ok) throw new Error(vbody.error);
+        visibilityDirty = false;
+      }
+
+      // 4. Save the text content.
       const res = await fetch('/api/save-content', {
         method: 'POST', headers: authHeaders(),
         body: JSON.stringify({ file: 'translations', data: translations }),

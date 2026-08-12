@@ -12,6 +12,7 @@ const ALLOWED_FILES = {
   translations: 'data/translations.json',
   pages: 'data/pages.json',
   elders: 'data/elders.json',
+  visibility: 'data/section-visibility.json',
 };
 
 module.exports = async (req, res) => {
