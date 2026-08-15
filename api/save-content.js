@@ -1,4 +1,4 @@
-// POST /api/save-content   { file: "translations" | "pages" | "elders", data: {...} }
+// POST /api/save-content   { file: "translations" | "pages" | "elders" | "visibility" | "builder", data: {...} }
 // Requires: Authorization: Bearer <token from /api/login>
 //
 // Writes the given file to data/<file>.json in your GitHub repo. Vercel
@@ -13,6 +13,7 @@ const ALLOWED_FILES = {
   pages: 'data/pages.json',
   elders: 'data/elders.json',
   visibility: 'data/section-visibility.json',
+  builder: 'data/page-builder.json',
 };
 
 module.exports = async (req, res) => {

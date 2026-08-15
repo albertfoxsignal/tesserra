@@ -2746,6 +2746,65 @@
       }
       .footer-bottom span { opacity: 0.5; }
     }
+    /* ─── CUSTOM CMS BLOCKS (added via /admin Page Builder) ─── */
+    .cms-block { position: relative; }
+    .cms-block-text { padding: 90px 0; }
+    .cms-block-text .cms-block-label {
+      font-family: var(--font-display); font-weight: 700; font-size: 11px;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent-2);
+      margin-bottom: 18px;
+    }
+    .cms-block-text h2 {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: clamp(28px, 4.5vw, 44px); line-height: 1.08;
+      letter-spacing: -0.01em; margin: 0 0 20px; color: var(--ink);
+      max-width: 720px;
+    }
+    .cms-block-text .cms-block-body {
+      font-size: 16px; line-height: 1.75; color: var(--ink-mid);
+      max-width: 640px; white-space: pre-line;
+    }
+    .cms-block-text .cms-block-btn { margin-top: 28px; }
+    .cms-block-image { padding: 60px 0; }
+    .cms-block-image img {
+      display: block; width: 100%; height: auto;
+      border-radius: 12px; object-fit: cover;
+    }
+    .cms-block-image.cms-img-full { padding: 0; }
+    .cms-block-image.cms-img-full .container { max-width: none; padding: 0; }
+    .cms-block-image.cms-img-full img { border-radius: 0; }
+    .cms-block-image .cms-block-caption {
+      margin-top: 14px; font-size: 13px; color: var(--ink-light);
+      letter-spacing: 0.02em;
+    }
+    .cms-block-image.cms-img-full .cms-block-caption { padding: 0 24px; }
+    .cms-block-banner {
+      background: var(--warm-dark); color: var(--white);
+      padding: 100px 0; text-align: center;
+    }
+    .cms-block-banner h2 {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: clamp(32px, 5.5vw, 56px); line-height: 1.05;
+      letter-spacing: -0.01em; margin: 0 auto 18px; max-width: 800px;
+    }
+    .cms-block-banner .cms-block-body {
+      font-size: 16px; line-height: 1.7; color: rgba(255,255,255,0.75);
+      max-width: 620px; margin: 0 auto; white-space: pre-line;
+    }
+    .cms-block-banner .cms-block-btn { margin-top: 32px; }
+    .cms-block .btn-cms {
+      display: inline-block; font-family: var(--font-display); font-weight: 700;
+      font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 15px 34px; background: var(--accent-2); color: #fff;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+    }
+    .cms-block .btn-cms:hover { opacity: 0.88; transform: translateY(-2px); }
+    .cms-block-banner .btn-cms { background: var(--accent); color: var(--warm-dark); }
+    @media (max-width: 700px) {
+      .cms-block-text { padding: 64px 0; }
+      .cms-block-banner { padding: 72px 0; }
+    }
   </style>
 </head>
 
@@ -4388,6 +4447,14 @@
         if (t[key]) el.innerHTML = t[key];
       });
 
+      // Apply custom-block translations (blocks injected by the Page
+      // Builder carry both languages as data attributes, since their text
+      // lives in data/page-builder.json rather than translations.json).
+      document.querySelectorAll('[data-block-en]').forEach(el => {
+        const v = lang === 'ko' ? el.getAttribute('data-block-ko') : el.getAttribute('data-block-en');
+        if (v) el.innerHTML = v;
+      });
+
       // Apply placeholder translations (form inputs/textareas)
       document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
@@ -4554,6 +4621,155 @@
       contact:{ title: 'Contact Us | Tessera Compassion Foundation',
                 desc:  'Get in touch with Tessera Compassion Foundation for partnerships, volunteering, media, or general inquiries.' },
     };
+
+    // ─── PAGE BUILDER (ordered sections + custom blocks, edited via /admin) ──
+    // data/page-builder.json shape:
+    //   { "<pageId>": { "order": ["home-hero", "block:x7f2", ...],
+    //                   "blocks": [ { id, type: "text"|"image"|"banner", ... } ] } }
+    // "order" mixes built-in section ids (data-cms-section values) with
+    // "block:<id>" entries for admin-created blocks. Sections the file
+    // doesn't mention keep their place at the end, so a newly-coded section
+    // never disappears just because the builder file predates it.
+    function cmsBlockText(b, field) {
+      // Returns { en, ko } pair for a block field, tolerating missing langs.
+      const en = (b.en && b.en[field]) || '';
+      const ko = (b.ko && b.ko[field]) || en;
+      return { en, ko };
+    }
+
+    function cmsBlockI18nSpan(b, field, className) {
+      const { en, ko } = cmsBlockText(b, field);
+      if (!en && !ko) return null;
+      const el = document.createElement(className === 'h2' ? 'h2' : 'div');
+      if (className && className !== 'h2') el.className = className;
+      el.setAttribute('data-block-en', en);
+      el.setAttribute('data-block-ko', ko);
+      el.innerHTML = currentLang === 'ko' ? ko : en;
+      return el;
+    }
+
+    function cmsBlockButton(b) {
+      const { en, ko } = cmsBlockText(b, 'button');
+      if (!en && !ko) return null;
+      const wrap = document.createElement('div');
+      wrap.className = 'cms-block-btn';
+      const link = (b.link || '').trim();
+      const isPage = link.startsWith('#');
+      const a = document.createElement('a');
+      a.className = 'btn-cms';
+      a.setAttribute('data-block-en', en);
+      a.setAttribute('data-block-ko', ko);
+      a.innerHTML = currentLang === 'ko' ? ko : en;
+      if (isPage) {
+        a.href = link;
+        a.onclick = () => navigate(link.slice(1)) || false;
+      } else if (link) {
+        a.href = link;
+        a.target = '_blank';
+        a.rel = 'noopener';
+      } else {
+        a.href = '#';
+        a.onclick = () => false;
+      }
+      wrap.appendChild(a);
+      return wrap;
+    }
+
+    function buildCmsBlock(b) {
+      const section = document.createElement('section');
+      section.className = 'cms-block fade-in';
+      section.setAttribute('data-cms-block', b.id);
+      const container = document.createElement('div');
+      container.className = 'container';
+
+      if (b.type === 'text') {
+        section.classList.add('cms-block-text');
+        const label = cmsBlockI18nSpan(b, 'label', 'section-label cms-block-label');
+        const heading = cmsBlockI18nSpan(b, 'heading', 'h2');
+        const body = cmsBlockI18nSpan(b, 'body', 'cms-block-body');
+        const btn = cmsBlockButton(b);
+        [label, heading, body, btn].forEach(el => el && container.appendChild(el));
+      } else if (b.type === 'image') {
+        section.classList.add('cms-block-image');
+        if (b.layout === 'full') section.classList.add('cms-img-full');
+        if (b.image) {
+          const img = document.createElement('img');
+          img.src = b.image;
+          img.loading = 'lazy';
+          const { en } = cmsBlockText(b, 'caption');
+          img.alt = en || 'Tessera Compassion Foundation';
+          container.appendChild(img);
+        }
+        const caption = cmsBlockI18nSpan(b, 'caption', 'cms-block-caption');
+        if (caption) container.appendChild(caption);
+      } else if (b.type === 'banner') {
+        section.classList.add('cms-block-banner');
+        const heading = cmsBlockI18nSpan(b, 'heading', 'h2');
+        const body = cmsBlockI18nSpan(b, 'body', 'cms-block-body');
+        const btn = cmsBlockButton(b);
+        [heading, body, btn].forEach(el => el && container.appendChild(el));
+      } else {
+        return null;
+      }
+
+      section.appendChild(container);
+      return section;
+    }
+
+    async function applyPageBuilder() {
+      let pb = {};
+      try {
+        const res = await fetch('data/page-builder.json');
+        pb = await res.json();
+      } catch (e) {
+        return; // file missing or invalid — pages stay exactly as coded
+      }
+      if (!pb || typeof pb !== 'object') return;
+
+      Object.entries(pb).forEach(([pageId, cfg]) => {
+        const containerEl = document.getElementById('page-' + pageId);
+        if (!containerEl || !cfg || typeof cfg !== 'object') return;
+
+        const blocks = Array.isArray(cfg.blocks) ? cfg.blocks : [];
+        const blockEls = {};
+        blocks.forEach(b => {
+          if (!b || !b.id || b.visible === false) return;
+          const el = buildCmsBlock(b);
+          if (el) blockEls[b.id] = el;
+        });
+
+        const builtIns = {};
+        containerEl.querySelectorAll(':scope > [data-cms-section]').forEach(el => {
+          builtIns[el.getAttribute('data-cms-section')] = el;
+        });
+
+        const order = Array.isArray(cfg.order) ? cfg.order : [];
+        const placed = new Set();
+        const sequence = [];
+        order.forEach(id => {
+          let el = null;
+          if (typeof id !== 'string') return;
+          if (id.startsWith('block:')) el = blockEls[id.slice(6)];
+          else el = builtIns[id];
+          if (el && !placed.has(id)) { sequence.push(el); placed.add(id); }
+        });
+        // Built-in sections the file doesn't know about keep their coded
+        // order, after the managed ones.
+        Object.entries(builtIns).forEach(([id, el]) => {
+          if (!placed.has(id)) sequence.push(el);
+        });
+        // Blocks that exist but were dropped from "order" go last.
+        blocks.forEach(b => {
+          if (b && b.id && blockEls[b.id] && !placed.has('block:' + b.id)) {
+            sequence.push(blockEls[b.id]);
+          }
+        });
+
+        sequence.forEach(el => containerEl.appendChild(el));
+      });
+
+      observeFadeIns(); // newly-injected blocks need their fade-in observers
+    }
 
     // ─── SECTION VISIBILITY (toggled via /admin) ──
     async function applySectionVisibility() {
@@ -4975,6 +5191,7 @@
       }
 
       loadCustomPageLinks();
+      await applyPageBuilder(); // must finish before setLang so injected blocks get the right language
       applySectionVisibility();
       initStripe();
       observeFadeIns();

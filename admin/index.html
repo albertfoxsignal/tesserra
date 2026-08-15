@@ -398,6 +398,70 @@
   .modal-actions { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
   .btn-cancel { background: var(--bg); border: 1px solid var(--rule); padding: 9px 18px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; font-family: inherit; }
   .btn-primary { background: var(--navy); color: var(--white); border: none; padding: 9px 18px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; font-family: inherit; }
+
+  /* ── PAGE BUILDER ── */
+  .builder-intro {
+    font-size: 13px; color: var(--ink-mid); margin-bottom: 20px; line-height: 1.6;
+    background: var(--white); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 16px;
+  }
+  .builder-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .builder-card {
+    background: var(--white); border: 1px solid var(--rule); border-radius: 8px;
+    transition: box-shadow 0.15s, border-color 0.15s;
+  }
+  .builder-card.dragging { opacity: 0.4; }
+  .builder-card.drop-above { box-shadow: 0 -3px 0 0 var(--blue); }
+  .builder-card.drop-below { box-shadow: 0 3px 0 0 var(--blue); }
+  .builder-card.hidden-on-site { opacity: 0.55; }
+  .builder-card-row {
+    display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+  }
+  .drag-handle {
+    cursor: grab; user-select: none; color: var(--ink-mid); font-size: 16px;
+    line-height: 1; padding: 4px 2px; flex-shrink: 0;
+  }
+  .drag-handle:active { cursor: grabbing; }
+  .builder-card-label { flex: 1; font-weight: 600; font-size: 14px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .builder-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 4px; flex-shrink: 0;
+  }
+  .badge-builtin { background: var(--bg); color: var(--ink-mid); border: 1px solid var(--rule); }
+  .badge-text    { background: #E8F0E9; color: var(--green); }
+  .badge-image   { background: #E9F1F8; color: var(--blue-dark); }
+  .badge-banner  { background: var(--navy); color: #fff; }
+  .builder-card-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .icon-btn {
+    background: none; border: none; cursor: pointer; font-size: 14px;
+    color: var(--ink-mid); padding: 5px 7px; border-radius: 5px; line-height: 1;
+  }
+  .icon-btn:hover { background: var(--bg); color: var(--ink); }
+  .icon-btn.danger:hover { background: #FBEAE8; color: var(--red); }
+  .icon-btn:disabled { opacity: 0.25; cursor: default; }
+  .icon-btn:disabled:hover { background: none; color: var(--ink-mid); }
+  .builder-card-editor {
+    border-top: 1px solid var(--rule); padding: 16px 14px 18px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .builder-card-editor .field-key { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mid); }
+  .builder-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 720px) { .builder-two-col { grid-template-columns: 1fr; } }
+  .add-block-bar {
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    padding: 16px; background: var(--white); border: 1px dashed var(--rule);
+    border-radius: 8px; margin-bottom: 90px;
+  }
+  .add-block-bar span { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mid); margin-right: 4px; }
+  .btn-add-block {
+    background: var(--bg); border: 1px solid var(--rule); border-radius: 6px;
+    padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+    color: var(--ink); transition: all 0.15s;
+  }
+  .btn-add-block:hover { border-color: var(--blue); color: var(--blue-dark); }
+  .builder-block-preview {
+    width: 44px; height: 32px; object-fit: cover; border-radius: 4px;
+    border: 1px solid var(--rule); flex-shrink: 0; background: var(--bg);
+  }
 </style>
 </head>
 <body>
@@ -461,6 +525,9 @@
   let pendingImageUploads = {}; // path -> dataUrl, queued until Save
   let visibilityData = {}; // domId -> true/false (missing = visible)
   let visibilityDirty = false; // only save the visibility file when the toggle changed
+  let builderData = {}; // pageId -> { order: [...], blocks: [...] } (data/page-builder.json)
+  let currentBuilderPage = null; // pageId of the open Page Builder view
+  let expandedBlockId = null; // which custom block's editor is open
 
   // ── AUTH ──
   function login() {
@@ -522,12 +589,13 @@
 
   // ── DATA LOADING ──
   async function loadAllData() {
-    const [pagesRes, transRes, eldersRes, customRes, visRes] = await Promise.all([
+    const [pagesRes, transRes, eldersRes, customRes, visRes, builderRes] = await Promise.all([
       fetch('../data/pages.json'),
       fetch('../data/translations.json'),
       fetch('../data/elders.json'),
       fetch('../data/custom-pages.json'),
       fetch('../data/section-visibility.json'),
+      fetch('../data/page-builder.json'),
     ]);
     pagesData = await pagesRes.json();
     translations = await transRes.json();
@@ -535,12 +603,27 @@
     customPagesData = await customRes.json().catch(() => []);
     try { visibilityData = await visRes.json(); } catch (e) { visibilityData = {}; }
     if (!visibilityData || typeof visibilityData !== 'object') visibilityData = {};
+    try { builderData = await builderRes.json(); } catch (e) { builderData = {}; }
+    if (!builderData || typeof builderData !== 'object') builderData = {};
   }
 
   // ── SIDEBAR ──
   function renderSidebar() {
     const sidebar = document.getElementById('sidebar');
     sidebar.innerHTML = '';
+
+    // Page Builder — reorder sections and add blocks, per real site page.
+    const builderHeader = document.createElement('div');
+    builderHeader.className = 'sidebar-page';
+    builderHeader.textContent = 'Page Layout';
+    sidebar.appendChild(builderHeader);
+    BUILDER_PAGES.forEach(bp => {
+      const btn = document.createElement('button');
+      btn.className = 'sidebar-section';
+      btn.textContent = '⠿ ' + bp.label;
+      btn.onclick = () => openBuilder(bp.id, btn);
+      sidebar.appendChild(btn);
+    });
 
     pagesData.pages.forEach(page => {
       const pageEl = document.createElement('div');
@@ -730,6 +813,473 @@
       if (!res.ok) throw new Error(body.error);
 
       msg.textContent = '✓ Saved — live in about a minute after redeploy.';
+      msg.className = 'save-msg ok';
+    } catch (e) {
+      msg.textContent = '✗ ' + e.message;
+      msg.className = 'save-msg err';
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  // ── PAGE BUILDER (drag-and-drop layout + custom blocks) ──
+  // Writes data/page-builder.json:
+  //   { "<pageId>": { order: ["home-hero", "block:x7f2", ...], blocks: [{...}] } }
+  // The live site reads that file at load, reorders built-in sections to
+  // match, and renders each block. Built-in sections are the ones defined
+  // in code; blocks are created right here and live only in the JSON.
+
+  const BUILDER_PAGES = [
+    { id: 'home',    label: 'Home' },
+    { id: 'about',   label: 'About' },
+    { id: 'adopt',   label: 'Adopt' },
+    { id: 'donate',  label: 'Donate' },
+    { id: 'contact', label: 'Contact' },
+  ];
+  let builderDirty = false;
+
+  // Built-in (coded) sections that can be reordered = the ones with a domId.
+  function builtInSectionsFor(pageId) {
+    const page = pagesData.pages.find(p => p.id === pageId);
+    if (!page) return [];
+    return page.sections.filter(s => s.domId).map(s => ({ id: s.domId, label: s.label }));
+  }
+
+  // Ensure builderData[pageId] exists with a complete, current order list.
+  function getBuilderCfg(pageId) {
+    if (!builderData[pageId] || typeof builderData[pageId] !== 'object') {
+      builderData[pageId] = { order: [], blocks: [] };
+    }
+    const cfg = builderData[pageId];
+    if (!Array.isArray(cfg.order)) cfg.order = [];
+    if (!Array.isArray(cfg.blocks)) cfg.blocks = [];
+
+    // Reconcile: drop order entries that no longer exist, append new ones.
+    const builtIns = builtInSectionsFor(pageId);
+    const validIds = new Set(builtIns.map(s => s.id));
+    const blockIds = new Set(cfg.blocks.map(b => 'block:' + b.id));
+    cfg.order = cfg.order.filter(id => validIds.has(id) || blockIds.has(id));
+    builtIns.forEach(s => { if (!cfg.order.includes(s.id)) cfg.order.push(s.id); });
+    cfg.blocks.forEach(b => { if (!cfg.order.includes('block:' + b.id)) cfg.order.push('block:' + b.id); });
+    return cfg;
+  }
+
+  function openBuilder(pageId, btnEl) {
+    currentBuilderPage = pageId;
+    currentSection = null;
+    expandedBlockId = null;
+    pendingImageUploads = {};
+    document.querySelectorAll('.sidebar-section').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    renderBuilder();
+  }
+
+  function builderPageLabel(pageId) {
+    const bp = BUILDER_PAGES.find(p => p.id === pageId);
+    return bp ? bp.label : pageId;
+  }
+
+  function findBlock(cfg, blockId) { return cfg.blocks.find(b => b.id === blockId); }
+
+  function orderEntryMeta(pageId, entry) {
+    // -> { label, badge, badgeClass, isBlock, block? , visible }
+    const cfg = getBuilderCfg(pageId);
+    if (entry.startsWith('block:')) {
+      const b = findBlock(cfg, entry.slice(6));
+      if (!b) return null;
+      const typeLabel = { text: 'Text', image: 'Image', banner: 'Banner' }[b.type] || b.type;
+      const heading = (b.en && (b.en.heading || b.en.caption || b.en.body)) || '';
+      return {
+        label: heading ? heading.replace(/<[^>]*>/g, '').slice(0, 60) : '(untitled ' + typeLabel.toLowerCase() + ' block)',
+        badge: typeLabel, badgeClass: 'badge-' + b.type, isBlock: true, block: b,
+        visible: b.visible !== false,
+      };
+    }
+    const s = builtInSectionsFor(pageId).find(x => x.id === entry);
+    if (!s) return null;
+    return {
+      label: s.label, badge: 'Built-in', badgeClass: 'badge-builtin', isBlock: false,
+      visible: visibilityData[entry] !== false,
+    };
+  }
+
+  function renderBuilder() {
+    const pageId = currentBuilderPage;
+    const cfg = getBuilderCfg(pageId);
+    const main = document.getElementById('main');
+    const builtInCount = builtInSectionsFor(pageId).length;
+
+    let html = `
+      <div class="section-header">
+        <div class="breadcrumb">Page Layout</div>
+        <h2>${builderPageLabel(pageId)} — sections &amp; blocks</h2>
+      </div>
+      <div class="builder-intro">
+        Drag the <strong>⠿ handle</strong> (or use the arrows) to reorder. The list runs
+        top-of-page → bottom-of-page. The 👁 toggle hides a section without deleting it.
+        ${builtInCount === 0 ? 'This page\'s built-in content stays where it is — blocks you add here appear <strong>below</strong> it.' : ''}
+        Nothing goes live until you press <strong>Save layout</strong>.
+      </div>
+      <div class="builder-list" id="builder-list"></div>
+      <div class="add-block-bar">
+        <span>+ Add block</span>
+        <button class="btn-add-block" onclick="addBlock('text')">📝 Text block</button>
+        <button class="btn-add-block" onclick="addBlock('image')">🖼 Image block</button>
+        <button class="btn-add-block" onclick="addBlock('banner')">🎯 Banner block</button>
+      </div>
+      <div class="save-bar">
+        <button class="btn-save" id="save-btn" onclick="saveBuilder()">Save layout</button>
+        <span class="save-msg" id="save-msg">${builderDirty ? 'Unsaved changes' : ''}</span>
+      </div>`;
+    main.innerHTML = html;
+    renderBuilderList();
+  }
+
+  function renderBuilderList() {
+    const pageId = currentBuilderPage;
+    const cfg = getBuilderCfg(pageId);
+    const list = document.getElementById('builder-list');
+    list.innerHTML = '';
+
+    cfg.order.forEach((entry, idx) => {
+      const meta = orderEntryMeta(pageId, entry);
+      if (!meta) return;
+
+      const card = document.createElement('div');
+      card.className = 'builder-card' + (meta.visible ? '' : ' hidden-on-site');
+      card.dataset.index = idx;
+
+      const row = document.createElement('div');
+      row.className = 'builder-card-row';
+
+      const handle = document.createElement('div');
+      handle.className = 'drag-handle';
+      handle.textContent = '⠿';
+      handle.title = 'Drag to reorder';
+      row.appendChild(handle);
+
+      if (meta.isBlock && meta.block.type === 'image' && meta.block.image) {
+        const thumb = document.createElement('img');
+        thumb.className = 'builder-block-preview';
+        thumb.src = meta.block.imagePreview || ('../' + meta.block.image);
+        thumb.onerror = () => { thumb.style.opacity = 0.3; };
+        row.appendChild(thumb);
+      }
+
+      const label = document.createElement('div');
+      label.className = 'builder-card-label';
+      label.textContent = meta.label;
+      row.appendChild(label);
+
+      const badge = document.createElement('span');
+      badge.className = 'builder-badge ' + meta.badgeClass;
+      badge.textContent = meta.badge;
+      row.appendChild(badge);
+
+      const actions = document.createElement('div');
+      actions.className = 'builder-card-actions';
+
+      const up = document.createElement('button');
+      up.className = 'icon-btn'; up.textContent = '▲'; up.title = 'Move up';
+      up.disabled = idx === 0;
+      up.onclick = () => moveOrderItem(idx, idx - 1);
+      actions.appendChild(up);
+
+      const down = document.createElement('button');
+      down.className = 'icon-btn'; down.textContent = '▼'; down.title = 'Move down';
+      down.disabled = idx === cfg.order.length - 1;
+      down.onclick = () => moveOrderItem(idx, idx + 1);
+      actions.appendChild(down);
+
+      const eye = document.createElement('button');
+      eye.className = 'icon-btn';
+      eye.textContent = meta.visible ? '👁' : '🚫';
+      eye.title = meta.visible ? 'Visible on site — click to hide' : 'Hidden from site — click to show';
+      eye.onclick = () => toggleEntryVisibility(entry);
+      actions.appendChild(eye);
+
+      if (meta.isBlock) {
+        const edit = document.createElement('button');
+        edit.className = 'icon-btn'; edit.textContent = '✏️'; edit.title = 'Edit block';
+        edit.onclick = () => {
+          expandedBlockId = expandedBlockId === meta.block.id ? null : meta.block.id;
+          renderBuilderList();
+        };
+        actions.appendChild(edit);
+
+        const del = document.createElement('button');
+        del.className = 'icon-btn danger'; del.textContent = '🗑'; del.title = 'Delete block';
+        del.onclick = () => deleteBlock(meta.block.id);
+        actions.appendChild(del);
+      }
+      row.appendChild(actions);
+      card.appendChild(row);
+
+      if (meta.isBlock && expandedBlockId === meta.block.id) {
+        card.appendChild(buildBlockEditor(meta.block));
+      }
+
+      // ── drag & drop wiring ──
+      card.draggable = true;
+      card.addEventListener('dragstart', e => {
+        // Only start a drag from the handle (or the card body, but not
+        // from inside the expanded editor's inputs).
+        if (e.target.closest('.builder-card-editor')) { e.preventDefault(); return; }
+        dragFromIndex = idx;
+        card.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        try { e.dataTransfer.setData('text/plain', String(idx)); } catch (err) {}
+      });
+      card.addEventListener('dragend', () => {
+        card.classList.remove('dragging');
+        clearDropHints();
+        dragFromIndex = null;
+      });
+      card.addEventListener('dragover', e => {
+        if (dragFromIndex === null || dragFromIndex === idx) return;
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        clearDropHints();
+        const rect = card.getBoundingClientRect();
+        const above = (e.clientY - rect.top) < rect.height / 2;
+        card.classList.add(above ? 'drop-above' : 'drop-below');
+      });
+      card.addEventListener('dragleave', () => {
+        card.classList.remove('drop-above', 'drop-below');
+      });
+      card.addEventListener('drop', e => {
+        e.preventDefault();
+        if (dragFromIndex === null) return;
+        const rect = card.getBoundingClientRect();
+        const above = (e.clientY - rect.top) < rect.height / 2;
+        let to = above ? idx : idx + 1;
+        if (dragFromIndex < to) to -= 1; // account for removal shifting indexes
+        moveOrderItem(dragFromIndex, to);
+        dragFromIndex = null;
+      });
+
+      list.appendChild(card);
+    });
+  }
+
+  let dragFromIndex = null;
+  function clearDropHints() {
+    document.querySelectorAll('.builder-card').forEach(c => c.classList.remove('drop-above', 'drop-below'));
+  }
+
+  function moveOrderItem(from, to) {
+    const cfg = getBuilderCfg(currentBuilderPage);
+    if (to < 0 || to >= cfg.order.length || from === to) { renderBuilderList(); return; }
+    const [item] = cfg.order.splice(from, 1);
+    cfg.order.splice(to, 0, item);
+    markBuilderDirty();
+    renderBuilderList();
+  }
+
+  function toggleEntryVisibility(entry) {
+    const cfg = getBuilderCfg(currentBuilderPage);
+    if (entry.startsWith('block:')) {
+      const b = findBlock(cfg, entry.slice(6));
+      if (b) b.visible = b.visible === false; // flip
+    } else {
+      visibilityData[entry] = visibilityData[entry] === false; // flip (missing = visible)
+      visibilityDirty = true;
+    }
+    markBuilderDirty();
+    renderBuilderList();
+  }
+
+  function markBuilderDirty() {
+    builderDirty = true;
+    const msg = document.getElementById('save-msg');
+    if (msg) { msg.textContent = 'Unsaved changes — click "Save layout" to publish.'; msg.className = 'save-msg'; }
+  }
+
+  // ── block CRUD ──
+  function newBlockId() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  }
+
+  function addBlock(type) {
+    const cfg = getBuilderCfg(currentBuilderPage);
+    const block = { id: newBlockId(), type, visible: true, en: {}, ko: {} };
+    if (type === 'image') block.layout = 'contained';
+    cfg.blocks.push(block);
+    cfg.order.push('block:' + block.id);
+    expandedBlockId = block.id;
+    markBuilderDirty();
+    renderBuilderList();
+    const list = document.getElementById('builder-list');
+    if (list && list.lastElementChild && list.lastElementChild.scrollIntoView) {
+      list.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  function deleteBlock(blockId) {
+    const cfg = getBuilderCfg(currentBuilderPage);
+    const b = findBlock(cfg, blockId);
+    const name = (b && b.en && b.en.heading) ? `"${b.en.heading}"` : 'this block';
+    if (!confirm(`Delete ${name}? This can't be undone after saving.`)) return;
+    cfg.blocks = cfg.blocks.filter(x => x.id !== blockId);
+    cfg.order = cfg.order.filter(x => x !== 'block:' + blockId);
+    if (expandedBlockId === blockId) expandedBlockId = null;
+    markBuilderDirty();
+    renderBuilderList();
+  }
+
+  function updateBlockField(blockId, lang, field, value) {
+    const b = findBlock(getBuilderCfg(currentBuilderPage), blockId);
+    if (!b) return;
+    if (lang) { if (!b[lang]) b[lang] = {}; b[lang][field] = value; }
+    else b[field] = value;
+    markBuilderDirty();
+    if (field === 'heading' && lang === 'en') {
+      // live-update the card label without a full re-render (keeps focus)
+      const card = document.querySelector(`.builder-card [data-block-editor="${blockId}"]`)?.closest('.builder-card');
+      const label = card?.querySelector('.builder-card-label');
+      if (label) label.textContent = value || '(untitled block)';
+    }
+  }
+
+  function blockField(b, lang, field, placeholder, rows) {
+    const val = escAttr((b[lang] && b[lang][field]) || '');
+    const grow = rows > 1 ? 'oninput="updateBlockField(\'' + b.id + '\',\'' + lang + '\',\'' + field + '\', this.value); autoGrow(this)"'
+                          : 'oninput="updateBlockField(\'' + b.id + '\',\'' + lang + '\',\'' + field + '\', this.value)"';
+    return `<textarea class="field-input" rows="${rows || 1}" placeholder="${placeholder}" ${grow}>${val}</textarea>`;
+  }
+
+  function buildBlockEditor(b) {
+    const wrap = document.createElement('div');
+    wrap.className = 'builder-card-editor';
+    wrap.setAttribute('data-block-editor', b.id);
+    let html = '';
+
+    if (b.type === 'text') {
+      html += `
+        <div class="field-key">Small label above the heading (optional)</div>
+        <div class="builder-two-col">${blockField(b, 'en', 'label', 'EN — e.g. OUR PROGRAMS', 1)}${blockField(b, 'ko', 'label', 'KO', 1)}</div>
+        <div class="field-key">Heading</div>
+        <div class="builder-two-col">${blockField(b, 'en', 'heading', 'EN heading', 1)}${blockField(b, 'ko', 'heading', 'KO heading', 1)}</div>
+        <div class="field-key">Body text</div>
+        <div class="builder-two-col">${blockField(b, 'en', 'body', 'EN body — blank lines become paragraph breaks', 3)}${blockField(b, 'ko', 'body', 'KO body', 3)}</div>`;
+    } else if (b.type === 'banner') {
+      html += `
+        <div class="field-key">Banner heading (big, centered, dark background)</div>
+        <div class="builder-two-col">${blockField(b, 'en', 'heading', 'EN heading', 1)}${blockField(b, 'ko', 'heading', 'KO heading', 1)}</div>
+        <div class="field-key">Supporting line (optional)</div>
+        <div class="builder-two-col">${blockField(b, 'en', 'body', 'EN', 2)}${blockField(b, 'ko', 'body', 'KO', 2)}</div>`;
+    } else if (b.type === 'image') {
+      const imgSrc = b.imagePreview || (b.image ? '../' + b.image : '');
+      html += `
+        <div class="field-key">Image</div>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+          ${imgSrc ? `<img src="${escAttr(imgSrc)}" style="width:120px;height:80px;object-fit:cover;border-radius:6px;border:1px solid var(--rule);" onerror="this.style.opacity=0.3" />` : '<div style="width:120px;height:80px;border-radius:6px;border:1px dashed var(--rule);display:flex;align-items:center;justify-content:center;color:var(--ink-mid);font-size:11px;">No image yet</div>'}
+          <label class="image-upload-btn">Upload image
+            <input type="file" accept="image/*" onchange="queueBlockImage(this, '${b.id}')" />
+          </label>
+          <div class="image-upload-status" id="block-img-status-${b.id}"></div>
+        </div>
+        <div class="field-key">Width</div>
+        <select class="field-input" style="max-width:260px;" onchange="updateBlockField('${b.id}', null, 'layout', this.value)">
+          <option value="contained" ${b.layout !== 'full' ? 'selected' : ''}>Contained (page width, rounded)</option>
+          <option value="full" ${b.layout === 'full' ? 'selected' : ''}>Full-bleed (edge to edge)</option>
+        </select>
+        <div class="field-key">Caption (optional)</div>
+        <div class="builder-two-col">${blockField(b, 'en', 'caption', 'EN caption', 1)}${blockField(b, 'ko', 'caption', 'KO caption', 1)}</div>`;
+    }
+
+    if (b.type === 'text' || b.type === 'banner') {
+      html += `
+        <div class="field-key">Button (optional — leave the label blank for no button)</div>
+        <div class="builder-two-col">${blockField(b, 'en', 'button', 'EN button label — e.g. Donate Now', 1)}${blockField(b, 'ko', 'button', 'KO button label', 1)}</div>
+        <div class="field-key">Button link</div>
+        <select class="field-input" style="max-width:340px;" onchange="updateBlockField('${b.id}', null, 'link', this.value)">
+          <option value="" ${!b.link ? 'selected' : ''}>— choose where it goes —</option>
+          <option value="#donate" ${b.link === '#donate' ? 'selected' : ''}>Donate page</option>
+          <option value="#adopt" ${b.link === '#adopt' ? 'selected' : ''}>Adopt page</option>
+          <option value="#about" ${b.link === '#about' ? 'selected' : ''}>About page</option>
+          <option value="#contact" ${b.link === '#contact' ? 'selected' : ''}>Contact page</option>
+          <option value="custom" ${b.link && !b.link.startsWith('#') ? 'selected' : ''}>Custom URL…</option>
+        </select>
+        ${b.link && !b.link.startsWith('#') ? `<input class="field-input" style="max-width:340px;" placeholder="https://…" value="${escAttr(b.link)}" oninput="updateBlockField('${b.id}', null, 'link', this.value)" />` : ''}`;
+    }
+
+    wrap.innerHTML = html;
+    // "Custom URL…" needs a re-render to show the URL input.
+    wrap.querySelectorAll('select').forEach(sel => {
+      sel.addEventListener('change', () => {
+        if (sel.value === 'custom') {
+          updateBlockField(b.id, null, 'link', 'https://');
+          renderBuilderList();
+        }
+      });
+    });
+    wrap.querySelectorAll('textarea.field-input').forEach(autoGrow);
+    return wrap;
+  }
+
+  function queueBlockImage(input, blockId) {
+    const file = input.files[0];
+    if (!file) return;
+    const b = findBlock(getBuilderCfg(currentBuilderPage), blockId);
+    if (!b) return;
+    const ext = (file.type === 'image/png') ? 'png' : (file.type === 'image/webp') ? 'webp' : 'jpg';
+    b.image = `assets/blocks/${blockId}.${ext}`;
+    const reader = new FileReader();
+    reader.onload = () => {
+      b.imagePreview = reader.result; // local preview only — stripped before saving
+      pendingImageUploads[b.image] = reader.result;
+      markBuilderDirty();
+      renderBuilderList();
+      const status = document.getElementById('block-img-status-' + blockId);
+      if (status) status.textContent = 'Queued — click "Save layout" to publish.';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function saveBuilder() {
+    const btn = document.getElementById('save-btn');
+    const msg = document.getElementById('save-msg');
+    btn.disabled = true;
+    msg.textContent = 'Saving…';
+    msg.className = 'save-msg';
+    try {
+      // 1. Upload any queued block images.
+      for (const [path, dataUrl] of Object.entries(pendingImageUploads)) {
+        const res = await fetch('/api/upload-image', {
+          method: 'POST', headers: authHeaders(),
+          body: JSON.stringify({ path, dataUrl }),
+        });
+        const body = await res.json();
+        if (!res.ok) throw new Error(`Image ${path}: ${body.error}`);
+      }
+      pendingImageUploads = {};
+
+      // 2. Save built-in section visibility if any eye toggles touched it.
+      if (visibilityDirty) {
+        const vres = await fetch('/api/save-content', {
+          method: 'POST', headers: authHeaders(),
+          body: JSON.stringify({ file: 'visibility', data: visibilityData }),
+        });
+        const vbody = await vres.json();
+        if (!vres.ok) throw new Error(vbody.error);
+        visibilityDirty = false;
+      }
+
+      // 3. Save the layout itself (strip local-only preview data first).
+      const clean = JSON.parse(JSON.stringify(builderData));
+      Object.values(clean).forEach(cfg => {
+        (cfg.blocks || []).forEach(b => { delete b.imagePreview; });
+      });
+      const res = await fetch('/api/save-content', {
+        method: 'POST', headers: authHeaders(),
+        body: JSON.stringify({ file: 'builder', data: clean }),
+      });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error);
+
+      builderDirty = false;
+      msg.textContent = '✓ Layout saved — live in about a minute after redeploy.';
       msg.className = 'save-msg ok';
     } catch (e) {
       msg.textContent = '✗ ' + e.message;
