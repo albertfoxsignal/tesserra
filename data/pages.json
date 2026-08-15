@@ -31,7 +31,15 @@
             "video.title3"
           ],
           "images": [],
-          "domId": "home-shorts"
+          "domId": "home-shorts",
+          "linkKeys": [
+            "shorts.pinned1",
+            "shorts.pinned2",
+            "shorts.pinned3",
+            "video.link1",
+            "video.link2",
+            "video.link3"
+          ]
         },
         {
           "id": "quartet",
@@ -304,6 +312,73 @@
       ]
     },
     {
+      "id": "donate",
+      "label": "Donate",
+      "sections": [
+        {
+          "id": "payment-settings",
+          "label": "Payment Settings",
+          "special": "payments",
+          "textKeys": [],
+          "images": []
+        },
+        {
+          "id": "donate-hero",
+          "label": "Hero (EN)",
+          "textKeys": [
+            "donate.label",
+            "donate.title",
+            "donate.intro"
+          ],
+          "images": []
+        },
+        {
+          "id": "donate-info",
+          "label": "Every Tessera Counts (EN)",
+          "textKeys": [
+            "donate.h2",
+            "donate.p1",
+            "donate.p2",
+            "donate.use1",
+            "donate.use2",
+            "donate.use3",
+            "donate.use4",
+            "donate.use5",
+            "donate.use6"
+          ],
+          "images": []
+        },
+        {
+          "id": "donate-goal",
+          "label": "Fundraising Goal (EN)",
+          "textKeys": [
+            "donate.goalLabel",
+            "donate.goalAmount",
+            "donate.goalRaised"
+          ],
+          "images": []
+        },
+        {
+          "id": "donate-org",
+          "label": "Organization Info (EN)",
+          "textKeys": [
+            "donate.orgInfo"
+          ],
+          "images": []
+        },
+        {
+          "id": "donate-ko-header",
+          "label": "Korean Page Header (KO)",
+          "textKeys": [
+            "ko.donate.label",
+            "ko.donate.title",
+            "ko.donate.intro"
+          ],
+          "images": []
+        }
+      ]
+    },
+    {
       "id": "contact",
       "label": "Contact",
       "sections": [
@@ -340,7 +415,10 @@
             "form.submit",
             "form.success"
           ],
-          "images": []
+          "images": [],
+          "linkKeys": [
+            "form.endpoint"
+          ]
         },
         {
           "id": "contact-social",
@@ -351,7 +429,13 @@
             "social.facebook",
             "social.youtube"
           ],
-          "images": []
+          "images": [],
+          "linkKeys": [
+            "social.instagram",
+            "social.tiktok",
+            "social.facebook",
+            "social.youtube"
+          ]
         }
       ]
     },
@@ -391,27 +475,13 @@
             "footer.terms",
             "footer.siteBy"
           ],
-          "images": []
-        }
-      ]
-    },
-    {
-      "id": "donate",
-      "label": "Donate (limited editing)",
-      "sections": [
-        {
-          "id": "payment-settings",
-          "label": "Payment Settings",
-          "special": "payments",
-          "textKeys": [],
-          "images": []
-        },
-        {
-          "id": "donate-note",
-          "label": "About this page",
-          "textKeys": [],
           "images": [],
-          "note": "The Donate page's text is written directly into the page HTML (English and Korean side by side) rather than through the translation system, so it isn't editable from this panel yet. Ask your developer to extend the CMS to cover it, or edit index.html directly for now."
+          "linkKeys": [
+            "social.instagram",
+            "social.tiktok",
+            "social.facebook",
+            "social.youtube"
+          ]
         }
       ]
     },

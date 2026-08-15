@@ -133,19 +133,61 @@
     padding: 16px 0;
   }
   .sidebar-page {
-    padding: 10px 20px 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 20px 8px;
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--ink-mid);
-    margin-top: 8px;
+    margin-top: 6px;
+    background: none;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+  }
+  .sidebar-page:hover { color: var(--ink); }
+  .sidebar-page .chevron {
+    display: inline-block;
+    transition: transform 0.15s ease;
+    font-size: 9px;
+    color: var(--ink-mid);
+    width: 10px;
+    flex-shrink: 0;
+  }
+  .sidebar-page.open .chevron { transform: rotate(90deg); }
+  .sidebar-page.has-active { color: var(--blue-dark); }
+  .sidebar-layout-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 8px 20px 8px 36px;
+    background: none;
+    border: none;
+    font-size: 12.5px;
+    font-family: inherit;
+    color: var(--ink-mid);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    font-style: italic;
+  }
+  .sidebar-layout-btn:hover { background: var(--bg); }
+  .sidebar-layout-btn.active {
+    background: #F3EDE2;
+    border-left-color: var(--blue-dark);
+    font-weight: 700;
+    color: var(--blue-dark);
+    font-style: normal;
   }
   .sidebar-section {
     display: block;
     width: 100%;
     text-align: left;
-    padding: 9px 20px 9px 28px;
+    padding: 9px 20px 9px 36px;
     background: none;
     border: none;
     font-size: 13.5px;
@@ -533,6 +575,8 @@
   let visibilityDirty = false; // only save the visibility file when the toggle changed
   let builderData = {}; // pageId -> { order: [...], blocks: [...] } (data/page-builder.json)
   let paymentConfig = null; // data/payment-config.json — Stripe + Korean giving settings
+  let linksData = {}; // data/links.json — social/video/form URLs, keyed
+  let linksDirty = false;
   let currentBuilderPage = null; // pageId of the open Page Builder view
   let expandedBlockId = null; // which custom block's editor is open
 
@@ -643,7 +687,7 @@
 
   // ── DATA LOADING ──
   async function loadAllData() {
-    const [pagesRes, transRes, eldersRes, customRes, visRes, builderRes, payRes] = await Promise.all([
+    const [pagesRes, transRes, eldersRes, customRes, visRes, builderRes, payRes, linksRes] = await Promise.all([
       fetch('../data/pages.json'),
       fetch('../data/translations.json'),
       fetch('../data/elders.json'),
@@ -651,6 +695,7 @@
       fetch('../data/section-visibility.json'),
       fetch('../data/page-builder.json'),
       fetch('../data/payment-config.json'),
+      fetch('../data/links.json'),
     ]);
     pagesData = await pagesRes.json();
     translations = await transRes.json();
@@ -668,37 +713,52 @@
     paymentConfig.korea = Object.assign(
       { bankName: '', accountNumber: '', accountHolder: '', kakaoEnabled: true, kakaoLink: '', cmsEnabled: true },
       paymentConfig.korea || {});
+    try { linksData = await linksRes.json(); } catch (e) { linksData = {}; }
+    if (!linksData || typeof linksData !== 'object') linksData = {};
   }
 
   // ── SIDEBAR ──
+  // Nested navigation: each page is a collapsible group. Its "Page Layout"
+  // entry (when the page supports the builder) and its section editors
+  // live under it, so everything about one page is in one place.
+  const expandedPages = new Set(['home']); // start with Home open
+  let activeSel = null; // { type: 'section'|'builder', pageId, sectionId? }
+
   function renderSidebar() {
     const sidebar = document.getElementById('sidebar');
     sidebar.innerHTML = '';
 
-    // Page Builder — reorder sections and add blocks, per real site page.
-    const builderHeader = document.createElement('div');
-    builderHeader.className = 'sidebar-page';
-    builderHeader.textContent = 'Page Layout';
-    sidebar.appendChild(builderHeader);
-    BUILDER_PAGES.forEach(bp => {
-      const btn = document.createElement('button');
-      btn.className = 'sidebar-section';
-      btn.textContent = '⠿ ' + bp.label;
-      btn.onclick = () => openBuilder(bp.id, btn);
-      sidebar.appendChild(btn);
-    });
-
     pagesData.pages.forEach(page => {
-      const pageEl = document.createElement('div');
-      pageEl.className = 'sidebar-page';
-      pageEl.textContent = page.label;
-      sidebar.appendChild(pageEl);
+      const isOpen = expandedPages.has(page.id);
+      const hasActive = activeSel && activeSel.pageId === page.id;
+
+      const header = document.createElement('button');
+      header.className = 'sidebar-page' + (isOpen ? ' open' : '') + (hasActive ? ' has-active' : '');
+      header.innerHTML = '<span class="chevron">▶</span>' + page.label;
+      header.onclick = () => {
+        if (expandedPages.has(page.id)) expandedPages.delete(page.id);
+        else expandedPages.add(page.id);
+        renderSidebar();
+      };
+      sidebar.appendChild(header);
+      if (!isOpen) return;
+
+      // Page Layout entry, nested under its page.
+      if (typeof BUILDER_PAGES !== 'undefined' && BUILDER_PAGES.some(b => b.id === page.id)) {
+        const lb = document.createElement('button');
+        lb.className = 'sidebar-layout-btn' +
+          (activeSel && activeSel.type === 'builder' && activeSel.pageId === page.id ? ' active' : '');
+        lb.textContent = '⠿ Page Layout';
+        lb.onclick = () => openBuilder(page.id);
+        sidebar.appendChild(lb);
+      }
 
       page.sections.forEach(section => {
         const btn = document.createElement('button');
-        btn.className = 'sidebar-section';
+        btn.className = 'sidebar-section' +
+          (activeSel && activeSel.type === 'section' && activeSel.pageId === page.id && activeSel.sectionId === section.id ? ' active' : '');
         btn.textContent = section.label;
-        btn.onclick = () => selectSection(page.id, section.id, btn);
+        btn.onclick = () => selectSection(page.id, section.id);
         sidebar.appendChild(btn);
       });
 
@@ -719,10 +779,13 @@
     });
   }
 
-  function selectSection(pageId, sectionId, btnEl) {
+  function selectSection(pageId, sectionId) {
     currentSection = { pageId, sectionId };
-    document.querySelectorAll('.sidebar-section').forEach(b => b.classList.remove('active'));
-    if (btnEl) btnEl.classList.add('active');
+    currentBuilderPage = null;
+    activeSel = { type: 'section', pageId, sectionId };
+    expandedPages.add(pageId);
+    linksDirty = false;
+    renderSidebar();
 
     const page = pagesData.pages.find(p => p.id === pageId);
     const section = page.sections.find(s => s.id === sectionId);
@@ -779,6 +842,20 @@
         </div>`;
     });
 
+    // Link fields (data/links.json) — URLs, one value shared across every
+    // element on the site that carries the same key (e.g. all Instagram
+    // icons). Rendered as single-line inputs with a friendly label.
+    (section.linkKeys || []).forEach(key => {
+      const label = LINK_LABELS[key] || key;
+      html += `
+        <div class="field-group">
+          <div class="field-key">🔗 ${label} <span style="font-weight:400;color:var(--ink-mid);text-transform:none;letter-spacing:0;">(${key})</span></div>
+          <input class="field-input" type="url" placeholder="https://…"
+            value="${escAttr(linksData[key] || '')}"
+            oninput="updateLinkField('${key}', this.value)" />
+        </div>`;
+    });
+
     section.images.forEach(imgPath => {
       html += `
         <div class="image-group">
@@ -807,6 +884,28 @@
   function autoGrow(el) {
     el.style.height = 'auto';
     el.style.height = (el.scrollHeight + 2) + 'px';
+  }
+
+  // Friendly names for link keys shown in section editors.
+  const LINK_LABELS = {
+    'social.instagram': 'Instagram profile',
+    'social.tiktok': 'TikTok profile',
+    'social.facebook': 'Facebook page',
+    'social.youtube': 'YouTube channel',
+    'form.endpoint': 'Form delivery endpoint (Formspree URL — https://formspree.io/f/YOUR_ID)',
+    'video.link1': 'Video 1 link (long-form grid)',
+    'video.link2': 'Video 2 link (long-form grid)',
+    'video.link3': 'Video 3 link (long-form grid)',
+    'shorts.pinned1': 'Pinned Short 1 (any YouTube URL)',
+    'shorts.pinned2': 'Pinned Short 2 (any YouTube URL)',
+    'shorts.pinned3': 'Pinned Short 3 (any YouTube URL)',
+  };
+
+  function updateLinkField(key, value) {
+    linksData[key] = value.trim();
+    linksDirty = true;
+    const msg = document.getElementById('save-msg');
+    if (msg) { msg.textContent = 'Link changed — click "Save changes" to publish.'; msg.className = 'save-msg'; }
   }
   function cssId(path) { return path.replace(/[^a-zA-Z0-9]/g, '_'); }
 
@@ -866,6 +965,17 @@
         const vbody = await vres.json();
         if (!vres.ok) throw new Error(vbody.error);
         visibilityDirty = false;
+      }
+
+      // 3b. Save link URLs if any were edited in this section.
+      if (linksDirty) {
+        const lres = await fetch('/api/save-content', {
+          method: 'POST', headers: authHeaders(),
+          body: JSON.stringify({ file: 'links', data: linksData }),
+        });
+        const lbody = await lres.json();
+        if (!lres.ok) throw new Error(lbody.error);
+        linksDirty = false;
       }
 
       // 4. Save the text content.
@@ -933,8 +1043,9 @@
     currentSection = null;
     expandedBlockId = null;
     pendingImageUploads = {};
-    document.querySelectorAll('.sidebar-section').forEach(b => b.classList.remove('active'));
-    if (btnEl) btnEl.classList.add('active');
+    activeSel = { type: 'builder', pageId };
+    expandedPages.add(pageId);
+    renderSidebar();
     renderBuilder();
   }
 
@@ -1545,12 +1656,20 @@
           <div style="height:6px"></div>
           <textarea class="field-input" placeholder="Story (Korean)" rows="2" data-f="story_ko" oninput="updateElderField(${i}, this); autoGrow(this)">${escAttr(elder.story_ko || '')}</textarea>
           <div style="height:10px"></div>
-          <div class="image-path">Photo path: ${escAttr(elder.photo || `assets/adopt/${elder.id || '??'}/photo.jpg`)}</div>
-          <label class="image-upload-btn">
-            Upload / replace photo
-            <input type="file" accept="image/*" onchange="queueElderPhoto(this, ${i})" />
-          </label>
-          <div class="image-upload-status" id="elder-img-status-${i}"></div>
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+            <img class="image-preview" id="elder-photo-preview-${i}"
+              src="../${escAttr(elder.photo || `assets/adopt/${elder.id || '??'}/photo.jpg`)}"
+              style="width:96px;height:96px;object-fit:cover;border-radius:8px;border:1px solid var(--rule);background:var(--bg);"
+              onerror="this.style.opacity=0.25" />
+            <div>
+              <div class="image-path">Photo path: ${escAttr(elder.photo || `assets/adopt/${elder.id || '??'}/photo.jpg`)}</div>
+              <label class="image-upload-btn">
+                Upload / replace photo
+                <input type="file" accept="image/*" onchange="queueElderPhoto(this, ${i})" />
+              </label>
+              <div class="image-upload-status" id="elder-img-status-${i}"></div>
+            </div>
+          </div>
         </div>`;
     });
 
@@ -1614,6 +1733,8 @@
     reader.onload = () => {
       pendingImageUploads[eldersData[i].photo] = reader.result;
       document.getElementById('elder-img-status-' + i).textContent = 'Queued — click "Save changes" to publish.';
+      const preview = document.getElementById('elder-photo-preview-' + i);
+      if (preview) { preview.src = reader.result; preview.style.opacity = 1; }
     };
     reader.readAsDataURL(file);
   }

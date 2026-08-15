@@ -15,6 +15,7 @@ const ALLOWED_FILES = {
   visibility: 'data/section-visibility.json',
   builder: 'data/page-builder.json',
   payments: 'data/payment-config.json',
+  links: 'data/links.json',
 };
 
 module.exports = async (req, res) => {
