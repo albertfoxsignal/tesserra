@@ -473,6 +473,12 @@
       <p>Admin — content management</p>
       <input type="password" id="password-input" placeholder="Password" autocomplete="current-password" />
       <button onclick="login()">Log in</button>
+      <div id="google-login-wrap" style="display:none;">
+        <div style="display:flex;align-items:center;gap:12px;margin:18px 0 14px;color:var(--ink-mid);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;">
+          <span style="flex:1;height:1px;background:var(--rule);"></span>or<span style="flex:1;height:1px;background:var(--rule);"></span>
+        </div>
+        <div id="google-btn" style="display:flex;justify-content:center;"></div>
+      </div>
       <div class="login-error" id="login-error"></div>
       <div class="login-note">
         This panel edits the live site directly. Changes are committed to the site's repository and go live after a short redeploy (usually under a minute).
@@ -571,10 +577,57 @@
     renderSidebar();
   }
 
+  // ── GOOGLE SIGN-IN (optional — appears only when GOOGLE_CLIENT_ID is set) ──
+  async function initGoogleLogin() {
+    let cfg;
+    try {
+      const res = await fetch('/api/login-google');
+      cfg = await res.json();
+    } catch (e) { return; } // endpoint unreachable — password login still works
+    if (!cfg || !cfg.enabled || !cfg.clientId) return;
+
+    const s = document.createElement('script');
+    s.src = 'https://accounts.google.com/gsi/client';
+    s.async = true;
+    s.onload = () => {
+      try {
+        google.accounts.id.initialize({
+          client_id: cfg.clientId,
+          callback: onGoogleCredential,
+        });
+        google.accounts.id.renderButton(document.getElementById('google-btn'), {
+          theme: 'outline', size: 'large', text: 'signin_with', width: 288,
+        });
+        document.getElementById('google-login-wrap').style.display = 'block';
+      } catch (e) { /* GIS failed to boot — password login remains */ }
+    };
+    document.head.appendChild(s);
+  }
+
+  async function onGoogleCredential(resp) {
+    const errEl = document.getElementById('login-error');
+    errEl.textContent = '';
+    try {
+      const r = await fetch('/api/login-google', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ credential: resp.credential }),
+      });
+      const body = await r.json();
+      if (!r.ok) { errEl.textContent = body.error || 'Google sign-in failed.'; return; }
+      sessionToken = body.token;
+      sessionStorage.setItem('tcf-admin-token', body.token);
+      enterAdmin();
+    } catch (e) {
+      errEl.textContent = 'Could not reach the server: ' + e.message;
+    }
+  }
+
   // On load, resume an existing session if we have one (avoids re-login on refresh).
   window.addEventListener('load', () => {
     const saved = sessionStorage.getItem('tcf-admin-token');
     if (saved) { sessionToken = saved; enterAdmin(); }
+    initGoogleLogin();
     document.getElementById('password-input').addEventListener('keydown', e => {
       if (e.key === 'Enter') login();
     });

@@ -2,7 +2,7 @@
   "stripe": {
     "enabled": false,
     "publishableKey": "",
-    "paymentIntentEndpoint": "/create-payment-intent"
+    "paymentIntentEndpoint": "/api/create-payment-intent"
   },
   "korea": {
     "bankName": "신한은행 (Shinhan Bank)",

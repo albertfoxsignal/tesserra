@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/create-payment-intent", "destination": "/api/create-payment-intent" }
+  ]
+}
