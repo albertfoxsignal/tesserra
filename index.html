@@ -3498,7 +3498,7 @@
 
             <!-- PAYMENT METHOD TABS -->
             <div class="pay-tabs">
-              <button class="pay-tab active" onclick="switchPayTab('card', this)">
+              <button class="pay-tab active" id="pay-tab-card" onclick="switchPayTab('card', this)">
                 <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="1" y="1" width="14" height="10" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M1 4h14" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="7" width="4" height="1.5" rx="0.5" fill="currentColor"/></svg>
                 Card
               </button>
@@ -3837,15 +3837,15 @@
               <div style="display:flex;flex-direction:column;gap:10px;">
                 <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--rule);">
                   <span style="font-family:var(--font-display);font-size:12px;color:var(--ink-light);">은행명</span>
-                  <span style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--ink);">신한은행 (Shinhan Bank)</span>
+                  <span id="ko-bank-name" style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--ink);">신한은행 (Shinhan Bank)</span>
                 </div>
                 <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--rule);">
                   <span style="font-family:var(--font-display);font-size:12px;color:var(--ink-light);">계좌번호</span>
-                  <span style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--ink);">[계좌번호 입력]</span>
+                  <span id="ko-account-number" style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--ink);">[계좌번호 입력]</span>
                 </div>
                 <div style="display:flex;justify-content:space-between;">
                   <span style="font-family:var(--font-display);font-size:12px;color:var(--ink-light);">예금주</span>
-                  <span style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--ink);">테세라컴패션파운데이션</span>
+                  <span id="ko-account-holder" style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--ink);">테세라컴패션파운데이션</span>
                 </div>
               </div>
             </div>
@@ -3863,7 +3863,7 @@
             <!-- Payment method toggle -->
             <div style="margin-bottom:24px;">
               <div style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:10px;">결제 방식</div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);">
+              <div id="ko-payment-toggle" style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);">
                 <button id="ko-kakao-btn" onclick="selectKoPayment('kakao')" style="font-family:var(--font-display);font-weight:700;font-size:12px;padding:12px;background:var(--blue);color:var(--white);border:none;cursor:pointer;transition:all 0.2s;">
                   💛 카카오페이
                 </button>
@@ -3910,7 +3910,7 @@
             </label>
 
             <!-- Submit -->
-            <button id="ko-submit-btn" style="width:100%;margin-top:20px;background:var(--blue);color:var(--white);font-family:var(--font-display);font-weight:800;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;padding:16px;border:none;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='var(--blue-dark)'" onmouseout="this.style.background='var(--blue)'">
+            <button id="ko-submit-btn" onclick="handleKoSubmit()" style="width:100%;margin-top:20px;background:var(--blue);color:var(--white);font-family:var(--font-display);font-weight:800;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;padding:16px;border:none;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='var(--blue-dark)'" onmouseout="this.style.background='var(--blue)'">
               💛 카카오페이로 작정하기
             </button>
 
@@ -4583,7 +4583,9 @@
     }
 
     // ─── KOREAN PAYMENT FORM ─────────────────────
+    let koSelectedMethod = 'kakao';
     function selectKoPayment(method) {
+      koSelectedMethod = method;
       const kakaoBtn = document.getElementById('ko-kakao-btn');
       const cmsBtn   = document.getElementById('ko-cms-btn');
       const dobField = document.getElementById('ko-dob-field');
@@ -4604,6 +4606,19 @@
         if (debitDate) debitDate.style.display = 'block';
         if (submitBtn) submitBtn.textContent = '🏦 CMS 자동이체 신청하기';
       }
+    }
+
+    function handleKoSubmit() {
+      // KakaoPay pledges open the foundation's KakaoPay link (set in /admin).
+      // CMS 자동이체 applications are collected via the contact channel until a
+      // dedicated backend exists.
+      if (koSelectedMethod === 'kakao') {
+        const link = (PAYMENT_CONFIG.korea.kakaoLink || '').trim();
+        if (link) { window.open(link, '_blank', 'noopener'); return; }
+        alert('카카오페이 링크가 아직 설정되지 않았습니다. 계좌 직접 이체를 이용하시거나 aiden@tesseracompassion.com 으로 문의해주세요.');
+        return;
+      }
+      alert('CMS 자동이체 신청이 접수 준비 중입니다. aiden@tesseracompassion.com 으로 문의해주시면 신청서를 보내드립니다.');
     }
 
     // ─── NAVIGATION ─────────────────────────────
@@ -5050,10 +5065,78 @@
     // ─── STRIPE SETUP ────────────────────────────
     let stripe, card, selectedAmount = 50;
 
-    function initStripe() {
+    // ─── PAYMENT CONFIG (edited via /admin → Donate → Payment Settings) ──
+    // data/payment-config.json controls whether Stripe card payments are
+    // live (and with which publishable key — safe to be public by design),
+    // and holds the Korean giving details (bank account, KakaoPay link,
+    // which methods are offered). Falls back to safe defaults if missing.
+    let PAYMENT_CONFIG = {
+      stripe: { enabled: false, publishableKey: '', paymentIntentEndpoint: '/create-payment-intent' },
+      korea: { bankName: '', accountNumber: '', accountHolder: '', kakaoEnabled: true, kakaoLink: '', cmsEnabled: true },
+    };
+
+    async function loadPaymentConfig() {
       try {
-        // Replace with your actual Stripe publishable key
-        stripe = Stripe('YOUR_STRIPE_PUBLISHABLE_KEY');
+        const res = await fetch('data/payment-config.json');
+        const cfg = await res.json();
+        if (cfg && typeof cfg === 'object') {
+          PAYMENT_CONFIG.stripe = Object.assign(PAYMENT_CONFIG.stripe, cfg.stripe || {});
+          PAYMENT_CONFIG.korea = Object.assign(PAYMENT_CONFIG.korea, cfg.korea || {});
+        }
+      } catch (e) { /* file missing — defaults keep the page functional */ }
+    }
+
+    function applyPaymentConfig() {
+      const s = PAYMENT_CONFIG.stripe;
+      const k = PAYMENT_CONFIG.korea;
+
+      // ── English page: card tab availability ──
+      const cardTab = document.getElementById('pay-tab-card');
+      const cardPanel = document.getElementById('panel-card');
+      const stripeReady = s.enabled && s.publishableKey && s.publishableKey.startsWith('pk_');
+      const notice = document.querySelector('.stripe-config-notice');
+      if (notice) notice.style.display = stripeReady ? 'none' : '';
+      if (!s.enabled && cardTab && cardPanel) {
+        // Card payments switched off in the admin — hide the tab entirely
+        // and land visitors on the ACH tab instead.
+        cardTab.style.display = 'none';
+        if (cardPanel.classList.contains('active')) {
+          const achTab = document.querySelector('.pay-tab:not(#pay-tab-card)');
+          if (achTab) switchPayTab('ach', achTab);
+        }
+      }
+
+      // ── Korean page: bank details ──
+      const setText = (id, v) => { const el = document.getElementById(id); if (el && v) el.textContent = v; };
+      setText('ko-bank-name', k.bankName);
+      setText('ko-account-number', k.accountNumber);
+      setText('ko-account-holder', k.accountHolder);
+
+      // ── Korean page: which methods are offered ──
+      const kakaoBtn = document.getElementById('ko-kakao-btn');
+      const cmsBtn = document.getElementById('ko-cms-btn');
+      const toggle = document.getElementById('ko-payment-toggle');
+      const kakaoOn = k.kakaoEnabled !== false;
+      const cmsOn = k.cmsEnabled !== false;
+      if (kakaoBtn && !kakaoOn) kakaoBtn.style.display = 'none';
+      if (cmsBtn && !cmsOn) { cmsBtn.style.display = 'none'; cmsBtn.style.borderLeft = 'none'; }
+      if (toggle && (!kakaoOn || !cmsOn)) toggle.style.gridTemplateColumns = '1fr';
+      if (toggle && !kakaoOn && !cmsOn) toggle.parentElement.style.display = 'none';
+      // Land on whichever method is actually available.
+      if (!kakaoOn && cmsOn) selectKoPayment('cms');
+      else selectKoPayment('kakao');
+    }
+
+    function initStripe() {
+      const s = PAYMENT_CONFIG.stripe;
+      const holder = document.getElementById('card-element');
+      if (!s.enabled || !s.publishableKey || !s.publishableKey.startsWith('pk_')) {
+        // Not configured (or deliberately disabled) — leave a quiet placeholder.
+        if (holder) holder.innerHTML = '<div style="font-family:var(--font-display);font-size:12px;color:rgba(200,184,154,0.5);letter-spacing:0.1em;">Card payments are not available right now — please use Bank / ACH.</div>';
+        return;
+      }
+      try {
+        stripe = Stripe(s.publishableKey);
         const elements = stripe.elements({
           fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Barlow:wght@400&display=swap' }]
         });
@@ -5071,8 +5154,7 @@
         });
         card.mount('#card-element');
       } catch(e) {
-        // Stripe key not set — show placeholder
-        document.getElementById('card-element').innerHTML = '<div style="font-family:var(--font-display);font-size:12px;color:rgba(200,184,154,0.5);letter-spacing:0.1em;">Card element loads after Stripe key is configured</div>';
+        if (holder) holder.innerHTML = '<div style="font-family:var(--font-display);font-size:12px;color:rgba(200,184,154,0.5);letter-spacing:0.1em;">Card element could not load — please try Bank / ACH.</div>';
       }
     }
 
@@ -5104,8 +5186,8 @@
       btn.textContent = 'Processing...';
 
       try {
-        // Create payment intent on your server
-        const res = await fetch('/create-payment-intent', {
+        // Create payment intent on the server (endpoint set in /admin)
+        const res = await fetch(PAYMENT_CONFIG.stripe.paymentIntentEndpoint || '/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ amount, currency: 'usd', name, email })
@@ -5193,6 +5275,8 @@
       loadCustomPageLinks();
       await applyPageBuilder(); // must finish before setLang so injected blocks get the right language
       applySectionVisibility();
+      await loadPaymentConfig();  // must resolve before initStripe reads the key
+      applyPaymentConfig();
       initStripe();
       observeFadeIns();
       initShortsCarousel();

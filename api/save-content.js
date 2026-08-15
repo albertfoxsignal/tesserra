@@ -14,6 +14,7 @@ const ALLOWED_FILES = {
   elders: 'data/elders.json',
   visibility: 'data/section-visibility.json',
   builder: 'data/page-builder.json',
+  payments: 'data/payment-config.json',
 };
 
 module.exports = async (req, res) => {

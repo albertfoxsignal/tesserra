@@ -400,6 +400,13 @@
       "label": "Donate (limited editing)",
       "sections": [
         {
+          "id": "payment-settings",
+          "label": "Payment Settings",
+          "special": "payments",
+          "textKeys": [],
+          "images": []
+        },
+        {
           "id": "donate-note",
           "label": "About this page",
           "textKeys": [],

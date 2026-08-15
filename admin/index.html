@@ -526,6 +526,7 @@
   let visibilityData = {}; // domId -> true/false (missing = visible)
   let visibilityDirty = false; // only save the visibility file when the toggle changed
   let builderData = {}; // pageId -> { order: [...], blocks: [...] } (data/page-builder.json)
+  let paymentConfig = null; // data/payment-config.json — Stripe + Korean giving settings
   let currentBuilderPage = null; // pageId of the open Page Builder view
   let expandedBlockId = null; // which custom block's editor is open
 
@@ -589,13 +590,14 @@
 
   // ── DATA LOADING ──
   async function loadAllData() {
-    const [pagesRes, transRes, eldersRes, customRes, visRes, builderRes] = await Promise.all([
+    const [pagesRes, transRes, eldersRes, customRes, visRes, builderRes, payRes] = await Promise.all([
       fetch('../data/pages.json'),
       fetch('../data/translations.json'),
       fetch('../data/elders.json'),
       fetch('../data/custom-pages.json'),
       fetch('../data/section-visibility.json'),
       fetch('../data/page-builder.json'),
+      fetch('../data/payment-config.json'),
     ]);
     pagesData = await pagesRes.json();
     translations = await transRes.json();
@@ -605,6 +607,14 @@
     if (!visibilityData || typeof visibilityData !== 'object') visibilityData = {};
     try { builderData = await builderRes.json(); } catch (e) { builderData = {}; }
     if (!builderData || typeof builderData !== 'object') builderData = {};
+    try { paymentConfig = await payRes.json(); } catch (e) { paymentConfig = null; }
+    if (!paymentConfig || typeof paymentConfig !== 'object') paymentConfig = {};
+    paymentConfig.stripe = Object.assign(
+      { enabled: false, publishableKey: '', paymentIntentEndpoint: '/create-payment-intent' },
+      paymentConfig.stripe || {});
+    paymentConfig.korea = Object.assign(
+      { bankName: '', accountNumber: '', accountHolder: '', kakaoEnabled: true, kakaoLink: '', cmsEnabled: true },
+      paymentConfig.korea || {});
   }
 
   // ── SIDEBAR ──
@@ -666,6 +676,7 @@
     pendingImageUploads = {};
 
     if (section.special === 'elders') { renderEldersEditor(page, section); return; }
+    if (section.special === 'payments') { renderPaymentsEditor(page, section); return; }
     renderSectionEditor(page, section);
   }
 
@@ -1280,6 +1291,164 @@
 
       builderDirty = false;
       msg.textContent = '✓ Layout saved — live in about a minute after redeploy.';
+      msg.className = 'save-msg ok';
+    } catch (e) {
+      msg.textContent = '✗ ' + e.message;
+      msg.className = 'save-msg err';
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  // ── PAYMENT SETTINGS EDITOR (Donate page) ──
+  // Edits data/payment-config.json. Two independent groups:
+  //  · Stripe — the on/off switch for card payments plus the publishable
+  //    key. Publishable (pk_) keys are designed to be public, so keeping
+  //    one in the repo is safe. SECRET (sk_) keys are not — they're
+  //    rejected here outright and must only ever live in Vercel env vars.
+  //  · Korean giving — bank transfer details shown on the KO donate page,
+  //    the KakaoPay link the 작정하기 button opens, and which of the two
+  //    methods (카카오페이 / CMS 자동이체) are offered at all.
+  function payField(group, field, value) {
+    paymentConfig[group][field] = value;
+    markPaymentsDirty();
+  }
+  let paymentsDirty = false;
+  function markPaymentsDirty() {
+    paymentsDirty = true;
+    const msg = document.getElementById('save-msg');
+    if (msg) { msg.textContent = 'Unsaved changes — click "Save payment settings" to publish.'; msg.className = 'save-msg'; }
+  }
+
+  function renderPaymentsEditor(page, section) {
+    const main = document.getElementById('main');
+    const s = paymentConfig.stripe;
+    const k = paymentConfig.korea;
+
+    main.innerHTML = `
+      <div class="section-header">
+        <div class="breadcrumb">${page.label}</div>
+        <h2>${section.label}</h2>
+      </div>
+
+      <div class="note-box" style="margin-bottom:20px;">
+        These settings control how the Donate page accepts money. Card payments (Stripe) power the
+        English page's Card tab; the Korean settings fill in the 계좌 직접 이체 box and the
+        카카오페이 / CMS 자동이체 options on the Korean page. Nothing changes on the live site until you save.
+      </div>
+
+      <!-- ── STRIPE ── -->
+      <div class="elder-card">
+        <div class="elder-card-head" style="align-items:center;">
+          <strong>💳 Card payments (Stripe)</strong>
+          <label class="vis-toggle">
+            <input type="checkbox" ${s.enabled ? 'checked' : ''}
+              onchange="payField('stripe','enabled', this.checked); document.getElementById('stripe-status-label').textContent = this.checked ? 'Card tab shown on site' : 'Card tab hidden on site';" />
+            <span class="vis-slider"></span>
+            <span class="vis-label" id="stripe-status-label">${s.enabled ? 'Card tab shown on site' : 'Card tab hidden on site'}</span>
+          </label>
+        </div>
+
+        <div class="field-key" style="margin-top:12px;">Stripe publishable key</div>
+        <input class="field-input" id="stripe-pk-input" placeholder="pk_live_… (or pk_test_… while testing)"
+          value="${escAttr(s.publishableKey || '')}"
+          oninput="validateStripeKey(this)" />
+        <div class="image-upload-status" id="stripe-pk-status" style="margin-top:6px;">${
+          s.publishableKey
+            ? (s.publishableKey.startsWith('pk_live_') ? '✓ Live key set — real cards will be charged.'
+               : s.publishableKey.startsWith('pk_test_') ? '⚠ TEST key set — payments are simulated, no real money moves.'
+               : '')
+            : 'Find this in the Stripe Dashboard → Developers → API keys. It starts with pk_ and is safe to publish.'
+        }</div>
+
+        <div class="field-key" style="margin-top:14px;">Payment server endpoint</div>
+        <input class="field-input" placeholder="/create-payment-intent"
+          value="${escAttr(s.paymentIntentEndpoint || '/create-payment-intent')}"
+          oninput="payField('stripe','paymentIntentEndpoint', this.value.trim())" />
+        <div class="image-upload-status" style="margin-top:6px;">The serverless function that creates the PaymentIntent using your SECRET key. The secret key itself lives only in Vercel environment variables — never paste it anywhere in this panel.</div>
+      </div>
+
+      <!-- ── KOREAN GIVING ── -->
+      <div class="elder-card">
+        <div class="elder-card-head"><strong>🇰🇷 Korean giving (한국 후원)</strong></div>
+
+        <div class="field-key" style="margin-top:10px;">계좌 직접 이체 — bank transfer details</div>
+        <div class="elder-grid">
+          <input class="field-input" placeholder="은행명 — e.g. 신한은행 (Shinhan Bank)"
+            value="${escAttr(k.bankName || '')}" oninput="payField('korea','bankName', this.value)" />
+          <input class="field-input" placeholder="계좌번호 — account number"
+            value="${escAttr(k.accountNumber || '')}" oninput="payField('korea','accountNumber', this.value)" />
+          <input class="field-input" placeholder="예금주 — account holder"
+            value="${escAttr(k.accountHolder || '')}" oninput="payField('korea','accountHolder', this.value)" />
+        </div>
+
+        <div class="field-key" style="margin-top:16px;">Offered pledge methods</div>
+        <div style="display:flex;gap:28px;flex-wrap:wrap;margin-top:6px;">
+          <label class="vis-toggle">
+            <input type="checkbox" ${k.kakaoEnabled !== false ? 'checked' : ''}
+              onchange="payField('korea','kakaoEnabled', this.checked)" />
+            <span class="vis-slider"></span>
+            <span class="vis-label">💛 카카오페이</span>
+          </label>
+          <label class="vis-toggle">
+            <input type="checkbox" ${k.cmsEnabled !== false ? 'checked' : ''}
+              onchange="payField('korea','cmsEnabled', this.checked)" />
+            <span class="vis-slider"></span>
+            <span class="vis-label">🏦 CMS 자동이체</span>
+          </label>
+        </div>
+
+        <div class="field-key" style="margin-top:16px;">KakaoPay link</div>
+        <input class="field-input" placeholder="https://qr.kakaopay.com/…"
+          value="${escAttr(k.kakaoLink || '')}" oninput="payField('korea','kakaoLink', this.value.trim())" />
+        <div class="image-upload-status" style="margin-top:6px;">The 카카오페이로 작정하기 button opens this link. Get it from KakaoPay → 송금 → 링크 만들기 (or your KakaoPay merchant QR). Leave blank to show a "not yet available" notice instead.</div>
+      </div>
+
+      <div class="save-bar">
+        <button class="btn-save" id="save-btn" onclick="savePayments()">Save payment settings</button>
+        <span class="save-msg" id="save-msg"></span>
+      </div>`;
+  }
+
+  function validateStripeKey(input) {
+    const v = input.value.trim();
+    const status = document.getElementById('stripe-pk-status');
+    if (v.startsWith('sk_') || v.startsWith('rk_')) {
+      // A secret/restricted key in a public repo = anyone can move money.
+      input.value = '';
+      status.textContent = '✗ That is a SECRET key — it must never be entered here or committed to the site. It belongs only in Vercel environment variables. Paste the PUBLISHABLE key (starts with pk_) instead.';
+      status.style.color = 'var(--red)';
+      payField('stripe', 'publishableKey', '');
+      return;
+    }
+    status.style.color = '';
+    if (v === '') status.textContent = 'Find this in the Stripe Dashboard → Developers → API keys. It starts with pk_ and is safe to publish.';
+    else if (v.startsWith('pk_live_')) status.textContent = '✓ Live key — real cards will be charged.';
+    else if (v.startsWith('pk_test_')) status.textContent = '⚠ TEST key — payments are simulated, no real money moves.';
+    else status.textContent = '⚠ This does not look like a Stripe publishable key (should start with pk_).';
+    payField('stripe', 'publishableKey', v);
+  }
+
+  async function savePayments() {
+    const btn = document.getElementById('save-btn');
+    const msg = document.getElementById('save-msg');
+    btn.disabled = true;
+    msg.textContent = 'Saving…';
+    msg.className = 'save-msg';
+    try {
+      // Belt-and-braces: never let a secret key reach the repo even if the
+      // input validation was somehow bypassed.
+      const pk = paymentConfig.stripe.publishableKey || '';
+      if (pk.startsWith('sk_') || pk.startsWith('rk_')) throw new Error('Secret keys cannot be saved. Use the publishable (pk_) key.');
+
+      const res = await fetch('/api/save-content', {
+        method: 'POST', headers: authHeaders(),
+        body: JSON.stringify({ file: 'payments', data: paymentConfig }),
+      });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error);
+      paymentsDirty = false;
+      msg.textContent = '✓ Saved — live in about a minute after redeploy.';
       msg.className = 'save-msg ok';
     } catch (e) {
       msg.textContent = '✗ ' + e.message;

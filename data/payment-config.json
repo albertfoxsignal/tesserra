@@ -1,0 +1,15 @@
+{
+  "stripe": {
+    "enabled": false,
+    "publishableKey": "",
+    "paymentIntentEndpoint": "/create-payment-intent"
+  },
+  "korea": {
+    "bankName": "신한은행 (Shinhan Bank)",
+    "accountNumber": "",
+    "accountHolder": "테세라컴패션파운데이션",
+    "kakaoEnabled": true,
+    "kakaoLink": "",
+    "cmsEnabled": true
+  }
+}
